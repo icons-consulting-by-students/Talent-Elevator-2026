@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Kontakt | Talent Elevator</title>
+    <meta name="description" content="Kontakt für Unternehmen beim Talent Elevator: Partnerschaft anfragen und mit dem Team sprechen." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&family=Space+Grotesk:wght@500;700&family=Syne:wght@700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body class="kontakt-page">
+    <header class="header-wrap">
+      <div class="container topbar" data-audience-header>
+        <div class="header-left">
+          <div class="header-pill">
+            <button class="nav-toggle" aria-label="Navigation öffnen">
+              <span class="burger">☰</span>
+            </button>
+            <a class="logo" href="index.html" aria-label="Talent Elevator Startseite">
+              <img class="site-logo" src="assets/logos/Logo_Weis_outlined.svg" alt="Talent Elevator" />
+            </a>
+          </div>
+        </div>
+        <div class="header-center">
+          <div class="header-audience" data-audience-switch aria-label="Zielgruppen-Auswahl">
+            <button class="audience-btn" type="button" data-audience-btn="students">Für Studierende</button>
+            <button class="audience-btn" type="button" data-audience-btn="companies">Für Unternehmen</button>
+          </div>
+          <div class="header-menu-items" data-header-menu></div>
+        </div>
+        <div class="header-right">
+          <button class="search-btn" type="button" aria-label="Suche öffnen">⌕</button>
+        </div>
+        <nav class="nav" aria-label="Hauptnavigation" aria-hidden="true">
+          <div class="nav-panel">
+            <div class="nav-head">
+              <a class="nav-brand-link" href="index.html" aria-label="Talent Elevator Startseite">
+                <img class="nav-brand-logo" src="assets/logos/Logo_Weis_outlined.svg" alt="Talent Elevator" />
+              </a>
+              <button class="nav-close" type="button" aria-label="Navigation schließen">×</button>
+            </div>
+            <div class="nav-menu-groups">
+              <section class="nav-group">
+                <p class="nav-eyebrow">FÜR STUDIERENDE</p>
+                <div class="nav-group-links">
+                  <a href="#vergangene-events">Vergangene Events</a>
+                  <a href="anmeldung.html">Anmeldung</a>
+                  <a href="ueber-uns.html">Über uns</a>
+                </div>
+              </section>
+              <section class="nav-group">
+                <p class="nav-eyebrow">FÜR UNTERNEHMEN</p>
+                <div class="nav-group-links">
+                  <a href="unternehmen.html">Unsere Leistungen</a>
+                  <a href="kontakt.html">Kontakt</a>
+                </div>
+              </section>
+            </div>
+            <hr class="nav-divider" />
+          </div>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <section class="page-hero">
+        <div class="container page-hero-shell visual-panel reveal company-hero-panel">
+          <p class="eyebrow">FÜR UNTERNEHMEN</p>
+          <h1>Kontakt</h1>
+          <p class="hero-copy">
+            Sprechen Sie mit uns über Ihr Wunschprofil und Ihre Recruiting-Ziele. Wir melden uns in der Regel innerhalb
+            von 24 bis 48 Stunden zurück.
+          </p>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="#unternehmen-kontakt">Partnerschaft anfragen</a>
+          </div>
+        </div>
+      </section>
+
+      <section class="section company-contact-section" id="unternehmen-kontakt">
+        <div class="container">
+          <div class="company-contact-shell">
+            <div class="company-contact-head reveal">
+              <p class="eyebrow">Kontakt</p>
+              <h2>Werden Sie Partner</h2>
+              <p>
+                Teilen Sie uns kurz Ihre Anforderungen mit, und wir melden uns zeitnah mit den nächsten Schritten.
+              </p>
+            </div>
+            <form class="company-contact-form reveal" action="#" method="post">
+              <div class="company-form-grid">
+                <label class="company-form-field">
+                  <span>Vorname &amp; Nachname</span>
+                  <input type="text" name="name" autocomplete="name" required />
+                </label>
+                <label class="company-form-field">
+                  <span>Unternehmen</span>
+                  <input type="text" name="company" autocomplete="organization" required />
+                </label>
+              </div>
+              <label class="company-form-field">
+                <span>E-Mail-Adresse</span>
+                <input type="email" name="email" autocomplete="email" required />
+              </label>
+              <label class="company-form-field">
+                <span>Nachricht</span>
+                <textarea name="message" rows="5" required></textarea>
+              </label>
+              <button class="btn btn-primary" type="submit">Anfrage senden</button>
+            </form>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <div class="container footer-content">
+        <span class="footer-brand">
+          <img class="footer-logo" src="assets/logos/Logo_Weis_outlined.svg" alt="Talent Elevator" />
+        </span>
+        <p>© 2026 Talent Elevator</p>
+      </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+  </body>
+</html>

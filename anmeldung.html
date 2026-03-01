@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Anmeldung | Talent Elevator</title>
+    <meta name="description" content="Anmeldung zum Talent Elevator Karriereevent." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&family=Space+Grotesk:wght@500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body>
+    <header class="header-wrap">
+      <div class="container topbar" data-audience-header>
+        <div class="header-left">
+          <div class="header-pill">
+            <button class="nav-toggle" aria-label="Navigation öffnen">
+              <span class="burger">☰</span>
+            </button>
+            <!-- HEADER LEFT: LOGO NEXT TO HAMBURGER -->
+            <a class="logo" href="index.html" aria-label="Talent Elevator Startseite">
+              <img class="site-logo" src="assets/logos/Logo_Weis_outlined.svg" alt="Talent Elevator" />
+            </a>
+          </div>
+        </div>
+        <div class="header-center">
+          <div class="header-audience" data-audience-switch aria-label="Zielgruppen-Auswahl">
+            <button class="audience-btn" type="button" data-audience-btn="students">Für Studierende</button>
+            <button class="audience-btn" type="button" data-audience-btn="companies">Für Unternehmen</button>
+          </div>
+          <div class="header-menu-items" data-header-menu></div>
+        </div>
+        <div class="header-right">
+          <button class="search-btn" type="button" aria-label="Suche öffnen">⌕</button>
+        </div>
+        <nav class="nav" aria-label="Hauptnavigation" aria-hidden="true">
+          <div class="nav-panel">
+            <div class="nav-head">
+              <a class="nav-brand-link" href="index.html" aria-label="Talent Elevator Startseite">
+                <img class="nav-brand-logo" src="assets/logos/Logo_Weis_outlined.svg" alt="Talent Elevator" />
+              </a>
+              <button class="nav-close" type="button" aria-label="Navigation schließen">×</button>
+            </div>
+            <div class="nav-menu-groups">
+              <section class="nav-group">
+                <p class="nav-eyebrow">FÜR STUDIERENDE</p>
+                <div class="nav-group-links">
+                  <a href="#vergangene-events">Vergangene Events</a>
+                  <a href="anmeldung.html">Anmeldung</a>
+                  <a href="ueber-uns.html">Über uns</a>
+                </div>
+              </section>
+              <section class="nav-group">
+                <p class="nav-eyebrow">FÜR UNTERNEHMEN</p>
+                <div class="nav-group-links">
+                  <a href="unternehmen.html">Unsere Leistungen</a>
+                  <a href="kontakt.html">Kontakt</a>
+                </div>
+              </section>
+            </div>
+            <hr class="nav-divider" />
+          </div>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <section class="page-hero">
+        <div class="container page-hero-shell visual-panel reveal">
+          <p class="eyebrow">Apply now</p>
+          <h1>Dein Platz beim Talent Elevator.</h1>
+          <p class="hero-copy">Kurzes Formular, klare Auswahlkriterien, hochwertiges Eventumfeld.</p>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="container form-layout">
+          <article class="form-shell reveal">
+            <h3>Anmeldung</h3>
+            <form>
+              <div class="split">
+                <div>
+                  <label for="vorname">Vorname</label>
+                  <input id="vorname" name="vorname" type="text" placeholder="Max" />
+                </div>
+                <div>
+                  <label for="nachname">Nachname</label>
+                  <input id="nachname" name="nachname" type="text" placeholder="Mustermann" />
+                </div>
+              </div>
+
+              <div class="split">
+                <div>
+                  <label for="email">E-Mail</label>
+                  <input id="email" name="email" type="email" placeholder="name@uni.at" />
+                </div>
+                <div>
+                  <label for="uni">Universität/FH</label>
+                  <input id="uni" name="uni" type="text" placeholder="z. B. TU Wien" />
+                </div>
+              </div>
+
+              <div class="split">
+                <div>
+                  <label for="studium">Studienrichtung</label>
+                  <input id="studium" name="studium" type="text" placeholder="Informatik" />
+                </div>
+                <div>
+                  <label for="semester">Semester</label>
+                  <select id="semester" name="semester">
+                    <option>Bitte wählen</option>
+                    <option>1-2</option>
+                    <option>3-4</option>
+                    <option>5-6</option>
+                    <option>7+</option>
+                  </select>
+                </div>
+              </div>
+
+              <div>
+                <label for="motivation">Kurzprofil / Motivation</label>
+                <textarea id="motivation" name="motivation" placeholder="Weshalb möchtest du teilnehmen?"></textarea>
+              </div>
+
+              <button class="btn btn-primary" type="submit">Anmeldung absenden</button>
+            </form>
+          </article>
+
+          <article class="partner-card reveal">
+            <span class="badge badge-primary">Selection</span>
+            <h3>Worauf wir achten</h3>
+            <p>Starke Leistung, klares Potenzial und professionelles Auftreten.</p>
+            <div class="media-dropzone">Visuelles Bewerbungsbeispiel: <code>assets/media/home</code></div>
+            <div class="media-dropzone">Optionales Kurzvideo: <code>assets/videos</code></div>
+          </article>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <div class="container footer-content">
+        <span class="footer-brand">
+          <img class="footer-logo" src="assets/logos/Logo_Weis_outlined.svg" alt="Talent Elevator" />
+          <span>© 2026 Talent Elevator</span>
+        </span>
+        <span>office@talentelevator.at</span>
+      </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+  </body>
+</html>
