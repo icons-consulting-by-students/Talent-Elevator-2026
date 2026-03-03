@@ -389,52 +389,37 @@ if ('IntersectionObserver' in window && revealEls.length > 0) {
     return;
   }
 
-  const processSteps = Array.from(processTimeline.querySelectorAll('.company-process-step'));
-  if (processSteps.length === 0) {
+  const processSection = processTimeline.closest('.company-process-section');
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  const revealProcessSection = () => {
+    if (!processSection) {
+      return;
+    }
+    processSection.classList.add('is-visible');
+  };
+
+  if (!processSection || reduceMotion || !('IntersectionObserver' in window)) {
+    revealProcessSection();
     return;
   }
 
-  const syncStepHeights = () => {
-    processSteps.forEach((step) => {
-      const copy = step.querySelector('p');
-      if (!copy) {
-        return;
-      }
-      step.style.setProperty('--step-copy-h', `${copy.scrollHeight}px`);
-    });
-  };
-
-  const clearSpotlight = () => {
-    processTimeline.classList.remove('is-spotlight');
-    processSteps.forEach((step) => step.classList.remove('is-active'));
-  };
-
-  const setActiveStep = (activeStep) => {
-    processTimeline.classList.add('is-spotlight');
-    processSteps.forEach((step) => {
-      step.classList.toggle('is-active', step === activeStep);
-    });
-  };
-
-  syncStepHeights();
-
-  processSteps.forEach((step) => {
-    step.addEventListener('mouseenter', () => setActiveStep(step));
-    step.addEventListener('focusin', () => setActiveStep(step));
-  });
-
-  processTimeline.addEventListener('mouseleave', clearSpotlight);
-  processTimeline.addEventListener('focusout', (event) => {
-    if (!processTimeline.contains(event.relatedTarget)) {
-      clearSpotlight();
-    }
-  });
-
-  window.addEventListener('resize', syncStepHeights);
+  const processObserver = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          revealProcessSection();
+          processObserver.unobserve(entry.target);
+        }
+      });
+    },
+    { threshold: 0.26 }
+  );
+  processObserver.observe(processSection);
 })();
 
 (() => {
-  const statsRoot = document.querySelector('.unternehmen-page .facts-kpis');
+  const statsRoot = document.querySelector('.unternehmen-page [data-company-kpis]');
   if (!statsRoot) {
     return;
   }
@@ -1146,10 +1131,12 @@ if ('IntersectionObserver' in window && animatedDonuts.length > 0) {
   };
 
   // LAYOUT SLOTS
-  const isCompanyDonut = document.body.classList.contains('unternehmen-page');
+  const isUnternehmenPage = document.body.classList.contains('unternehmen-page');
+  const isCompanyDonut = isUnternehmenPage && !root.classList.contains('te-donut-home-style');
+  const isUnternehmenHomeStyleDonut = isUnternehmenPage && root.classList.contains('te-donut-home-style');
   const leftY = [-180, -60, 60, 180];
   const rightY = [-140, 0, 140];
-  const leftX = isCompanyDonut ? -420 : -360;
+  const leftX = isCompanyDonut ? -420 : isUnternehmenHomeStyleDonut ? -410 : -360;
   const rightX = isCompanyDonut ? 420 : 360;
   const rightEdgeX = rightX;
   const underlineLen = 200; // fallback
