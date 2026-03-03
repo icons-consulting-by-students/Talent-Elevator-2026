@@ -336,13 +336,13 @@ video {
 }
 
 .search-btn {
-  width: 66px;
-  height: 66px;
+  width: 74px;
+  height: 74px;
   border: 1px solid rgba(255, 255, 255, 0.72);
   border-radius: 18px;
   background: rgba(177, 187, 201, 0.72);
   color: #4b5664;
-  font-size: 1.65rem;
+  font-size: 2rem;
   line-height: 1;
   cursor: pointer;
   box-shadow: 0 8px 22px rgba(6, 15, 29, 0.26);
@@ -5090,9 +5090,9 @@ textarea {
   }
 
   .search-btn {
-    width: 48px;
-    height: 48px;
-    font-size: 1.3rem;
+    width: 54px;
+    height: 54px;
+    font-size: 1.55rem;
     border-radius: 14px;
   }
 
