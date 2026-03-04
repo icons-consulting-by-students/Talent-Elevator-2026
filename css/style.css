@@ -277,9 +277,9 @@ video {
 
 .audience-btn {
   border: 0;
-  min-width: 158px;
-  height: 48px;
-  border-radius: 16px;
+  min-width: 148px;
+  height: 44px;
+  border-radius: 14px;
   font-weight: 700;
   font-size: 0.93rem;
   letter-spacing: 0.01em;
@@ -293,6 +293,7 @@ video {
 .audience-btn.is-active {
   background: linear-gradient(120deg, var(--royal-700), var(--royal-600));
   color: #fff;
+  border-radius: 14px;
 }
 
 /* HEADER FIX: MENU ONLY AFTER CLICK */
@@ -328,7 +329,7 @@ video {
 }
 
 .topbar.audience-selected .header-center {
-  justify-content: center;
+  justify-content: flex-start;
 }
 
 .topbar.audience-selected .header-menu-items {
@@ -2727,12 +2728,39 @@ h1 {
   color: #fff;
 }
 
+.kontakt-page .company-hero-panel h1 {
+  margin: 0.7rem 0 0;
+  transform: none;
+}
+
+@media (min-width: 981px) {
+  .kontakt-page .company-hero-panel h1 {
+    max-width: none;
+  }
+
+  .unternehmen-page .company-hero-panel h1 {
+    max-width: none;
+  }
+
+  .kontakt-page .company-hero-panel {
+    min-height: clamp(270px, 34vw, 430px);
+  }
+
+  .unternehmen-page .company-hero-panel {
+    min-height: clamp(270px, 34vw, 430px);
+  }
+
+  .kontakt-page .company-hero-panel .hero-copy {
+    margin-top: 2.8rem;
+  }
+}
+
 .company-hero-panel::before {
   content: none;
 }
 
 .unternehmen-page .page-hero {
-  padding: clamp(4.6rem, 10vh, 7rem) 0 clamp(3.4rem, 8vh, 5.5rem);
+  padding: clamp(3.3rem, 8vw, 5.3rem) 0 clamp(3.4rem, 8vh, 5.5rem);
 }
 
 .anmeldung-page .page-hero {
@@ -2798,6 +2826,28 @@ h1 {
   max-width: 600px;
   line-height: 1.6;
   margin: 2.1rem 0 0;
+}
+
+.kontakt-page .company-hero-panel .hero-actions {
+  margin-top: 1rem;
+}
+
+.kontakt-page .company-hero-panel {
+  justify-content: flex-start;
+}
+
+.unternehmen-page .company-hero-panel {
+  justify-content: flex-start;
+}
+
+.kontakt-page .company-hero-panel .hero-copy {
+  max-width: none;
+  margin-top: auto;
+}
+
+.unternehmen-page .company-hero-panel .hero-copy {
+  max-width: none;
+  margin-top: auto;
 }
 
 .company-hero-line-primary {
@@ -3014,9 +3064,9 @@ h1 {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  justify-content: flex-end;
+  justify-content: flex-start;
   gap: 0;
-  min-height: clamp(300px, 28vw, 380px);
+  min-height: clamp(210px, 18vw, 270px);
   padding: clamp(1.2rem, 1.7vw, 1.5rem) clamp(1.25rem, 1.8vw, 1.55rem) clamp(1.45rem, 2.2vw, 1.9rem);
   border-radius: 22px;
   border: 1px solid rgba(255, 255, 255, 0.14);
@@ -3036,12 +3086,14 @@ h1 {
 .company-benefit-content {
   width: 100%;
   display: grid;
-  align-content: end;
+  align-content: start;
+  margin-top: clamp(2.4rem, 4vw, 3.4rem);
+  row-gap: clamp(1rem, 1.8vw, 1.4rem);
 }
 
 .company-benefit-item h3 {
   margin: 0;
-  margin-bottom: clamp(1rem, 1.8vw, 1.4rem);
+  min-height: clamp(3.2rem, 5.2vw, 4.2rem);
   color: #fff;
   font-size: clamp(1.05rem, 1.25vw, 1.32rem);
   line-height: 1.2;
@@ -3113,9 +3165,22 @@ h1 {
   font-size: clamp(1.7rem, 4vw, 2.6rem);
 }
 
+.kontakt-page .company-contact-head .eyebrow {
+  color: var(--royal-300);
+  margin: 0;
+}
+
+.kontakt-page .company-contact-head h2 {
+  margin: 0.7rem 0 0;
+  color: #fff;
+  font-size: clamp(2.1rem, 5vw, 4.3rem);
+  line-height: 1.04;
+  max-width: none;
+}
+
 .company-contact-head p {
   margin: 0.72rem 0 0;
-  max-width: 64ch;
+  max-width: 68ch;
   color: rgba(224, 237, 249, 0.9);
   line-height: 1.5;
 }
@@ -5083,6 +5148,10 @@ textarea {
 @media (max-width: 1180px) {
   .header-menu-items {
     display: none !important;
+  }
+
+  .topbar.audience-selected .header-menu-items {
+    display: inline-flex !important;
   }
 }
 

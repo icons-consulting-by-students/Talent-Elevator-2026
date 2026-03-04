@@ -121,13 +121,6 @@ if (audienceButtons.length > 0) {
 
       applyAudience(targetAudience);
       setMenuState(false);
-
-      if (targetAudience === 'companies' && !onCompaniesPage) {
-        window.location.href = 'unternehmen.html';
-      }
-      if (targetAudience === 'students' && !onIndexPage) {
-        window.location.href = 'index.html';
-      }
     });
   });
 }
