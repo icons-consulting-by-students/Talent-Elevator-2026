@@ -1700,7 +1700,7 @@ if ('IntersectionObserver' in window && animatedDonuts.length > 0) {
     },
     ey: {
       title: 'EY Parthenon',
-      text: 'EY Parthenon steht dem Top-Management ihrer Kund:innen zur Seite, wenn es darum geht, die Strategie in einem sich schnell wandelnden Umfeld zu transformieren, in herausfordernden Zeiten Maßnahmen der Restrukturierung und Sanierung umzusetzen, Wachstum zu generieren und neue Märkte zu erschließen. Als Teil ihres internationalen Teams gestaltest du die Zukunft zusammen mit den Entscheidungsträger:innen. “It’s yours to build.”',
+      text: '„Gemeinsam zukunftsweisende Lösungen für die Wirtschaftswelt von morgen entwickeln.” - Das ist das Ziel von rund 1.400 Kolleg:innen an österreichweit vier Standorten von EYP (Wien, Linz, Salzburg und Klagenfurt). Als eines der marktführenden Unternehmen in der Wirtschaftsprüfung, Steuerberatung, Strategy and Transactions sowie im Consulting begleitet EYP Kund:innen mit innovativen Dienstleistungen in die Zukunft. EY Parthenon steht dem Top-Management zur Seite, wenn es darum geht, die Strategie in einem sich schnell wandelnden Umfeld zu transformieren, in herausfordernden Zeiten Maßnahmen der Restrukturierung und Sanierung umzusetzen, Wachstum zu generieren und neue Märkte zu erschließen. Als Teil eines internationalen Teams gestaltest also DU die Zukunft zusammen mit den Entscheidungsträger:innen. “It’s yours to build.”',
       href: 'https://www.ey.com/de_at/strategy-transactions/parthenon',
       logo: 'assets/logos/EY_Parthenon_logo.svg.png',
     },
@@ -1712,7 +1712,7 @@ if ('IntersectionObserver' in window && animatedDonuts.length > 0) {
     },
     billa: {
       title: 'BILLA',
-      text: 'BILLA ist einer der zentralen Arbeitgeber im österreichischen Handel und treibt moderne Retail-Lösungen voran.',
+      text: 'Seit bereits 70 Jahren gehört BILLA einfach zum österreichischen Lebensmittelhandel dazu. Mit rund 1.300 Märkten in ganzBillarreich ist BILLA ein wichtiger Nahversorger und verspricht mit einer Auswahl von über 30.000 verschiedenen Produkten ein genussvolles Einkaufserlebnis. Wichtige aktuelle strategische Schwerpunkte wie Plant-Based, Regionalität, Nachhaltigkeit und Digitalisierung werden aktiv vorangetrieben. Um dies erfolgreich umzusetzen, sind mehr als 30.000 Mitarbeiter:innen und ca. 1.800 Lehrlinge in den Märkten, im Vertriebsaußendienst sowie in der Zentrale beschäftigt. Die Billa Mitarbeiter:innen machen das Unternehmen zu einem der erfolgreichsten im Land. So wird ein Umfeld geschaffen, das allen Mitarbeiter:innen optimale Arbeitsbedingungen, Chancengerechtigkeit und Gestaltungsfreiraum bietet. Besonders am Herzen liegt Billa die Vereinbarkeit von Beruf und Familie sowie Vielfalt – nicht nur auf Karrierewegen, sondern vor allem in den Teams.',
       href: 'https://www.billa.at/',
       logo: 'assets/logos/Billa_logo.svg.png',
     },
@@ -1852,10 +1852,9 @@ if ('IntersectionObserver' in window && animatedDonuts.length > 0) {
   };
 
   const renderDesktop = () => {
-    const sample = cards[activeIndex] || cards[0];
-    const cardWidth = sample ? sample.getBoundingClientRect().width : 560;
-    const offset = cardWidth * 0.6;
-    const farOffset = cardWidth * 1.25;
+    const baseDesktopWidth = 480;
+    const offset = baseDesktopWidth * 0.6;
+    const farOffset = baseDesktopWidth * 1.25;
 
     cards.forEach((card, idx) => {
       const delta = shortestDelta(idx, activeIndex);
