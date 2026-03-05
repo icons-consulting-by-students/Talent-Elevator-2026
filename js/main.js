@@ -6,6 +6,7 @@ const topbar = document.querySelector('[data-audience-header]') || document.quer
 const audienceSwitch = document.querySelector('[data-audience-switch]');
 const audienceButtons = audienceSwitch ? Array.from(audienceSwitch.querySelectorAll('[data-audience-btn]')) : [];
 const headerMenu = document.querySelector('[data-header-menu]');
+const audienceStorageKey = 'te_selected_audience';
 
 /* HEADER FIX: NEUTRAL DEFAULT (NO PERSISTENCE) */
 
@@ -13,7 +14,7 @@ const headerMenu = document.querySelector('[data-header-menu]');
 const audienceMenus = {
   students: [
     { label: 'Anmeldung', href: 'anmeldung.html' },
-    { label: 'Vergangene Events', href: '#vergangene-events' },
+    { label: 'Vergangene Events', href: 'index.html#vergangene-events' },
     { label: 'Über uns', href: 'ueber-uns.html' },
   ],
   companies: [
@@ -33,12 +34,44 @@ const onCompaniesPage =
   pathname.endsWith('/leistungen.html') ||
   pathname.endsWith('/services') ||
   pathname.endsWith('/services.html');
+const onStudentsPage =
+  onIndexPage ||
+  pathname.endsWith('/anmeldung') ||
+  pathname.endsWith('/anmeldung.html') ||
+  pathname.endsWith('/ueber-uns') ||
+  pathname.endsWith('/ueber-uns.html') ||
+  pathname.endsWith('/talent-elevator-2023') ||
+  pathname.endsWith('/talent-elevator-2023.html') ||
+  pathname.endsWith('/talent-elevator-2024') ||
+  pathname.endsWith('/talent-elevator-2024.html') ||
+  pathname.endsWith('/talent-elevator-2025') ||
+  pathname.endsWith('/talent-elevator-2025.html');
 
 const normalizeAudience = (value) => {
   if (value === 'students' || value === 'companies') {
     return value;
   }
   return '';
+};
+
+const readStoredAudience = () => {
+  try {
+    return normalizeAudience(window.localStorage.getItem(audienceStorageKey) || '');
+  } catch (_error) {
+    return '';
+  }
+};
+
+const persistAudience = (audience) => {
+  try {
+    if (audience) {
+      window.localStorage.setItem(audienceStorageKey, audience);
+      return;
+    }
+    window.localStorage.removeItem(audienceStorageKey);
+  } catch (_error) {
+    // Ignore storage errors (e.g., private mode restrictions).
+  }
 };
 
 const renderLinks = (container, links) => {
@@ -103,12 +136,17 @@ const applyAudienceVisuals = (audience) => {
 };
 
 /* HEADER FIX: MENU ONLY AFTER CLICK */
-const applyAudience = (audience) => {
+const applyAudience = (audience, options = {}) => {
+  const { persist = true } = options;
   const normalized = normalizeAudience(audience);
 
   applyAudienceVisuals(normalized);
   const links = normalized ? audienceMenus[normalized] || [] : [];
   renderLinks(headerMenu, links);
+
+  if (persist) {
+    persistAudience(normalized);
+  }
 };
 
 if (audienceButtons.length > 0) {
@@ -116,6 +154,18 @@ if (audienceButtons.length > 0) {
     btn.addEventListener('click', () => {
       const targetAudience = normalizeAudience(btn.dataset.audienceBtn);
       if (!targetAudience) {
+        return;
+      }
+
+      if (targetAudience === 'students' && !onIndexPage) {
+        persistAudience('students');
+        window.location.href = 'index.html';
+        return;
+      }
+
+      if (targetAudience === 'companies' && !onCompaniesPage) {
+        persistAudience('companies');
+        window.location.href = 'unternehmen.html';
         return;
       }
 
@@ -156,18 +206,22 @@ if (nav) {
 document.addEventListener('click', (event) => {
   const target =
     event.target instanceof Element
-      ? event.target.closest('a[href="#vergangene-events"], a[href="#unternehmen-kontakt"]')
+      ? event.target.closest(
+          'a[href="#unternehmen-kontakt"], a[href="index.html#unternehmen-kontakt"]'
+        )
       : null;
   if (!target) {
     return;
   }
 
-  const href = target.getAttribute('href');
-  if (!href || !href.startsWith('#')) {
+  const href = target.getAttribute('href') || '';
+  const hashIndex = href.indexOf('#');
+  if (hashIndex < 0) {
     return;
   }
+  const hash = href.slice(hashIndex);
 
-  const section = document.querySelector(href);
+  const section = document.querySelector(hash);
   if (!section) {
     return;
   }
@@ -192,7 +246,12 @@ document.addEventListener('keydown', (event) => {
   }
 });
 
-applyAudience(onCompaniesPage ? 'companies' : '');
+const storedAudience = readStoredAudience();
+const initialAudience = onIndexPage ? '' : onCompaniesPage ? 'companies' : onStudentsPage ? 'students' : storedAudience;
+if (onIndexPage) {
+  persistAudience('');
+}
+applyAudience(initialAudience, { persist: false });
 
 const revealEls = document.querySelectorAll('.reveal');
 
@@ -556,7 +615,7 @@ if ('IntersectionObserver' in window && revealEls.length > 0) {
         }
       });
     },
-    { threshold: 0.32 }
+    { threshold: 0.12 }
   );
 
   sectionObserver.observe(dayflow);
