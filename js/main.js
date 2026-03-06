@@ -1881,6 +1881,9 @@ if ('IntersectionObserver' in window && animatedDonuts.length > 0) {
   let activeIndex = 0;
   const wrap = (idx) => ((idx % total) + total) % total;
   const isDesktop = () => window.innerWidth >= 1024;
+  const isHandy = () => window.innerWidth <= 760;
+  const viewport = carousel.querySelector('.te2025-workshop-viewport');
+  let hasResetHandyOnLoad = false;
 
   const shortestDelta = (idx, active) => {
     const forward = (idx - active + total) % total;
@@ -1960,12 +1963,28 @@ if ('IntersectionObserver' in window && animatedDonuts.length > 0) {
     cards.forEach(clearMobileStyles);
   };
 
+  const resetToFirstCardOnHandy = () => {
+    if (!isHandy() || !viewport) {
+      return;
+    }
+    viewport.scrollTo({ left: 0, behavior: 'auto' });
+  };
+
   const render = () => {
     if (isDesktop()) {
       renderDesktop();
       return;
     }
     renderMobile();
+
+    if (!hasResetHandyOnLoad) {
+      window.requestAnimationFrame(() => {
+        resetToFirstCardOnHandy();
+        window.requestAnimationFrame(resetToFirstCardOnHandy);
+        window.setTimeout(resetToFirstCardOnHandy, 120);
+      });
+      hasResetHandyOnLoad = true;
+    }
   };
 
   const go = (direction) => {
@@ -1978,5 +1997,7 @@ if ('IntersectionObserver' in window && animatedDonuts.length > 0) {
   prevBtn.disabled = false;
   nextBtn.disabled = false;
   window.addEventListener('resize', render);
+  window.addEventListener('load', resetToFirstCardOnHandy);
+  window.addEventListener('pageshow', resetToFirstCardOnHandy);
   render();
 })();
