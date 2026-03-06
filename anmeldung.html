@@ -74,70 +74,109 @@
           <div class="company-hero-glass-layer" aria-hidden="true"></div>
           <p class="eyebrow">Apply now</p>
           <h1>Dein Platz beim Talent Elevator.</h1>
-          <p class="hero-copy">Kurzes Formular, klare Auswahlkriterien, hochwertiges Eventumfeld.</p>
+          <p class="hero-copy">Wir freuen uns über Deine Bewerbung und stehen jederzeit bei Fragen unter talentelevator@icons.at zur Verfügung.</p>
+        </div>
+      </section>
+
+      <section class="section apply-process-section">
+        <div class="container">
+          <div class="apply-process-head reveal">
+            <p class="eyebrow">Bewerbungsprozess</p>
+            <h2>Bewerbungsablauf</h2>
+          </div>
+
+          <div class="apply-process-timeline reveal">
+            <article class="apply-process-card">
+              <h3>Reihung der Unternehmen</h3>
+              <p>
+                Informiere dich auf unserer Website über die teilnehmenden Unternehmen und wähle jene aus, die dich fachlich und persönlich am meisten ansprechen. Ordne deine Favoriten im Bewerbungsprozess nach Priorität.
+              </p>
+            </article>
+
+            <article class="apply-process-card">
+              <h3>Bewerbung</h3>
+              <p>
+                Lade im Bewerbungsformular deinen Lebenslauf inklusive aktuellem Notenauszug hoch. So erhalten wir einen umfassenden Eindruck deines Profils.
+              </p>
+            </article>
+
+            <article class="apply-process-card">
+              <h3>Zuteilung</h3>
+              <p>
+                Wir berücksichtigen deine Prioritäten sowie dein Profil bei der Zuteilung. Innerhalb einer Woche erhältst du eine Rückmeldung, ob du teilnimmst – inklusive deiner Unternehmenszuteilung.
+              </p>
+            </article>
+          </div>
         </div>
       </section>
 
       <section class="section">
-        <div class="container form-layout">
-          <article class="form-shell reveal">
-            <h3>Anmeldung</h3>
-            <form>
-              <div class="split">
-                <div>
-                  <label for="vorname">Vorname</label>
-                  <input id="vorname" name="vorname" type="text" placeholder="Max" />
-                </div>
-                <div>
-                  <label for="nachname">Nachname</label>
-                  <input id="nachname" name="nachname" type="text" placeholder="Mustermann" />
-                </div>
-              </div>
+        <div class="container">
+          <div class="apply-process-head reveal">
+            <p class="eyebrow">Anmeldung</p>
+            <h2>Bewerbungsformular</h2>
+          </div>
 
-              <div class="split">
-                <div>
-                  <label for="email">E-Mail</label>
-                  <input id="email" name="email" type="email" placeholder="name@uni.at" />
+          <div class="form-layout">
+            <article class="form-shell reveal">
+              <h3>Anmeldung</h3>
+              <form>
+                <div class="split">
+                  <div>
+                    <label for="vorname">Vorname</label>
+                    <input id="vorname" name="vorname" type="text" placeholder="Max" />
+                  </div>
+                  <div>
+                    <label for="nachname">Nachname</label>
+                    <input id="nachname" name="nachname" type="text" placeholder="Mustermann" />
+                  </div>
                 </div>
-                <div>
-                  <label for="uni">Universität/FH</label>
-                  <input id="uni" name="uni" type="text" placeholder="z. B. TU Wien" />
+
+                <div class="split">
+                  <div>
+                    <label for="email">E-Mail</label>
+                    <input id="email" name="email" type="email" placeholder="name@uni.at" />
+                  </div>
+                  <div>
+                    <label for="uni">Universität/FH</label>
+                    <input id="uni" name="uni" type="text" placeholder="z. B. TU Wien" />
+                  </div>
                 </div>
-              </div>
 
-              <div class="split">
-                <div>
-                  <label for="studium">Studienrichtung</label>
-                  <input id="studium" name="studium" type="text" placeholder="Informatik" />
+                <div class="split">
+                  <div>
+                    <label for="studium">Studienrichtung</label>
+                    <input id="studium" name="studium" type="text" placeholder="Informatik" />
+                  </div>
+                  <div>
+                    <label for="semester">Semester</label>
+                    <select id="semester" name="semester">
+                      <option>Bitte wählen</option>
+                      <option>1-2</option>
+                      <option>3-4</option>
+                      <option>5-6</option>
+                      <option>7+</option>
+                    </select>
+                  </div>
                 </div>
+
                 <div>
-                  <label for="semester">Semester</label>
-                  <select id="semester" name="semester">
-                    <option>Bitte wählen</option>
-                    <option>1-2</option>
-                    <option>3-4</option>
-                    <option>5-6</option>
-                    <option>7+</option>
-                  </select>
+                  <label for="motivation">Kurzprofil / Motivation</label>
+                  <textarea id="motivation" name="motivation" placeholder="Weshalb möchtest du teilnehmen?"></textarea>
                 </div>
-              </div>
 
-              <div>
-                <label for="motivation">Kurzprofil / Motivation</label>
-                <textarea id="motivation" name="motivation" placeholder="Weshalb möchtest du teilnehmen?"></textarea>
-              </div>
+                <button class="btn btn-primary" type="submit">Anmeldung absenden</button>
+              </form>
+            </article>
 
-              <button class="btn btn-primary" type="submit">Anmeldung absenden</button>
-            </form>
-          </article>
-
-          <article class="partner-card reveal">
-            <span class="badge badge-primary">Selection</span>
-            <h3>Worauf wir achten</h3>
-            <p>Starke Leistung, klares Potenzial und professionelles Auftreten.</p>
-            <div class="media-dropzone">Visuelles Bewerbungsbeispiel: <code>assets/media/home</code></div>
-            <div class="media-dropzone">Optionales Kurzvideo: <code>assets/videos</code></div>
-          </article>
+            <article class="partner-card reveal">
+              <span class="badge badge-primary">Selection</span>
+              <h3>Worauf wir achten</h3>
+              <p>Starke Leistung, klares Potenzial und professionelles Auftreten.</p>
+              <div class="media-dropzone">Visuelles Bewerbungsbeispiel: <code>assets/media/home</code></div>
+              <div class="media-dropzone">Optionales Kurzvideo: <code>assets/videos</code></div>
+            </article>
+          </div>
         </div>
       </section>
     </main>

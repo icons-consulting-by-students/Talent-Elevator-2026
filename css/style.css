@@ -2799,6 +2799,69 @@ h1 {
   background: url("/assets/media/home/Anmeldung_Background.png") center / cover no-repeat;
 }
 
+.apply-process-section {
+  padding-top: clamp(1.1rem, 2vw, 1.8rem);
+  padding-bottom: clamp(2.4rem, 5vw, 3.8rem);
+}
+
+.apply-process-head {
+  text-align: center;
+  margin-bottom: clamp(1.3rem, 2.5vw, 2rem);
+}
+
+.apply-process-head .eyebrow {
+  margin: 0;
+}
+
+.apply-process-head h2 {
+  margin: 0.45rem 0 0;
+  color: #f4f9ff;
+  font-size: clamp(1.7rem, 4.1vw, 3rem);
+  letter-spacing: -0.02em;
+}
+
+.apply-process-timeline {
+  position: relative;
+  display: grid;
+  gap: clamp(0.75rem, 1.35vw, 1rem);
+  padding-left: clamp(2.8rem, 5vw, 4rem);
+}
+
+.apply-process-timeline::before {
+  content: "";
+  position: absolute;
+  left: clamp(0.75rem, 1.5vw, 1.2rem);
+  top: 1.15rem;
+  bottom: 1.15rem;
+  width: 2px;
+  border-radius: 999px;
+  background: linear-gradient(180deg, rgba(114, 178, 242, 0.78), rgba(114, 178, 242, 0.34));
+}
+
+.apply-process-card {
+  border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.34);
+  background: rgba(248, 252, 255, 0.6);
+  backdrop-filter: blur(10px) saturate(120%);
+  -webkit-backdrop-filter: blur(10px) saturate(120%);
+  color: #2f4054;
+  padding: clamp(1rem, 1.8vw, 1.45rem) clamp(1rem, 2vw, 1.55rem);
+  box-shadow: 0 14px 30px rgba(2, 10, 20, 0.22);
+}
+
+.apply-process-card h3 {
+  margin: 0;
+  color: #182238;
+  font-size: clamp(1.25rem, 2vw, 1.85rem);
+  line-height: 1.1;
+}
+
+.apply-process-card p {
+  margin: clamp(0.52rem, 1vw, 0.75rem) 0 0;
+  font-size: clamp(0.94rem, 1.25vw, 1.02rem);
+  line-height: 1.55;
+}
+
 .company-hero-panel::before {
   content: none;
 }
@@ -3293,6 +3356,18 @@ h1 {
     margin-top: 0;
   }
 
+  .apply-process-head h2 {
+    font-size: clamp(1.7rem, 7vw, 2.3rem);
+  }
+
+  .apply-process-timeline {
+    padding-left: 1.7rem;
+  }
+
+  .apply-process-timeline::before {
+    left: 0.52rem;
+  }
+
   .company-form-grid {
     grid-template-columns: 1fr;
   }
@@ -3315,6 +3390,10 @@ h1 {
 @media (max-width: 700px) {
   .company-benefits-grid {
     grid-template-columns: 1fr;
+  }
+
+  .apply-process-card {
+    border-radius: 18px;
   }
 }
 
