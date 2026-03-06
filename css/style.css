@@ -2748,11 +2748,11 @@ h1 {
   }
 
   .kontakt-page .company-hero-panel {
-    min-height: clamp(295px, 36vw, 455px);
+    min-height: clamp(350px, 42vw, 540px);
   }
 
   .unternehmen-page .company-hero-panel {
-    min-height: clamp(295px, 36vw, 455px);
+    min-height: clamp(350px, 42vw, 540px);
   }
 
   .kontakt-page .company-hero-panel .hero-copy {
@@ -2781,7 +2781,7 @@ h1 {
 }
 
 .company-hero-panel {
-  min-height: clamp(190px, 26vw, 320px);
+  min-height: clamp(230px, 31vw, 390px);
   padding: clamp(1.4rem, 3.8vw, 2.4rem);
   border: 1px solid var(--glass-border);
   border-radius: 26px;
@@ -2876,7 +2876,7 @@ h1 {
 }
 
 .company-hero-line-primary {
-  color: var(--royal-300);
+  color: #fff;
 }
 
 .company-proof-section {
@@ -3599,7 +3599,7 @@ h1 {
 .about-hero-card {
   display: flex;
   flex-direction: column;
-  min-height: clamp(190px, 26vw, 320px);
+  min-height: clamp(230px, 31vw, 390px);
   padding: clamp(1.4rem, 3.8vw, 2.4rem);
   background:
     linear-gradient(145deg, rgba(6, 31, 52, 0.72), rgba(9, 42, 71, 0.54)),
@@ -3633,6 +3633,40 @@ h1 {
   font-weight: 800;
 }
 
+.about-hero-social {
+  margin-left: auto;
+  margin-right: -0.25rem;
+  margin-bottom: 0.58rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0.62rem;
+  flex-shrink: 0;
+}
+
+.about-hero-social-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.7rem;
+  height: 2.7rem;
+}
+
+.about-hero-social-link img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  filter: brightness(0) saturate(100%) invert(1);
+  transition: filter 0.2s ease;
+}
+
+.about-hero-social-link:hover img,
+.about-hero-social-link:focus-visible img,
+.about-hero-social-link:active img {
+  filter: none;
+}
+
 .about-hero-card .eyebrow {
   margin: 0;
 }
@@ -3643,7 +3677,7 @@ h1 {
 
 @media (min-width: 981px) {
   .about-hero-card {
-    min-height: clamp(295px, 36vw, 455px);
+    min-height: clamp(350px, 42vw, 540px);
   }
 }
 
@@ -3651,6 +3685,11 @@ h1 {
   .about-hero-bottom {
     flex-direction: column;
     align-items: flex-start;
+  }
+
+  .about-hero-social {
+    margin-left: 0;
+    align-self: flex-end;
   }
 
   .about-hero-card .hero-actions {

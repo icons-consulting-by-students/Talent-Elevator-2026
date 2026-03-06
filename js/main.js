@@ -13,8 +13,8 @@ const audienceStorageKey = 'te_selected_audience';
 /* HEADER MENU ITEMS */
 const audienceMenus = {
   students: [
-    { label: 'Anmeldung', href: 'anmeldung.html' },
     { label: 'Vergangene Events', href: 'index.html#vergangene-events' },
+    { label: 'Anmeldung', href: 'anmeldung.html' },
     { label: 'Über uns', href: 'ueber-uns.html' },
   ],
   companies: [
