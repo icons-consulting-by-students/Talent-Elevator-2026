@@ -5711,6 +5711,18 @@ textarea {
     margin-top: 1.2rem;
   }
 
+  .unternehmen-page #te-study-donut.reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+
+  .unternehmen-page #te-study-donut.reveal.visible {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+
   .unternehmen-page .company-kpi-chart .facts-donut-col {
     justify-items: center;
   }
