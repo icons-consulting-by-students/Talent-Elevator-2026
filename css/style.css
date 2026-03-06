@@ -2794,9 +2794,43 @@ h1 {
   text-align: left;
 }
 
-.anmeldung-hero-panel {
-  min-height: clamp(330px, 50vw, 560px);
-  background: url("/assets/media/home/Anmeldung_Background.png") center / cover no-repeat;
+.anmeldung-hero-card {
+  display: flex;
+  flex-direction: column;
+  min-height: clamp(230px, 31vw, 390px);
+  padding: clamp(1.4rem, 3.8vw, 2.4rem);
+  background:
+    linear-gradient(145deg, rgba(6, 31, 52, 0.72), rgba(9, 42, 71, 0.54)),
+    url("/assets/media/home/Anmeldung_Hero_Image.jpg") center / cover no-repeat;
+}
+
+.anmeldung-hero-card::before {
+  content: none;
+}
+
+.anmeldung-hero-bottom {
+  margin-top: auto;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 1.4rem;
+}
+
+.anmeldung-hero-card .hero-copy {
+  margin: 0;
+  max-width: min(720px, 100%);
+}
+
+.anmeldung-hero-card .hero-copy a {
+  font-weight: 800;
+}
+
+.anmeldung-hero-card .eyebrow {
+  margin: 0;
+}
+
+.anmeldung-hero-card h1 {
+  margin: 0.28rem 0 0;
 }
 
 .apply-process-section {
@@ -2918,7 +2952,8 @@ h1 {
 
 .kontakt-page .company-hero-panel,
 .unternehmen-page .company-hero-panel,
-.ueber-uns-page .about-hero-card {
+.ueber-uns-page .about-hero-card,
+.anmeldung-page .anmeldung-hero-card {
   padding-top: clamp(0.9rem, 2.5vw, 1.5rem);
   padding-bottom: clamp(0.9rem, 2.5vw, 1.5rem);
   justify-content: flex-start;
@@ -3756,6 +3791,10 @@ h1 {
 
 @media (min-width: 981px) {
   .about-hero-card {
+    min-height: clamp(350px, 42vw, 540px);
+  }
+
+  .anmeldung-hero-card {
     min-height: clamp(350px, 42vw, 540px);
   }
 }
