@@ -5711,6 +5711,11 @@ textarea {
     margin-top: 1.2rem;
   }
 
+  .unternehmen-page .company-kpi-section .facts-donut-col {
+    min-height: auto;
+    height: auto;
+  }
+
   .unternehmen-page .company-kpi-chart.reveal,
   .unternehmen-page .company-kpi-chart.reveal.visible {
     opacity: 1;
