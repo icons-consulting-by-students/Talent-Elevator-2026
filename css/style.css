@@ -51,7 +51,8 @@ body {
 
 .unternehmen-page,
 .kontakt-page,
-.anmeldung-page {
+.anmeldung-page,
+.datenschutz-page {
   position: relative;
   isolation: isolate;
   background: transparent;
@@ -61,7 +62,8 @@ body {
 .unternehmen-page::before,
 .kontakt-page::before,
 .ueber-uns-page::before,
-.anmeldung-page::before {
+.anmeldung-page::before,
+.datenschutz-page::before {
   content: "";
   position: fixed;
   inset: 0;
@@ -81,7 +83,8 @@ body {
 .unternehmen-page > *,
 .kontakt-page > *,
 .ueber-uns-page > *,
-.anmeldung-page > * {
+.anmeldung-page > *,
+.datenschutz-page > * {
   position: relative;
   z-index: 1;
 }
@@ -2780,6 +2783,57 @@ h1 {
   padding: clamp(4.6rem, 10vh, 7rem) 0 clamp(3.4rem, 8vh, 5.5rem);
 }
 
+.datenschutz-page .page-hero {
+  padding: clamp(2.8rem, 7vh, 4.8rem) 0 clamp(1.2rem, 3vh, 2.2rem);
+}
+
+.legal-section {
+  padding-top: clamp(2.2rem, 6vw, 3.8rem);
+}
+
+.legal-content {
+  padding: clamp(1.3rem, 3.4vw, 2.2rem);
+  border: 1px solid var(--glass-border);
+  min-height: auto;
+  justify-content: flex-start;
+  background:
+    linear-gradient(145deg, rgba(6, 31, 52, 0.58), rgba(9, 42, 71, 0.44)),
+    radial-gradient(circle at 80% 24%, rgba(114, 178, 242, 0.2), transparent 40%);
+}
+
+.legal-content::before {
+  content: none;
+}
+
+.legal-title {
+  margin: 0.35rem 0 1rem;
+  max-width: none;
+  font-size: clamp(2.2rem, 5.4vw, 4.8rem);
+}
+
+.legal-content h2 {
+  margin-top: 1.6rem;
+  margin-bottom: 0.55rem;
+}
+
+.legal-content h3 {
+  margin-top: 1.15rem;
+  margin-bottom: 0.35rem;
+  font-size: 1.02rem;
+}
+
+.legal-content p,
+.legal-content li {
+  color: rgba(223, 233, 242, 0.9);
+  line-height: 1.62;
+}
+
+.legal-content ul {
+  margin-top: 0.4rem;
+  margin-bottom: 0.8rem;
+  padding-left: 1.2rem;
+}
+
 .company-hero-panel {
   min-height: clamp(230px, 31vw, 390px);
   padding: clamp(1.4rem, 3.8vw, 2.4rem);
@@ -4969,6 +5023,61 @@ textarea {
 .footer-logo {
   height: 22px;
   width: auto;
+}
+
+.footer-meta {
+  display: inline-flex;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.footer-links {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.9rem;
+}
+
+.footer-links a {
+  color: rgba(223, 233, 242, 0.9);
+  text-decoration: none;
+}
+
+.footer-links a:hover,
+.footer-links a:focus-visible {
+  color: #fff;
+  text-decoration: underline;
+}
+
+.footer-social {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+}
+
+.footer-social-link {
+  display: inline-flex;
+  width: 34px;
+  height: 34px;
+  border-radius: 999px;
+  align-items: center;
+  justify-content: center;
+}
+
+.footer-social-link img {
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+  filter: brightness(0) invert(1);
+  transition: transform 0.22s ease, opacity 0.22s ease, filter 0.22s ease;
+}
+
+.footer-social-link:hover img,
+.footer-social-link:focus-visible img,
+.footer-social-link:active img {
+  transform: scale(1.08);
+  opacity: 1;
+  filter: none;
 }
 
 .reveal {

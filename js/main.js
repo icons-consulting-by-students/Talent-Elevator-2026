@@ -25,6 +25,11 @@ const audienceMenus = {
 
 const pathname = window.location.pathname.toLowerCase();
 const onIndexPage = pathname.endsWith('/') || pathname.endsWith('/index.html');
+const onLegalPage =
+  pathname.endsWith('/datenschutzerklaerung') ||
+  pathname.endsWith('/datenschutzerklaerung.html') ||
+  pathname.endsWith('/impressum') ||
+  pathname.endsWith('/impressum.html');
 const onCompaniesPage =
   pathname.endsWith('/unternehmen') ||
   pathname.endsWith('/unternehmen.html') ||
@@ -247,7 +252,7 @@ document.addEventListener('keydown', (event) => {
 });
 
 const storedAudience = readStoredAudience();
-const initialAudience = onIndexPage ? '' : onCompaniesPage ? 'companies' : onStudentsPage ? 'students' : storedAudience;
+const initialAudience = onIndexPage || onLegalPage ? '' : onCompaniesPage ? 'companies' : onStudentsPage ? 'students' : storedAudience;
 if (onIndexPage) {
   persistAudience('');
 }
