@@ -5896,6 +5896,22 @@ textarea {
 }
 
 @media (max-width: 767px) {
+  .unternehmen-page::before,
+  .kontakt-page::before,
+  .ueber-uns-page::before,
+  .anmeldung-page::before,
+  .datenschutz-page::before,
+  .scrolly-bg__layer {
+    background-image:
+      var(--mountain-overlay),
+      url("../assets/media/home/Mountain_Background.png"),
+      url("/assets/media/home/Mountain_Background.png"),
+      url("assets/media/home/Mountain_Background.png");
+    background-attachment: scroll;
+    background-position: top center;
+    background-size: cover;
+  }
+
   .value-image-grid {
     grid-template-columns: 1fr;
     grid-auto-rows: auto;
@@ -5954,4 +5970,44 @@ textarea {
   .label-connector {
     stroke-dashoffset: 0;
   }
+}
+
+/* PRE-PHASE: Countdown Container neutralisieren */
+#bewerbung-pre .bewerbung-countdown {
+    background: none !important;
+    border: none !important;
+    box-shadow: none !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    padding: 0 !important;
+}
+/* PRE-PHASE: Nur die Zahl bekommt Dark Glass */
+#bewerbung-pre .bewerbung-countdown-number {
+    display: inline-block;
+
+    background: rgba(15, 25, 40, 0.55);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+
+    color: rgba(255, 255, 255, 0.85) !important;
+
+    border-radius: 16px;
+    padding: 0.15em 0.4em;
+
+    border: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+section#bewerbung-pre p.bewerbung-countdown-number {
+    color: rgba(255, 255, 255, 0.85) !important;
+}
+
+/* PRE-PHASE: Box um Countdown-Zahl entfernen */
+#bewerbung-pre .bewerbung-countdown-number {
+    background: none !important;
+    border: none !important;
+    box-shadow: none !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    border-radius: 0 !important;
+    padding: 0 !important;
 }

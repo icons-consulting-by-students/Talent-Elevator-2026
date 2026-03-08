@@ -12,6 +12,158 @@
       rel="stylesheet"
     />
     <link rel="stylesheet" href="css/style.css" />
+    <style>
+      #bewerbung-wrapper .bewerbung-hidden {
+        display: none;
+      }
+
+      #bewerbung-wrapper .bewerbung-state {
+        width: 100%;
+      }
+
+      #bewerbung-wrapper .bewerbung-pre {
+        padding: clamp(1.5rem, 4vw, 2.5rem);
+        border: 1px solid rgba(255, 255, 255, 0.18);
+        border-radius: 24px;
+        background: rgba(255, 255, 255, 0.06);
+        backdrop-filter: blur(14px);
+        -webkit-backdrop-filter: blur(14px);
+      }
+
+      #bewerbung-wrapper .bewerbung-pre-grid {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) minmax(220px, 0.65fr);
+        gap: clamp(1.5rem, 4vw, 3.5rem);
+        align-items: center;
+      }
+
+      #bewerbung-wrapper .bewerbung-pre-copy {
+        max-width: 720px;
+      }
+
+      #bewerbung-wrapper .bewerbung-pre-copy h3 {
+        margin: 0.5rem 0 1rem;
+      }
+
+      #bewerbung-wrapper .bewerbung-pre-copy p {
+        margin: 0;
+      }
+
+      #bewerbung-wrapper .bewerbung-countdown {
+        text-align: right;
+      }
+
+      #bewerbung-wrapper .bewerbung-countdown-number {
+        display: inline-block;
+        margin: 0;
+        font-size: clamp(5.5rem, 14vw, 10rem);
+        line-height: 0.85;
+        font-weight: 800;
+        opacity: 1;
+        color: rgba(255, 255, 255, 0.9);
+        padding: 0.2em 0.35em;
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        border-radius: 12px;
+        background: rgba(0, 0, 0, 0.45);
+        backdrop-filter: blur(6px);
+        -webkit-backdrop-filter: blur(6px);
+        animation: bewerbung-count-number-in 0.6s ease-out both;
+      }
+
+      #bewerbung-wrapper .bewerbung-count-label {
+        margin: 0.7rem 0 0;
+        font-size: 0.95rem;
+        font-weight: 700;
+        opacity: 0.75;
+      }
+
+      #bewerbung-wrapper .bewerbung-open {
+        border: 1px solid rgba(18, 27, 38, 0.12);
+        border-radius: 18px;
+        background: #f7f9fb;
+        padding: clamp(1.25rem, 2.5vw, 2rem);
+      }
+
+      #bewerbung-wrapper .bewerbung-open h3 {
+        margin: 0.5rem 0 1rem;
+      }
+
+      /* CLOSED-PHASE: Dark Glass Card */
+      #bewerbung-closed .bewerbung-card {
+        background: rgba(15, 25, 40, 0.55);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        border-radius: 24px;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.25);
+        color: #ffffff;
+        padding: clamp(1.25rem, 2.5vw, 2rem);
+      }
+
+      #bewerbung-closed .bewerbung-card p {
+        margin: 0;
+      }
+
+      #bewerbung-wrapper .bewerbung-open-note {
+        margin: 0 0 1rem;
+        font-size: 0.95rem;
+        font-weight: 600;
+      }
+
+      #bewerbung-wrapper .bewerbung-open-form .split {
+        display: block;
+      }
+
+      #bewerbung-wrapper .bewerbung-open-form .split > div + div {
+        margin-top: 1rem;
+      }
+
+      #bewerbung-wrapper .bewerbung-submit-message {
+        margin-top: 0.75rem;
+        color: #b42318;
+        font-size: 0.95rem;
+        font-weight: 600;
+      }
+
+      @keyframes bewerbung-count-number-in {
+        from {
+          opacity: 0;
+          transform: translateY(10px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      @media (max-width: 800px) {
+        #bewerbung-wrapper .bewerbung-pre-grid {
+          grid-template-columns: 1fr;
+          gap: 1.25rem;
+          text-align: center;
+        }
+
+        #bewerbung-wrapper .bewerbung-pre-copy {
+          max-width: none;
+        }
+
+        #bewerbung-wrapper .bewerbung-countdown {
+          text-align: center;
+        }
+
+        #bewerbung-wrapper .bewerbung-countdown-number {
+          font-size: clamp(4.8rem, 24vw, 7.5rem);
+        }
+      }
+
+      .anmeldung-page .footer {
+        margin-top: 0;
+      }
+
+      .anmeldung-page #bewerbung-wrapper {
+        margin-bottom: 2rem;
+      }
+    </style>
   </head>
   <body class="anmeldung-page">
     <header class="header-wrap">
@@ -113,15 +265,33 @@
 
       <section class="section">
         <div class="container">
-          <div class="apply-process-head reveal">
-            <p class="eyebrow">Anmeldung</p>
-            <h2>Bewerbungsformular</h2>
+          <div class="apply-process-head reveal" data-bewerbung-title>
+            <p class="eyebrow">Bewerbung 2026</p>
+            <h2 data-bewerbung-title-text>Beginn der Bewerbung</h2>
           </div>
 
-          <div class="form-layout">
-            <article class="form-shell reveal">
+          <div id="bewerbung-wrapper" class="reveal">
+            <section id="bewerbung-pre" class="bewerbung-state bewerbung-pre bewerbung-hidden">
+              <div class="bewerbung-pre-grid">
+                <div class="bewerbung-pre-copy">
+                  <h3>Der Countdown läuft</h3>
+                  <p>
+                    Die Bewerbungsphase startet am 1. April 2026. Wir freuen uns darauf, ambitionierte Studierende beim
+                    Talent Elevator willkommen zu heißen. Weitere Informationen findest Du unter „Bewerbungsablauf“ oder
+                    via <a href="mailto:talentelevator@icons.at">talentelevator@icons.at</a>.
+                  </p>
+                </div>
+                <div class="bewerbung-countdown">
+                  <p class="bewerbung-countdown-number" data-bewerbung-count-value>24</p>
+                  <p class="bewerbung-count-label">Tage bis 01. April 2026</p>
+                </div>
+              </div>
+            </section>
+
+            <section id="bewerbung-open" class="bewerbung-state bewerbung-open bewerbung-hidden">
+              <p class="bewerbung-open-note">Bewerbungsphase läuft bis 28. April 2026</p>
               <h3>Anmeldung</h3>
-              <form>
+              <form class="bewerbung-open-form" data-bewerbung-form>
                 <div class="split">
                   <div>
                     <label for="vorname">Vorname</label>
@@ -166,17 +336,21 @@
                   <textarea id="motivation" name="motivation" placeholder="Weshalb möchtest du teilnehmen?"></textarea>
                 </div>
 
-                <button class="btn btn-primary" type="submit">Anmeldung absenden</button>
+                <button class="btn btn-primary" type="submit" data-bewerbung-submit>Anmeldung absenden</button>
+                <p class="bewerbung-submit-message bewerbung-hidden" data-bewerbung-submit-message role="status" aria-live="polite">
+                  Die Bewerbungsphase ist derzeit nicht aktiv.
+                </p>
               </form>
-            </article>
+            </section>
 
-            <article class="partner-card reveal">
-              <span class="badge badge-primary">Selection</span>
-              <h3>Worauf wir achten</h3>
-              <p>Starke Leistung, klares Potenzial und professionelles Auftreten.</p>
-              <div class="media-dropzone">Visuelles Bewerbungsbeispiel: <code>assets/media/home</code></div>
-              <div class="media-dropzone">Optionales Kurzvideo: <code>assets/videos</code></div>
-            </article>
+            <section id="bewerbung-closed" class="bewerbung-state bewerbung-post bewerbung-hidden">
+              <div class="bewerbung-card">
+                <p>
+                  Vielen Dank für das große Interesse am Talent Elevator 2026. Wir melden uns zeitnah bei allen
+                  Bewerber:innen.
+                </p>
+              </div>
+            </section>
           </div>
         </div>
       </section>
@@ -217,6 +391,149 @@
       </div>
     </footer>
 
+    <script>
+      (function () {
+        const wrapper = document.getElementById("bewerbung-wrapper");
+        if (!wrapper) {
+          return;
+        }
+
+        const viennaZone = "Europe/Vienna";
+        const startUtcMs = Date.UTC(2026, 2, 31, 22, 0, 0);
+        const endExclusiveUtcMs = Date.UTC(2026, 3, 28, 22, 0, 0);
+        const targetStartDateUtcMs = Date.UTC(2026, 3, 1);
+
+        const preSection = wrapper.querySelector("#bewerbung-pre");
+        const openSection = wrapper.querySelector("#bewerbung-open");
+        const postSection = wrapper.querySelector("#bewerbung-closed");
+        const titleSection = document.querySelector("[data-bewerbung-title]");
+        const titleText = document.querySelector("[data-bewerbung-title-text]");
+        const countdownValue = wrapper.querySelector("[data-bewerbung-count-value]");
+        const form = wrapper.querySelector("[data-bewerbung-form]");
+        const submitButton = wrapper.querySelector("[data-bewerbung-submit]");
+        const submitMessage = wrapper.querySelector("[data-bewerbung-submit-message]");
+
+        const dateFormatter = new Intl.DateTimeFormat("de-AT", {
+          timeZone: viennaZone,
+          year: "numeric",
+          month: "2-digit",
+          day: "2-digit",
+        });
+        const timeFormatter = new Intl.DateTimeFormat("de-AT", {
+          timeZone: viennaZone,
+          hour: "2-digit",
+          minute: "2-digit",
+          second: "2-digit",
+          hour12: false,
+        });
+
+        function getViennaDateParts(now) {
+          const parts = dateFormatter.formatToParts(now);
+          const year = Number(parts.find(function (part) { return part.type === "year"; }).value);
+          const month = Number(parts.find(function (part) { return part.type === "month"; }).value);
+          const day = Number(parts.find(function (part) { return part.type === "day"; }).value);
+          return { year: year, month: month, day: day };
+        }
+
+        function getViennaTimeParts(now) {
+          const parts = timeFormatter.formatToParts(now);
+          const hour = Number(parts.find(function (part) { return part.type === "hour"; }).value);
+          const minute = Number(parts.find(function (part) { return part.type === "minute"; }).value);
+          const second = Number(parts.find(function (part) { return part.type === "second"; }).value);
+          return {
+            hour: hour,
+            minute: minute,
+            second: second,
+          };
+        }
+
+        function getState(nowMs) {
+          if (nowMs < startUtcMs) {
+            return "before";
+          }
+          if (nowMs >= endExclusiveUtcMs) {
+            return "after";
+          }
+          return "active";
+        }
+
+        function updateCountdown(now) {
+          if (!countdownValue) {
+            return;
+          }
+          const parts = getViennaDateParts(now);
+          const todayUtcMs = Date.UTC(parts.year, parts.month - 1, parts.day);
+          const remainingDays = Math.max(0, Math.ceil((targetStartDateUtcMs - todayUtcMs) / 86400000));
+          countdownValue.textContent = String(remainingDays);
+        }
+
+        function applyState() {
+          const now = new Date();
+          const state = getState(now.getTime());
+          const isActive = state === "active";
+
+          if (preSection) {
+            preSection.classList.toggle("bewerbung-hidden", state !== "before");
+          }
+          if (openSection) {
+            openSection.classList.toggle("bewerbung-hidden", state !== "active");
+          }
+          if (postSection) {
+            postSection.classList.toggle("bewerbung-hidden", state !== "after");
+          }
+          if (titleSection) {
+            titleSection.classList.remove("bewerbung-hidden");
+          }
+          if (titleText) {
+            if (state === "before") {
+              titleText.textContent = "Beginn der Bewerbung";
+            } else if (state === "after") {
+              titleText.textContent = "Ende der Bewerbung";
+            } else {
+              titleText.textContent = "Bewerbungsformular";
+            }
+          }
+          if (submitButton) {
+            submitButton.disabled = !isActive;
+          }
+          if (submitMessage) {
+            submitMessage.classList.add("bewerbung-hidden");
+          }
+          if (state === "before") {
+            updateCountdown(now);
+          }
+        }
+
+        function scheduleDailyUpdate() {
+          const now = new Date();
+          const timeParts = getViennaTimeParts(now);
+          const passedTodayMs = ((timeParts.hour * 60 + timeParts.minute) * 60 + timeParts.second) * 1000 + now.getMilliseconds();
+          const msPerDay = 86400000;
+          const nextDelay = Math.max(1000, msPerDay - passedTodayMs + 500);
+          window.setTimeout(function () {
+            applyState();
+            scheduleDailyUpdate();
+          }, nextDelay);
+        }
+
+        if (form) {
+          form.addEventListener("submit", function (event) {
+            if (getState(Date.now()) !== "active") {
+              event.preventDefault();
+              if (submitMessage) {
+                submitMessage.classList.remove("bewerbung-hidden");
+              }
+              if (submitButton) {
+                submitButton.disabled = true;
+              }
+            }
+          });
+        }
+
+        applyState();
+        scheduleDailyUpdate();
+      })();
+    </script>
     <script src="js/main.js"></script>
   </body>
 </html>
