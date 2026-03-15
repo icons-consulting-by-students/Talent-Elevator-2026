@@ -1791,6 +1791,24 @@ if ('IntersectionObserver' in window && animatedDonuts.length > 0) {
       href: 'https://www.sonepar.com/',
       logo: 'assets/logos/sonepar_logo.png',
     },
+    post: {
+      title: 'Österreichische Post',
+      text: 'Die Österreichische Post AG ist ein international tätiger Post-, Logistik- und Dienstleistungskonzern mit herausragender Bedeutung für Österreich. Gegründet 1999, mit Hauptsitz in Wien und gesamt national und international rund 27.000 Mitarbeiter*innen. Das Unternehmen steht für höchste Qualität und bietet ein umfassendes Produkt- und Serviceportfolio, um aktuelle Kund*innenbedürfnisse bestens abzudecken. Die Post bündelt ihre Geschäftsaktivitäten in drei Divisionen: Brief & Werbepost, Paket & Logistik und Filiale & Bank. International ist die Post selektiv präsent in den Märkten Deutschland, Südost- und Osteuropa, der Türkei und Aserbaidschan.',
+      href: 'https://www.post.at/',
+      logo: 'assets/logos/Post_logo.png',
+    },
+    siemensenergy: {
+      title: 'Siemens Energy',
+      text: 'Siemens Energy gehört zu den weltweit führenden Unternehmen der Energietechnologie. Das Unternehmen arbeitet gemeinsam mit seinen Kunden und Partnern an den Energiesystemen der Zukunft und unterstützt so den Übergang zu einer nachhaltigeren Welt. Mit seinem Portfolio an Produkten, Lösungen und Services deckt Siemens Energy nahezu die gesamte Energiewertschöpfungskette ab - von der Energieerzeugung über die Energieübertragung bis hin zur Speicherung. Zum Portfolio zählen konventionelle und erneuerbare Energietechnik, zum Beispiel Gas- und Dampfturbinen, mit Wasserstoff betriebene Hybridkraftwerke, Generatoren und Transformatoren. Mehr als 50 Prozent des Portfolios sind bereits dekarbonisiert. Durch die Mehrheitsbeteiligung an der börsennotierten Siemens Gamesa Renewable Energy (SGRE) gehört Siemens Energy zu den Weltmarktführern bei Erneuerbaren Energien. Geschätzt ein Sechstel der weltweiten Stromerzeugung basiert auf Technologien von Siemens Energy. Siemens Energy beschäftigt weltweit rund 92.000 Mitarbeiter*innen in mehr als 90 Ländern und erzielte im Geschäftsjahr 2022 einen Umsatz von 29 Milliarden Euro.',
+      href: 'https://www.siemens-energy.com/at/de/home.html',
+      logo: 'assets/logos/SiemensEnergy_logo.png',
+    },
+    voestalpine: {
+      title: 'voestalpine',
+      text: 'voestalpine ist ein innovativer und weltweit führender Stahl- und Technologiekonzern. Die Metal Engineering Division mit weltweit rund 13.150 Mitarbeiter:innen ist mit dem Geschäftsbereich Railway Systems globaler Marktführer für Bahninfrastruktursysteme und Signaltechnik. Ein weiterer Bereich der Division, Industrial Systems, ist darüber hinaus europäischer Marktführer für Qualitätsdraht sowie globaler Anbieter von Schweißkomplettlösungen. Vom Standort Kindberg in Österreich werden zudem Nahtlosrohre zu Kund:innen in die ganze Welt geliefert. Besonders spannend: Die voestalpine Metal Engineering Division bietet Student:innen, welche 2-3 Jahre vor ihrem Studienabschluss stehen, ein dreistufiges Studierendenprogramm mit einem monatlichen Stipendium und eine anschließende Tätigkeit im Unternehmen an.',
+      href: 'https://www.voestalpine.com/group/en/group/overview/organizational-chart/metal-engineering/',
+      logo: 'assets/logos/Voestalpine_logo.png',
+    },
   };
 
   const setActiveCard = (key) => {
@@ -1823,14 +1841,23 @@ if ('IntersectionObserver' in window && animatedDonuts.length > 0) {
     cards.forEach((card) => card.classList.remove('is-active'));
   };
 
-  cards.forEach((card) => {
-    card.addEventListener('click', () => {
-      const key = card.dataset.partnerKey;
-      if (!key) {
-        return;
-      }
-      openDetail(key);
-    });
+  marquee.addEventListener('click', (event) => {
+    const target = event.target;
+    if (!(target instanceof Element)) {
+      return;
+    }
+
+    const clickedCard = target.closest('.logo-marquee-card[data-partner-key]');
+    if (!clickedCard) {
+      return;
+    }
+
+    const key = clickedCard.dataset.partnerKey;
+    if (!key) {
+      return;
+    }
+
+    openDetail(key);
   });
 
   detailClose.addEventListener('click', closeDetail);

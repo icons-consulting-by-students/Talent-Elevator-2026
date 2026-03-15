@@ -566,6 +566,7 @@ main {
 
 .hero-byline {
   display: inline-flex;
+  flex-direction: column;
   align-items: center;
   gap: 0.7rem;
   padding: 0;
@@ -1818,6 +1819,21 @@ h1 {
   padding: 0 0 1.1rem 0.9rem;
 }
 
+.faq-link-mail {
+  font-weight: 700;
+}
+
+.faq-link-team {
+  color: #1477da;
+  font-weight: 700;
+}
+
+.faq-link-team:visited,
+.faq-link-team:hover,
+.faq-link-team:focus-visible {
+  color: #1477da;
+}
+
 .faq-answer-body::before {
   content: "";
   position: absolute;
@@ -1961,9 +1977,15 @@ h1 {
   animation-play-state: paused;
 }
 
+.logo-marquee:hover .logo-marquee-track,
+.logo-marquee:focus-within .logo-marquee-track {
+  animation-play-state: paused;
+}
+
 .partner-strip .logo-marquee-card {
   border: 0;
   cursor: pointer;
+  flex: 0 0 auto;
   width: 240px;
   height: 120px;
   display: grid;
