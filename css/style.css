@@ -814,7 +814,7 @@ h1 {
 .event-facts {
   position: relative;
   margin-top: 0;
-  padding: clamp(4.8rem, 8vw, 6.8rem) 0;
+  padding: clamp(4.8rem, 8vw, 6.8rem) 0 clamp(3.2rem, 5vw, 4.6rem);
   overflow: hidden;
 }
 
