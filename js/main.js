@@ -648,9 +648,8 @@ if ('IntersectionObserver' in window && revealEls.length > 0) {
     return;
   }
 
-  const stage = factsGraphic.querySelector('.event-facts-stage');
   const slides = Array.from(factsGraphic.querySelectorAll('.event-facts-slide'));
-  if (!stage || slides.length === 0) {
+  if (slides.length === 0) {
     return;
   }
 
@@ -660,10 +659,7 @@ if ('IntersectionObserver' in window && revealEls.length > 0) {
   let rafId = null;
   let holdTimer = null;
   let started = false;
-  let activeIndex = -1;
-  let settledCount = 0;
-  const rightmostSlot = slides.length - 1;
-  const currentSlots = slides.map(() => rightmostSlot);
+  let activeIndex = 0;
 
   const kpis = slides
     .map((slide) => {
@@ -689,97 +685,14 @@ if ('IntersectionObserver' in window && revealEls.length > 0) {
     kpi.valueEl.textContent = `${value}${kpi.suffix}`;
   };
 
-  const getFinalValueText = (kpi) => `${kpi.target}${kpi.suffix}`;
-
-  const applyStageLayout = () => {
-    const columnCount = slides.length;
-    stage.style.display = 'grid';
-    stage.style.width = '100%';
-    stage.style.alignItems = 'end';
-    stage.style.gridTemplateColumns = `repeat(${columnCount}, max-content)`;
-    stage.style.gridTemplateRows = 'minmax(0, auto)';
-    stage.style.justifyContent = 'end';
-    stage.style.columnGap = 'clamp(1.5rem, 2.8vw, 2.4rem)';
-    stage.style.rowGap = '1rem';
-
-    slides.forEach((slide, index) => {
-      slide.classList.remove('is-active');
-      slide.style.position = 'relative';
-      slide.style.inset = 'auto';
-      slide.style.display = 'grid';
-      slide.style.alignContent = 'end';
-      slide.style.justifyItems = 'end';
-      slide.style.textAlign = 'right';
-      slide.style.pointerEvents = 'none';
-      slide.style.alignSelf = 'end';
-      slide.style.width = slide.dataset.lockedWidth || 'max-content';
-      slide.style.minWidth = slide.dataset.lockedWidth || 'max-content';
-      slide.style.maxWidth = 'none';
-      slide.style.justifySelf = 'end';
-      slide.style.gridRow = '1';
-      slide.style.transform = 'none';
+  const setActiveSlide = (index) => {
+    slides.forEach((slide, slideIndex) => {
+      slide.classList.toggle('is-active', slideIndex === index);
     });
-  };
-
-  const setSlideVisible = (slide, visible) => {
-    slide.style.opacity = visible ? '1' : '0';
-    slide.style.transition = 'opacity 280ms ease';
-  };
-
-  const updateSlidePositions = () => {
-    applyStageLayout();
-  };
-
-  const applySlotAssignments = () => {
-    slides.forEach((slide, index) => {
-      slide.style.gridColumn = `${currentSlots[index] + 1}`;
-    });
-  };
-
-  const shiftExistingSlidesLeft = (nextIndex) => {
-    slides.forEach((_, index) => {
-      if (index !== nextIndex && index < settledCount) {
-        currentSlots[index] = Math.max(0, currentSlots[index] - 1);
-      }
-    });
-    currentSlots[nextIndex] = rightmostSlot;
-  };
-
-  const measureValueWidths = () => {
-    kpis.forEach((kpi) => {
-      const previousText = kpi.valueEl.textContent;
-      kpi.valueEl.textContent = getFinalValueText(kpi);
-      const width = Math.ceil(kpi.valueEl.getBoundingClientRect().width);
-      if (width > 0) {
-        kpi.valueEl.dataset.lockedWidth = `${width}px`;
-        kpi.valueEl.style.minWidth = kpi.valueEl.dataset.lockedWidth;
-      }
-      kpi.valueEl.textContent = previousText;
-    });
-  };
-
-  const clearSlideIsolation = (slide) => {
-    delete slide.dataset.lockedWidth;
-    slide.style.contain = '';
-    slide.style.width = 'max-content';
-    slide.style.minWidth = 'max-content';
-  };
-
-  const lockSlideIsolation = (slide) => {
-    const width = Math.ceil(slide.getBoundingClientRect().width);
-    if (width > 0) {
-      slide.dataset.lockedWidth = `${width}px`;
-      slide.style.width = slide.dataset.lockedWidth;
-      slide.style.minWidth = slide.dataset.lockedWidth;
-    }
-    slide.style.contain = 'layout paint style';
   };
 
   const resetKpi = (kpi) => {
     setValue(kpi, 0);
-    if (kpi.valueEl.dataset.lockedWidth) {
-      kpi.valueEl.style.minWidth = kpi.valueEl.dataset.lockedWidth;
-    }
     kpi.progressFill.style.transform = 'scaleX(0)';
   };
 
@@ -794,7 +707,7 @@ if ('IntersectionObserver' in window && revealEls.length > 0) {
       return;
     }
 
-    activeIndex = index;
+    setActiveSlide(index);
 
     if (rafId) {
       window.cancelAnimationFrame(rafId);
@@ -804,13 +717,6 @@ if ('IntersectionObserver' in window && revealEls.length > 0) {
       window.clearTimeout(holdTimer);
       holdTimer = null;
     }
-
-    updateSlidePositions();
-    shiftExistingSlidesLeft(index);
-    applySlotAssignments();
-    measureValueWidths();
-    clearSlideIsolation(slides[index]);
-    setSlideVisible(slides[index], true);
 
     if (reduceMotion) {
       finalizeKpi(kpi);
@@ -831,18 +737,9 @@ if ('IntersectionObserver' in window && revealEls.length > 0) {
       if (progress < 1) {
         rafId = window.requestAnimationFrame(step);
       } else {
-        finalizeKpi(kpi);
-        settledCount = index + 1;
-        activeIndex = -1;
-        lockSlideIsolation(slides[index]);
-
-        if (index >= kpis.length - 1) {
-          rafId = null;
-          return;
-        }
-
         holdTimer = window.setTimeout(() => {
-          runSlide(index + 1);
+          activeIndex = (index + 1) % kpis.length;
+          runSlide(activeIndex);
         }, HOLD_MS);
       }
     };
@@ -858,59 +755,16 @@ if ('IntersectionObserver' in window && revealEls.length > 0) {
     factsSection.classList.add('play');
 
     if (reduceMotion) {
-      activeIndex = -1;
-      settledCount = slides.length;
-      updateSlidePositions();
-      slides.forEach((_, index) => {
-        currentSlots[index] = index;
-      });
-      applySlotAssignments();
-      measureValueWidths();
-      slides.forEach((slide) => {
-        setSlideVisible(slide, true);
-        lockSlideIsolation(slide);
-      });
-      kpis.forEach((kpi) => finalizeKpi(kpi));
+      activeIndex = 0;
+      setActiveSlide(activeIndex);
+      finalizeKpi(kpis[activeIndex]);
       return;
     }
 
-    settledCount = 0;
-    activeIndex = -1;
-    updateSlidePositions();
-    slides.forEach((_, index) => {
-      currentSlots[index] = rightmostSlot;
-    });
-    applySlotAssignments();
-    measureValueWidths();
     kpis.forEach((kpi) => resetKpi(kpi));
-    slides.forEach((slide, index) => {
-      clearSlideIsolation(slide);
-      setSlideVisible(slide, index === 0);
-    });
-    runSlide(0);
+    activeIndex = 0;
+    runSlide(activeIndex);
   };
-
-  updateSlidePositions();
-
-  window.addEventListener('resize', () => {
-    if (!started) {
-      return;
-    }
-
-    slides.forEach((slide, index) => {
-      if (index < settledCount) {
-        clearSlideIsolation(slide);
-      }
-    });
-    updateSlidePositions();
-    applySlotAssignments();
-    measureValueWidths();
-    slides.forEach((slide, index) => {
-      if (index < settledCount) {
-        lockSlideIsolation(slide);
-      }
-    });
-  });
 
   if (!('IntersectionObserver' in window)) {
     start();
@@ -931,6 +785,7 @@ if ('IntersectionObserver' in window && revealEls.length > 0) {
 
   io.observe(factsSection);
 })();
+
 
 const animatedDonuts = document.querySelectorAll('[data-animate-once]');
 const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
