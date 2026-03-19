@@ -441,6 +441,167 @@ if ('IntersectionObserver' in window && revealEls.length > 0) {
 })();
 
 (() => {
+  const form = document.querySelector('[data-contact-form]');
+  if (!form) {
+    return;
+  }
+
+  const submitButton = form.querySelector('[data-contact-submit]');
+  const feedback = form.querySelector('[data-contact-feedback]');
+  const successModal = document.querySelector('[data-contact-success-modal]');
+  const resetButton = document.querySelector('[data-contact-reset]');
+  const modalCloseArea = document.querySelector('[data-contact-modal-close]');
+  const fields = ['name', 'company', 'email', 'message']
+    .map((name) => form.elements.namedItem(name))
+    .filter(Boolean);
+
+  let isSubmitting = false;
+
+  const setFeedback = (message, type = 'error') => {
+    if (!feedback) {
+      return;
+    }
+
+    feedback.textContent = message;
+    feedback.classList.toggle('is-success', type === 'success');
+  };
+
+  const setLoadingState = (loading) => {
+    if (!submitButton) {
+      return;
+    }
+
+    submitButton.disabled = loading;
+    submitButton.classList.toggle('is-loading', loading);
+    submitButton.setAttribute('aria-busy', String(loading));
+  };
+
+  const clearInvalidState = () => {
+    fields.forEach((field) => field.classList.remove('is-invalid'));
+  };
+
+  const validateForm = () => {
+    clearInvalidState();
+
+    const values = {
+      name: String(form.elements.namedItem('name')?.value || '').trim(),
+      company: String(form.elements.namedItem('company')?.value || '').trim(),
+      email: String(form.elements.namedItem('email')?.value || '').trim(),
+      message: String(form.elements.namedItem('message')?.value || '').trim(),
+    };
+
+    const missingField = Object.entries(values).find(([, value]) => !value);
+    if (missingField) {
+      const field = form.elements.namedItem(missingField[0]);
+      field?.classList.add('is-invalid');
+      field?.focus();
+      setFeedback('Bitte fuellen Sie alle Pflichtfelder aus.');
+      return null;
+    }
+
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailPattern.test(values.email)) {
+      const emailField = form.elements.namedItem('email');
+      emailField?.classList.add('is-invalid');
+      emailField?.focus();
+      setFeedback('Bitte geben Sie eine gueltige E-Mail-Adresse ein.');
+      return null;
+    }
+
+    setFeedback('');
+    return values;
+  };
+
+  const openSuccessModal = () => {
+    if (!successModal) {
+      return;
+    }
+
+    successModal.classList.add('is-visible');
+    successModal.setAttribute('aria-hidden', 'false');
+    document.body.classList.add('contact-modal-open');
+  };
+
+  const closeSuccessModal = () => {
+    if (!successModal) {
+      return;
+    }
+
+    successModal.classList.remove('is-visible');
+    successModal.setAttribute('aria-hidden', 'true');
+    document.body.classList.remove('contact-modal-open');
+  };
+
+  form.addEventListener('submit', async (event) => {
+    event.preventDefault();
+    if (isSubmitting) {
+      return;
+    }
+
+    const payload = validateForm();
+    if (!payload) {
+      return;
+    }
+
+    isSubmitting = true;
+    setLoadingState(true);
+    setFeedback('');
+
+    try {
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(payload),
+      });
+
+      const result = await response.json().catch(() => ({
+        success: false,
+        error: 'Unerwartete Serverantwort.',
+      }));
+
+      if (!response.ok || !result.success) {
+        throw new Error(result.error || 'Die Anfrage konnte nicht gesendet werden.');
+      }
+
+      openSuccessModal();
+      setFeedback('Ihre Anfrage wurde erfolgreich versendet.', 'success');
+    } catch (error) {
+      setFeedback(error.message || 'Die Anfrage konnte aktuell nicht gesendet werden.');
+    } finally {
+      isSubmitting = false;
+      setLoadingState(false);
+    }
+  });
+
+  fields.forEach((field) => {
+    field.addEventListener('input', () => {
+      field.classList.remove('is-invalid');
+      if (feedback?.textContent) {
+        setFeedback('');
+      }
+    });
+  });
+
+  const resetFlow = () => {
+    form.reset();
+    clearInvalidState();
+    setFeedback('');
+    closeSuccessModal();
+  };
+
+  resetButton?.addEventListener('click', resetFlow);
+  modalCloseArea?.addEventListener('click', resetFlow);
+
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape' && successModal?.classList.contains('is-visible')) {
+      resetFlow();
+    }
+  });
+})();
+
+(() => {
   const processTimeline = document.querySelector('.company-process-timeline');
   if (!processTimeline) {
     return;
@@ -2032,5 +2193,58 @@ if ('IntersectionObserver' in window && animatedDonuts.length > 0) {
   window.addEventListener('resize', render);
   window.addEventListener('load', resetToFirstCardOnHandy);
   window.addEventListener('pageshow', resetToFirstCardOnHandy);
+  render();
+})();
+
+(() => {
+  const stack = document.querySelector('[data-te-2026-stack]');
+  if (!stack) {
+    return;
+  }
+
+  const cards = Array.from(stack.querySelectorAll('[data-te-2026-card]'));
+  if (cards.length === 0) {
+    return;
+  }
+
+  const stateClasses = ['card-active', 'card-second', 'card-third', 'card-fourth'];
+  let order = [...cards];
+  const isDesktop = () => window.innerWidth >= 992;
+
+  const render = () => {
+    cards.forEach((card) => {
+      stateClasses.forEach((className) => card.classList.remove(className));
+    });
+
+    order.forEach((card, index) => {
+      const className = stateClasses[index];
+      if (className) {
+        card.classList.add(className);
+      }
+    });
+  };
+
+  const rotateCards = () => {
+    if (!isDesktop()) {
+      return;
+    }
+
+    const firstCard = order.shift();
+    if (!firstCard) {
+      return;
+    }
+    order.push(firstCard);
+    render();
+  };
+
+  stack.addEventListener('click', rotateCards);
+  stack.addEventListener('keydown', (event) => {
+    if (event.key === 'Enter' || event.key === ' ') {
+      event.preventDefault();
+      rotateCards();
+    }
+  });
+
+  window.addEventListener('resize', render);
   render();
 })();

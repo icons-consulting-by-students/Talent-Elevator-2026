@@ -96,9 +96,8 @@
             </div>
             <form
               class="company-contact-form reveal"
-              action="mailto:talentelevator@icons.at"
-              method="post"
-              enctype="text/plain"
+              data-contact-form
+              novalidate
             >
               <div class="company-form-grid">
                 <label class="company-form-field">
@@ -118,12 +117,26 @@
                 <span>Nachricht</span>
                 <textarea name="message" rows="5" required></textarea>
               </label>
-              <button class="btn btn-primary" type="submit">Anfrage senden</button>
+              <p class="company-contact-feedback" data-contact-feedback aria-live="polite"></p>
+              <button class="btn btn-primary company-contact-submit" type="submit" data-contact-submit>
+                <span class="company-contact-submit-label">Anfrage senden</span>
+                <span class="company-contact-spinner" aria-hidden="true"></span>
+              </button>
             </form>
           </div>
         </div>
       </section>
     </main>
+
+    <div class="contact-success-modal" data-contact-success-modal aria-hidden="true">
+      <div class="contact-success-backdrop" data-contact-modal-close></div>
+      <div class="contact-success-dialog" role="dialog" aria-modal="true" aria-labelledby="contact-success-title">
+        <div class="contact-success-icon" aria-hidden="true">✓</div>
+        <h2 id="contact-success-title">Vielen Dank fuer Ihre Anfrage</h2>
+        <p>Wir melden uns zeitnah bei Ihnen.</p>
+        <button class="btn btn-primary" type="button" data-contact-reset>Neue Anfrage senden</button>
+      </div>
+    </div>
 
     <footer class="footer">
       <div class="container footer-content">
