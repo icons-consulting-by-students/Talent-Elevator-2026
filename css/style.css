@@ -5118,6 +5118,41 @@ h1 {
     width: 100%;
     height: 100%;
   }
+
+  .events-2024-page .te2025-highlights--2024 .te2025-speakers-grid,
+  .events-2023-page .te2025-highlights--2024 .te2025-speakers-grid {
+    gap: 1.2rem;
+    padding: 0.65rem;
+    max-width: min(470px, 100%);
+  }
+
+  .events-2024-page .te2025-highlights--2024 .te2025-speaker-media,
+  .events-2023-page .te2025-highlights--2024 .te2025-speaker-media {
+    max-height: 176px;
+  }
+
+  .events-2024-page .te2025-highlights--2024 .te2025-speaker-brand-badge,
+  .events-2023-page .te2025-highlights--2024 .te2025-speaker-brand-badge {
+    width: 68%;
+    height: 52px;
+    padding: 0.5rem 0.68rem;
+  }
+
+  .events-2024-page .te2025-highlights--2024 .te2025-speaker-copy,
+  .events-2023-page .te2025-highlights--2024 .te2025-speaker-copy {
+    max-width: 168px;
+    padding-top: 2.15rem;
+  }
+
+  .events-2024-page .te2025-highlights--2024 .te2025-speaker-copy h4,
+  .events-2023-page .te2025-highlights--2024 .te2025-speaker-copy h4 {
+    font-size: 0.98rem;
+  }
+
+  .events-2024-page .te2025-highlights--2024 .te2025-speaker-company,
+  .events-2023-page .te2025-highlights--2024 .te2025-speaker-company {
+    font-size: 0.77rem;
+  }
 }
 
 .te2025-highlights--2025 .te2025-speakers-grid > .te2025-speaker-card {
