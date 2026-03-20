@@ -10,19 +10,6 @@ const audienceStorageKey = 'te_selected_audience';
 
 /* HEADER FIX: NEUTRAL DEFAULT (NO PERSISTENCE) */
 
-/* HEADER MENU ITEMS */
-const audienceMenus = {
-  students: [
-    { label: 'Vergangene Events', href: 'index.html#vergangene-events' },
-    { label: 'Anmeldung', href: 'anmeldung.html' },
-    { label: 'Über uns', href: 'ueber-uns.html' },
-  ],
-  companies: [
-    { label: 'Unsere Leistungen', href: 'unternehmen.html' },
-    { label: 'Kontakt', href: 'kontakt.html' },
-  ],
-};
-
 const pathname = window.location.pathname.toLowerCase();
 const onIndexPage = pathname.endsWith('/') || pathname.endsWith('/index.html');
 const onLegalPage =
@@ -51,6 +38,19 @@ const onStudentsPage =
   pathname.endsWith('/talent-elevator-2024.html') ||
   pathname.endsWith('/talent-elevator-2025') ||
   pathname.endsWith('/talent-elevator-2025.html');
+
+/* HEADER MENU ITEMS */
+const audienceMenus = {
+  students: [
+    { label: 'Vergangene Events', href: onIndexPage ? '#vergangene-events' : 'talent-elevator-2025.html' },
+    { label: 'Anmeldung', href: 'anmeldung.html' },
+    { label: 'Über uns', href: 'ueber-uns.html' },
+  ],
+  companies: [
+    { label: 'Unsere Leistungen', href: 'unternehmen.html' },
+    { label: 'Kontakt', href: 'kontakt.html' },
+  ],
+};
 
 const normalizeAudience = (value) => {
   if (value === 'students' || value === 'companies') {

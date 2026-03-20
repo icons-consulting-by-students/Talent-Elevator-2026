@@ -695,6 +695,11 @@ video {
 }
 
 @media (max-width: 640px) {
+  .te-2026-section {
+    background-size: 115% auto;
+    background-position: center top;
+  }
+
   .te-2026-layout {
     padding-block: 4rem;
   }
