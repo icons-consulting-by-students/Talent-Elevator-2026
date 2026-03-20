@@ -33,12 +33,13 @@
       #bewerbung-wrapper .bewerbung-pre-grid {
         display: grid;
         grid-template-columns: minmax(0, 1fr) minmax(220px, 0.65fr);
-        gap: clamp(1.5rem, 4vw, 3.5rem);
+        gap: clamp(3.25rem, 8vw, 7rem);
         align-items: center;
       }
 
       #bewerbung-wrapper .bewerbung-pre-copy {
         max-width: 720px;
+        padding-right: clamp(2rem, 5vw, 4.5rem);
       }
 
       #bewerbung-wrapper .bewerbung-pre-copy h3 {
@@ -47,6 +48,10 @@
 
       #bewerbung-wrapper .bewerbung-pre-copy p {
         margin: 0;
+      }
+
+      #bewerbung-wrapper .bewerbung-remind-trigger {
+        margin-top: 1.5rem;
       }
 
       #bewerbung-pre .bewerbung-countdown {
@@ -144,6 +149,78 @@
         font-weight: 600;
       }
 
+      .bewerbung-remind-overlay[hidden] {
+        display: none;
+      }
+
+      .bewerbung-remind-overlay {
+        position: fixed;
+        inset: 0;
+        z-index: 1200;
+        display: flex;
+        align-items: flex-start;
+        justify-content: center;
+        overflow-y: auto;
+        padding: clamp(7rem, 14vh, 9.5rem) clamp(1rem, 3vw, 2rem) clamp(2rem, 5vh, 3rem);
+        background: rgba(4, 10, 18, 0.78);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+      }
+
+      .bewerbung-remind-dialog {
+        position: relative;
+        width: min(100%, 780px);
+        padding: clamp(1.5rem, 3vw, 2.25rem);
+        border: 1px solid rgba(255, 255, 255, 0.14);
+        border-radius: 24px;
+        background: linear-gradient(180deg, rgba(16, 28, 43, 0.98), rgba(10, 20, 33, 0.96));
+        box-shadow: 0 30px 80px rgba(0, 0, 0, 0.38);
+        color: #f4f8fc;
+      }
+
+      .bewerbung-remind-dialog h3 {
+        margin: 0.35rem 0 0.65rem;
+      }
+
+      .bewerbung-remind-dialog p {
+        margin: 0;
+      }
+
+      .bewerbung-remind-close {
+        position: absolute;
+        top: 1rem;
+        right: 1rem;
+        width: 2.75rem;
+        height: 2.75rem;
+        border: 1px solid rgba(255, 255, 255, 0.16);
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.08);
+        color: #f4f8fc;
+        font-size: 1.4rem;
+        line-height: 1;
+        cursor: pointer;
+      }
+
+      .bewerbung-remind-close:hover {
+        background: rgba(255, 255, 255, 0.14);
+      }
+
+      .bewerbung-remind-form {
+        margin-top: 1.5rem;
+        padding: clamp(1rem, 2vw, 1.25rem);
+        border-radius: 18px;
+        background: rgba(255, 255, 255, 0.04);
+      }
+
+      .bewerbung-remind-form iframe,
+      .bewerbung-remind-form form {
+        width: 100%;
+      }
+
+      body.bewerbung-remind-open {
+        overflow: hidden;
+      }
+
       @keyframes bewerbung-count-number-in {
         from {
           opacity: 0;
@@ -164,6 +241,11 @@
 
         #bewerbung-wrapper .bewerbung-pre-copy {
           max-width: none;
+          padding-right: 0;
+        }
+
+        #bewerbung-wrapper .bewerbung-remind-trigger {
+          margin-top: 1.25rem;
         }
 
         #bewerbung-pre .bewerbung-countdown {
@@ -189,6 +271,10 @@
         #bewerbung-pre .bewerbung-count-label {
           margin-top: 0.5rem;
           font-size: 0.68rem;
+        }
+
+        .bewerbung-remind-dialog {
+          padding: 1.25rem;
         }
       }
 
@@ -312,10 +398,12 @@
                 <div class="bewerbung-pre-copy">
                   <h3>Der Countdown läuft</h3>
                   <p>
-                    Die Bewerbungsphase startet am 1. April 2026. Wir freuen uns darauf, ambitionierte Studierende beim
-                    Talent Elevator willkommen zu heißen. Weitere Informationen findest Du unter „Bewerbungsablauf“ oder
-                    via <a href="mailto:talentelevator@icons.at">talentelevator@icons.at</a>.
+                    Die Bewerbungsphase für den diesjährigen Talent Elevator startet bald &amp; wir freuen uns auf deine Bewerbung!<br /><br />
+                    Und damit du nichts verpasst, lass dich ein paar Tage vor Bewerbungsschluss erinnern.
                   </p>
+                  <button class="btn btn-primary bewerbung-remind-trigger" type="button" data-remind-open>
+                    Remind Me
+                  </button>
                 </div>
                 <div class="bewerbung-countdown">
                   <div class="bewerbung-countdown-values">
@@ -402,6 +490,34 @@
           </div>
         </div>
       </section>
+
+      <div class="bewerbung-remind-overlay" data-remind-overlay hidden>
+        <div
+          class="bewerbung-remind-dialog"
+          data-remind-dialog
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="bewerbung-remind-title"
+        >
+          <button class="bewerbung-remind-close" type="button" aria-label="Overlay schließen" data-remind-close>×</button>
+          <p class="eyebrow">Bewerbung 2026</p>
+          <h3 id="bewerbung-remind-title">Remind Me</h3>
+          <p>Trag dich kurz ein und wir erinnern dich rechtzeitig vor dem Bewerbungsschluss.</p>
+          <div class="bewerbung-remind-form" data-remind-form-wrap>
+            <!-- BEGIN Podio web form -->
+            <script src="https://podio.com/webforms/26565574/2015158.js"></script>
+            <script type="text/javascript">
+              _podioWebForm.render("2015158");
+            </script>
+            <noscript>
+              <a href="https://podio.com/webforms/26565574/2015158" target="_blank" rel="noopener noreferrer">
+                Bitte füllen Sie das Formular aus
+              </a>
+            </noscript>
+            <!-- END Podio web form -->
+          </div>
+        </div>
+      </div>
     </main>
 
     <footer class="footer">
@@ -460,6 +576,13 @@
         const form = wrapper.querySelector("[data-bewerbung-form]");
         const submitButton = wrapper.querySelector("[data-bewerbung-submit]");
         const submitMessage = wrapper.querySelector("[data-bewerbung-submit-message]");
+        const remindOpenButton = wrapper.querySelector("[data-remind-open]");
+        const remindOverlay = document.querySelector("[data-remind-overlay]");
+        const remindCloseButton = document.querySelector("[data-remind-close]");
+        const remindFormWrap = document.querySelector("[data-remind-form-wrap]");
+        let remindAutoClosed = false;
+        let remindOpenedAt = 0;
+        let remindIframeBound = false;
 
         const dateFormatter = new Intl.DateTimeFormat("de-AT", {
           timeZone: viennaZone,
@@ -568,6 +691,66 @@
           }, nextDelay);
         }
 
+        function openRemindOverlay() {
+          if (!remindOverlay) {
+            return;
+          }
+          remindOpenedAt = Date.now();
+          remindAutoClosed = false;
+          remindOverlay.hidden = false;
+          document.body.classList.add("bewerbung-remind-open");
+        }
+
+        function closeRemindOverlay() {
+          if (!remindOverlay) {
+            return;
+          }
+          remindOverlay.hidden = true;
+          document.body.classList.remove("bewerbung-remind-open");
+        }
+
+        function maybeCloseRemindOverlay() {
+          if (!remindFormWrap || remindAutoClosed) {
+            return;
+          }
+
+          const renderedForm = remindFormWrap.querySelector("form, iframe");
+          const formText = remindFormWrap.textContent ? remindFormWrap.textContent.toLowerCase() : "";
+          const successDetected =
+            formText.includes("danke") ||
+            formText.includes("thank") ||
+            formText.includes("erfolgreich") ||
+            formText.includes("submitted") ||
+            formText.includes("gesendet");
+
+          if (!renderedForm && successDetected) {
+            remindAutoClosed = true;
+            window.setTimeout(closeRemindOverlay, 700);
+          }
+        }
+
+        function bindRemindIframeLoad() {
+          if (!remindFormWrap || remindIframeBound) {
+            return;
+          }
+
+          const remindIframe = remindFormWrap.querySelector("iframe");
+          if (!remindIframe) {
+            return;
+          }
+
+          remindIframe.addEventListener("load", function () {
+            const isOpen = remindOverlay && !remindOverlay.hidden;
+            const openDurationMs = Date.now() - remindOpenedAt;
+            if (isOpen && openDurationMs > 3000) {
+              remindAutoClosed = true;
+              window.setTimeout(closeRemindOverlay, 700);
+            }
+          });
+
+          remindIframeBound = true;
+        }
+
         if (form) {
           form.addEventListener("submit", function (event) {
             if (getState(Date.now()) !== "active") {
@@ -580,6 +763,42 @@
               }
             }
           });
+        }
+
+        if (remindOpenButton) {
+          remindOpenButton.addEventListener("click", openRemindOverlay);
+        }
+
+        if (remindCloseButton) {
+          remindCloseButton.addEventListener("click", closeRemindOverlay);
+        }
+
+        if (remindOverlay) {
+          remindOverlay.addEventListener("click", function (event) {
+            if (event.target === remindOverlay) {
+              closeRemindOverlay();
+            }
+          });
+        }
+
+        document.addEventListener("keydown", function (event) {
+          if (event.key === "Escape" && remindOverlay && !remindOverlay.hidden) {
+            closeRemindOverlay();
+          }
+        });
+
+        if (remindFormWrap) {
+          const remindObserver = new MutationObserver(function () {
+            bindRemindIframeLoad();
+            maybeCloseRemindOverlay();
+          });
+          remindObserver.observe(remindFormWrap, {
+            childList: true,
+            subtree: true,
+            characterData: true,
+          });
+          bindRemindIframeLoad();
+          window.setTimeout(maybeCloseRemindOverlay, 1500);
         }
 
         applyState();
