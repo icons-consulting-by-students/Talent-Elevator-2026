@@ -3852,6 +3852,7 @@ h1 {
 
 .company-contact-submit {
   justify-self: start;
+  margin-top: -0.95rem;
 }
 
 .company-contact-feedback {
@@ -3860,6 +3861,13 @@ h1 {
   color: #ffcbc8;
   font-size: 0.92rem;
   line-height: 1.4;
+}
+
+.company-contact-privacy-note {
+  margin: 0.15rem 0 0.35rem;
+  color: rgba(214, 231, 248, 0.54);
+  font-size: 0.8rem;
+  line-height: 1.45;
 }
 
 .company-contact-feedback.is-success {
