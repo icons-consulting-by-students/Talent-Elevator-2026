@@ -18,21 +18,49 @@ app.use(
 );
 app.use(express.json({ limit: '1mb' }));
 
-const requiredEnvVars = ['SMTP_HOST', 'SMTP_PORT', 'SMTP_USER', 'SMTP_PASS', 'MAIL_TO'];
+const isPlaceholderValue = (value = '') => /your-|example|changeme/i.test(String(value));
 
-const missingEnvVars = requiredEnvVars.filter((key) => !process.env[key]);
+const createTransportConfig = () => {
+  const smtpService = String(process.env.SMTP_SERVICE || '').trim();
+  const smtpHost = String(process.env.SMTP_HOST || '').trim();
+  const smtpPort = String(process.env.SMTP_PORT || '').trim();
+  const smtpSecure = String(process.env.SMTP_SECURE || '').trim().toLowerCase();
+
+  if (smtpService) {
+    return {
+      service: smtpService,
+      auth: {
+        user: process.env.SMTP_USER,
+        pass: process.env.SMTP_PASS,
+      },
+    };
+  }
+
+  return {
+    host: smtpHost,
+    port: Number(smtpPort || 587),
+    secure: smtpSecure ? smtpSecure === 'true' : Number(smtpPort || 587) === 465,
+    auth: {
+      user: process.env.SMTP_USER,
+      pass: process.env.SMTP_PASS,
+    },
+  };
+};
+
+const requiredEnvVars = ['SMTP_USER', 'SMTP_PASS', 'MAIL_TO'];
+
+if (!process.env.SMTP_SERVICE && !process.env.SMTP_HOST) {
+  requiredEnvVars.push('SMTP_HOST');
+}
+
+const missingEnvVars = requiredEnvVars.filter((key) => {
+  const value = process.env[key];
+  return !value || isPlaceholderValue(value);
+});
 
 const transporter =
   missingEnvVars.length === 0
-    ? nodemailer.createTransport({
-        host: process.env.SMTP_HOST,
-        port: Number(process.env.SMTP_PORT),
-        secure: Number(process.env.SMTP_PORT) === 465,
-        auth: {
-          user: process.env.SMTP_USER,
-          pass: process.env.SMTP_PASS,
-        },
-      })
+    ? nodemailer.createTransport(createTransportConfig())
     : null;
 
 const escapeHtml = (value = '') =>
@@ -77,6 +105,7 @@ app.post('/api/contact', async (req, res) => {
   }
 
   const { name, company, email, message } = validation.value;
+  const fromLabel = `${name} via Talent Elevator`.replace(/"/g, '');
 
   const html = `
     <h2>Neue Anfrage ueber Talent Elevator Website</h2>
@@ -86,9 +115,36 @@ app.post('/api/contact', async (req, res) => {
     <p><strong>Nachricht:</strong><br />${escapeHtml(message).replace(/\n/g, '<br />')}</p>
   `;
 
+  const confirmationText = [
+    `Liebe/r ${name},`,
+    '',
+    'vielen Dank für Ihre Anfrage! Wir haben Ihre Nachricht erhalten und melden uns zeitnah bei Ihnen.',
+    '',
+    'Hier eine Zusammenfassung Ihrer Anfrage:',
+    '',
+    `Unternehmen: ${company}`,
+    `E-Mail: ${email}`,
+    '',
+    'Nachricht:',
+    message,
+    '',
+    'Beste Grüße',
+    'Talent Elevator Team',
+  ].join('\n');
+
+  const confirmationHtml = `
+    <p>Liebe/r ${escapeHtml(name)},</p>
+    <p>vielen Dank für Ihre Anfrage! Wir haben Ihre Nachricht erhalten und melden uns zeitnah bei Ihnen.</p>
+    <p><strong>Hier eine Zusammenfassung Ihrer Anfrage:</strong></p>
+    <p><strong>Unternehmen:</strong><br />${escapeHtml(company)}</p>
+    <p><strong>E-Mail:</strong><br />${escapeHtml(email)}</p>
+    <p><strong>Nachricht:</strong><br />${escapeHtml(message).replace(/\n/g, '<br />')}</p>
+    <p>Beste Grüße<br />Talent Elevator Team</p>
+  `;
+
   try {
-    await transporter.sendMail({
-      from: `"Talent Elevator Website" <${process.env.SMTP_USER}>`,
+    const internalMailInfo = await transporter.sendMail({
+      from: process.env.MAIL_FROM || `"${fromLabel}" <${process.env.SMTP_USER}>`,
       to: process.env.MAIL_TO,
       replyTo: email,
       subject: 'Neue Anfrage ueber Talent Elevator Website',
@@ -103,6 +159,26 @@ app.post('/api/contact', async (req, res) => {
         'Nachricht:',
         message,
       ].join('\n'),
+    });
+    console.log('Interne Kontakt-Mail gesendet:', {
+      messageId: internalMailInfo.messageId,
+      accepted: internalMailInfo.accepted,
+      rejected: internalMailInfo.rejected,
+    });
+
+    const confirmationMailInfo = await transporter.sendMail({
+      from: `"Talent Elevator" <${process.env.SMTP_USER}>`,
+      to: email,
+      replyTo: process.env.MAIL_TO,
+      subject: 'Ihre Anfrage bei Talent Elevator',
+      text: confirmationText,
+      html: confirmationHtml,
+    });
+    console.log('Confirmation-Mail gesendet:', {
+      messageId: confirmationMailInfo.messageId,
+      accepted: confirmationMailInfo.accepted,
+      rejected: confirmationMailInfo.rejected,
+      recipient: email,
     });
 
     return res.json({ success: true });
@@ -122,4 +198,23 @@ app.use(express.static(ROOT_DIR));
 
 app.listen(PORT, () => {
   console.log(`Talent Elevator server laeuft auf http://localhost:${PORT}`);
+
+  if (!transporter) {
+    console.warn(
+      `Kontaktformular-Mailversand noch nicht aktiv. Fehlende oder Platzhalter-ENV Variablen: ${missingEnvVars.join(', ')}`
+    );
+    return;
+  }
+
+  transporter
+    .verify()
+    .then(() => {
+      console.log('SMTP-Verbindung erfolgreich verifiziert.');
+    })
+    .catch((error) => {
+      console.error('SMTP-Verifizierung fehlgeschlagen:', error.message);
+      if (String(process.env.SMTP_HOST || '').includes('gmail') || String(process.env.SMTP_SERVICE || '').toLowerCase() === 'gmail') {
+        console.error('Hinweis fuer Gmail: Verwenden Sie ein App-Passwort, nicht Ihr normales Google-Passwort.');
+      }
+    });
 });
