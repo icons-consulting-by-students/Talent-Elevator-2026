@@ -325,10 +325,10 @@ video {
   width: 100%;
   min-height: 100vh;
   display: flex;
-  align-items: center;
+  align-items: stretch;
   overflow: hidden;
   isolation: isolate;
-  background-image: url("../assets/media/home/Loft_Wien_Bild_2.jpg");
+  background-image: url("../assets/media/home/TE_2026_2.jpg");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -354,22 +354,31 @@ video {
   position: relative;
   z-index: 1;
   width: 100%;
+  min-height: 100vh;
   display: grid;
   grid-template-columns: minmax(280px, 0.4fr) minmax(0, 0.6fr);
-  align-items: center;
+  align-items: end;
   gap: clamp(2.5rem, 5vw, 5.5rem);
-  padding: clamp(4rem, 7vw, 6rem) clamp(1.35rem, 4vw, 4rem) clamp(1rem, 2.5vw, 1.8rem);
+  padding: clamp(4rem, 7vw, 6rem) clamp(1.35rem, 4vw, 4rem) 6rem;
 }
 
 .te-2026-location {
   display: grid;
-  gap: 1rem;
-  align-content: start;
-  align-self: start;
+  grid-template-rows: auto 1fr auto;
+  gap: 0;
+  height: 100%;
+  align-self: stretch;
   justify-self: start;
   max-width: 24rem;
   padding: 0;
-  margin-top: -0.9rem;
+  margin-top: 0;
+}
+
+.te-2026-location-copy {
+  display: grid;
+  gap: 1rem;
+  align-content: start;
+  transform: translateY(-0.6rem);
 }
 
 .te-2026-location-eyebrow {
@@ -399,9 +408,9 @@ video {
 }
 
 .te-2026-location-mark {
-  position: absolute;
-  left: clamp(1.35rem, 4vw, 4rem);
-  bottom: clamp(6rem, 7vw, 6rem);
+  grid-row: 3;
+  align-self: end;
+  position: static;
   width: clamp(12rem, 22vw, 17rem);
   height: auto;
   margin-top: 0;
@@ -491,14 +500,14 @@ video {
   width: min(100%, 47rem);
   cursor: pointer;
   overflow: visible;
-  padding: 1rem 5.25rem 0.75rem 0;
+  padding: 1rem 5.25rem 0 0;
   margin-top: 0.35rem;
 }
 
 .te-2026-card {
   isolation: isolate;
   position: absolute;
-  inset: 0 auto auto 0;
+  inset: auto auto 0 0;
   width: calc(100% - 4.5rem);
   min-height: 23.75rem;
   aspect-ratio: 1.45 / 1;
@@ -633,6 +642,13 @@ video {
 
   .te-2026-location {
     margin-top: 0;
+    height: auto;
+    gap: 1rem;
+    grid-template-rows: auto;
+  }
+
+  .te-2026-location-copy {
+    gap: 1rem;
   }
 
   .te-2026-copy {
@@ -1864,7 +1880,7 @@ h1 {
 .dayflow-step.is-visible {
   opacity: 1;
   transform: translateY(0);
-  transition-delay: var(--step-delay, 0ms);
+  transition-delay: 0ms;
 }
 
 .dayflow-node {
