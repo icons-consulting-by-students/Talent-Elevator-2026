@@ -32,7 +32,7 @@
 
       #bewerbung-wrapper .bewerbung-pre-grid {
         display: grid;
-        grid-template-columns: minmax(0, 1fr) minmax(220px, 0.65fr);
+        grid-template-columns: minmax(0, 0.82fr) minmax(220px, 0.78fr);
         gap: clamp(3.25rem, 8vw, 7rem);
         align-items: center;
       }
@@ -99,6 +99,10 @@
         letter-spacing: 0.08em;
         text-transform: uppercase;
         color: rgba(223, 235, 246, 0.72);
+      }
+
+      #bewerbung-pre .bewerbung-count-label-short {
+        display: none;
       }
 
       #bewerbung-wrapper .bewerbung-open {
@@ -237,11 +241,13 @@
           grid-template-columns: 1fr;
           gap: 1.25rem;
           text-align: center;
+          justify-items: center;
         }
 
         #bewerbung-wrapper .bewerbung-pre-copy {
           max-width: none;
           padding-right: 0;
+          margin: 0 auto;
         }
 
         #bewerbung-wrapper .bewerbung-remind-trigger {
@@ -250,11 +256,14 @@
 
         #bewerbung-pre .bewerbung-countdown {
           justify-content: center;
+          margin-top: 0.9rem;
         }
 
         #bewerbung-pre .bewerbung-countdown-values {
           justify-content: center;
-          width: 100%;
+          width: auto;
+          max-width: 100%;
+          margin: 0 auto;
           gap: 0.7rem;
         }
 
@@ -262,6 +271,10 @@
           min-width: 0;
           flex: 1 1 0;
           padding: 0.8rem 0.55rem;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
         }
 
         #bewerbung-pre .bewerbung-countdown-number {
@@ -271,6 +284,14 @@
         #bewerbung-pre .bewerbung-count-label {
           margin-top: 0.5rem;
           font-size: 0.68rem;
+        }
+
+        #bewerbung-pre .bewerbung-count-label-full {
+          display: none;
+        }
+
+        #bewerbung-pre .bewerbung-count-label-short {
+          display: inline;
         }
 
         .bewerbung-remind-dialog {
@@ -420,6 +441,13 @@
                       <p class="bewerbung-countdown-number" data-bewerbung-count-minutes>00</p>
                       <p class="bewerbung-count-label">Minuten</p>
                     </div>
+                    <div class="bewerbung-countdown-unit">
+                      <p class="bewerbung-countdown-number" data-bewerbung-count-seconds>00</p>
+                      <p class="bewerbung-count-label">
+                        <span class="bewerbung-count-label-full">Sekunden</span>
+                        <span class="bewerbung-count-label-short">Sek.</span>
+                      </p>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -564,7 +592,10 @@
         }
 
         const viennaZone = "Europe/Vienna";
-        const startUtcMs = Date.UTC(2026, 2, 31, 22, 0, 0);
+        const useTestStartDate = true;
+        const originalStartUtcMs = Date.UTC(2026, 2, 31, 22, 0, 0);
+        const testStartUtcMs = Date.UTC(2026, 2, 22, 22, 0, 0);
+        const startUtcMs = useTestStartDate ? testStartUtcMs : originalStartUtcMs;
         const endExclusiveUtcMs = Date.UTC(2026, 3, 28, 22, 0, 0);
         const preSection = wrapper.querySelector("#bewerbung-pre");
         const openSection = wrapper.querySelector("#bewerbung-open");
@@ -574,6 +605,7 @@
         const countdownDays = wrapper.querySelector("[data-bewerbung-count-days]");
         const countdownHours = wrapper.querySelector("[data-bewerbung-count-hours]");
         const countdownMinutes = wrapper.querySelector("[data-bewerbung-count-minutes]");
+        const countdownSeconds = wrapper.querySelector("[data-bewerbung-count-seconds]");
         const form = wrapper.querySelector("[data-bewerbung-form]");
         const submitButton = wrapper.querySelector("[data-bewerbung-submit]");
         const submitMessage = wrapper.querySelector("[data-bewerbung-submit-message]");
@@ -630,18 +662,20 @@
         }
 
         function updateCountdown(now) {
-          if (!countdownDays || !countdownHours || !countdownMinutes) {
+          if (!countdownDays || !countdownHours || !countdownMinutes || !countdownSeconds) {
             return;
           }
           const remainingMs = Math.max(0, startUtcMs - now.getTime());
-          const totalMinutes = Math.floor(remainingMs / 60000);
-          const remainingDays = Math.floor(totalMinutes / 1440);
-          const remainingHours = Math.floor((totalMinutes % 1440) / 60);
-          const remainingMinutes = totalMinutes % 60;
+          const totalSeconds = Math.floor(remainingMs / 1000);
+          const remainingDays = Math.floor(totalSeconds / 86400);
+          const remainingHours = Math.floor((totalSeconds % 86400) / 3600);
+          const remainingMinutes = Math.floor((totalSeconds % 3600) / 60);
+          const remainingSeconds = totalSeconds % 60;
 
           countdownDays.textContent = String(remainingDays);
           countdownHours.textContent = String(remainingHours).padStart(2, "0");
           countdownMinutes.textContent = String(remainingMinutes).padStart(2, "0");
+          countdownSeconds.textContent = String(remainingSeconds).padStart(2, "0");
         }
 
         function applyState() {
@@ -683,9 +717,8 @@
 
         function scheduleCountdownUpdate() {
           const now = new Date();
-          const timeParts = getViennaTimeParts(now);
-          const passedMinuteMs = (timeParts.second * 1000) + now.getMilliseconds();
-          const nextDelay = Math.max(1000, 60000 - passedMinuteMs + 50);
+          const passedSecondMs = now.getMilliseconds();
+          const nextDelay = Math.max(50, 1000 - passedSecondMs + 10);
           window.setTimeout(function () {
             applyState();
             scheduleCountdownUpdate();
