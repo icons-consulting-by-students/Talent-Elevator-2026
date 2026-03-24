@@ -2207,7 +2207,7 @@ if ('IntersectionObserver' in window && animatedDonuts.length > 0) {
     return;
   }
 
-  const stateClasses = ['card-active', 'card-second', 'card-third', 'card-fourth'];
+  const stateClasses = ['card-active', 'card-second', 'card-third', 'card-fourth', 'card-fifth', 'card-sixth'];
   let order = [...cards];
   const isDesktop = () => window.innerWidth >= 992;
 

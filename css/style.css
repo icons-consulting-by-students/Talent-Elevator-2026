@@ -361,7 +361,7 @@ video {
   grid-template-columns: minmax(280px, 0.4fr) minmax(0, 0.6fr);
   align-items: end;
   gap: clamp(2.5rem, 5vw, 5.5rem);
-  padding: clamp(4rem, 7vw, 6rem) clamp(1.35rem, 4vw, 4rem) 4.25rem;
+  padding: clamp(4rem, 7vw, 6rem) clamp(1.35rem, 4vw, 4rem) 6rem;
 }
 
 .te-2026-location {
@@ -416,7 +416,7 @@ video {
   width: clamp(12rem, 22vw, 17rem);
   height: auto;
   margin-top: 0;
-  transform: translateY(calc(-1 * var(--te-2026-stack-lift)));
+  transform: translateY(calc((-1 * var(--te-2026-stack-lift)) + var(--te-2026-stack-drop, 2rem) + 0.5rem));
 }
 
 .te-2026-content {
@@ -488,7 +488,7 @@ video {
 }
 
 .te-2026-stack-title {
-  margin: -1.5rem 0 2rem;
+  margin: -0.7rem 0 2rem;
   max-width: 28ch;
   font-family: "Space Grotesk", "Segoe UI", sans-serif;
   font-size: clamp(1.6rem, 2.7vw, 2.5rem);
@@ -498,22 +498,26 @@ video {
 }
 
 .te-2026-stack {
+  --te-2026-stack-step-x: 2rem;
+  --te-2026-stack-step-y: -1.15rem;
+  --te-2026-stack-visual-step: 1.25;
+  --te-2026-stack-drop: 3rem;
   position: relative;
-  min-height: 27.5rem;
+  min-height: 25.5rem;
   width: min(100%, 47rem);
   cursor: pointer;
   overflow: visible;
   padding: 1rem 5.25rem 0 0;
   margin-top: 0.35rem;
-  transform: translateY(calc(-1 * var(--te-2026-stack-lift)));
+  transform: translateY(calc((-1 * var(--te-2026-stack-lift)) + var(--te-2026-stack-drop)));
 }
 
 .te-2026-card {
   isolation: isolate;
   position: absolute;
   inset: auto auto 0 0;
-  width: calc(100% - 4.5rem);
-  min-height: 23.75rem;
+  width: calc(100% - 6.25rem);
+  min-height: 22rem;
   aspect-ratio: 1.45 / 1;
   display: block;
   border: 1px solid rgba(255, 255, 255, 0.2);
@@ -568,7 +572,7 @@ video {
 .te-2026-card-inner {
   position: relative;
   z-index: 1;
-  min-height: 23.75rem;
+  min-height: 22rem;
   height: 100%;
   display: flex;
   flex-direction: column;
@@ -583,6 +587,11 @@ video {
   max-height: 2.65rem;
   align-self: flex-start;
   object-fit: contain;
+}
+
+.te-2026-card[data-te-2026-company="Waterdrop"] .te-2026-card-logo {
+  max-width: min(11rem, 43%);
+  max-height: 3rem;
 }
 
 .te-2026-card-text {
@@ -604,33 +613,69 @@ video {
 .te-2026-card.card-active {
   transform: translate3d(0, 0, 0) scale(1);
   opacity: 1;
-  z-index: 4;
+  z-index: 6;
   filter: saturate(1.02) brightness(1.02);
   box-shadow: 0 28px 58px rgba(4, 10, 18, 0.2);
 }
 
 .te-2026-card.card-second {
-  transform: translate3d(2.6rem, -1.15rem, 0) scale(0.95);
+  transform: translate3d(
+    calc(var(--te-2026-stack-step-x) * var(--te-2026-stack-visual-step) * 1),
+    calc(var(--te-2026-stack-step-y) * var(--te-2026-stack-visual-step) * 1),
+    0
+  ) scale(0.95);
   opacity: 1;
-  z-index: 3;
+  z-index: 5;
   filter: saturate(0.98) brightness(0.98);
   box-shadow: 0 20px 46px rgba(4, 10, 18, 0.14);
 }
 
 .te-2026-card.card-third {
-  transform: translate3d(5rem, -2.05rem, 0) scale(0.91);
+  transform: translate3d(
+    calc(var(--te-2026-stack-step-x) * var(--te-2026-stack-visual-step) * 2),
+    calc(var(--te-2026-stack-step-y) * var(--te-2026-stack-visual-step) * 1.85),
+    0
+  ) scale(0.91);
   opacity: 1;
-  z-index: 2;
+  z-index: 4;
   filter: saturate(0.94) brightness(0.96);
   box-shadow: 0 14px 34px rgba(4, 10, 18, 0.12);
 }
 
 .te-2026-card.card-fourth {
-  transform: translate3d(7.4rem, -2.95rem, 0) scale(0.87);
+  transform: translate3d(
+    calc(var(--te-2026-stack-step-x) * var(--te-2026-stack-visual-step) * 3),
+    calc(var(--te-2026-stack-step-y) * var(--te-2026-stack-visual-step) * 2.65),
+    0
+  ) scale(0.87);
   opacity: 1;
-  z-index: 1;
+  z-index: 3;
   filter: saturate(0.9) brightness(0.93);
   box-shadow: 0 10px 24px rgba(4, 10, 18, 0.1);
+}
+
+.te-2026-card.card-fifth {
+  transform: translate3d(
+    calc(var(--te-2026-stack-step-x) * var(--te-2026-stack-visual-step) * 4),
+    calc(var(--te-2026-stack-step-y) * var(--te-2026-stack-visual-step) * 3.45),
+    0
+  ) scale(0.83);
+  opacity: 1;
+  z-index: 2;
+  filter: saturate(0.86) brightness(0.9);
+  box-shadow: 0 8px 20px rgba(4, 10, 18, 0.09);
+}
+
+.te-2026-card.card-sixth {
+  transform: translate3d(
+    calc(var(--te-2026-stack-step-x) * var(--te-2026-stack-visual-step) * 5),
+    calc(var(--te-2026-stack-step-y) * var(--te-2026-stack-visual-step) * 4.25),
+    0
+  ) scale(0.79);
+  opacity: 1;
+  z-index: 1;
+  filter: saturate(0.82) brightness(0.87);
+  box-shadow: 0 6px 16px rgba(4, 10, 18, 0.08);
 }
 
 @media (max-width: 991px) {
@@ -701,7 +746,9 @@ video {
   .te-2026-card.card-active,
   .te-2026-card.card-second,
   .te-2026-card.card-third,
-  .te-2026-card.card-fourth {
+  .te-2026-card.card-fourth,
+  .te-2026-card.card-fifth,
+  .te-2026-card.card-sixth {
     transform: none;
     opacity: 1;
     z-index: auto;
