@@ -3,6 +3,7 @@ const nav = document.querySelector('.nav');
 const navPanel = nav ? nav.querySelector('.nav-panel') : null;
 const headerPill = document.querySelector('.header-pill');
 const topbar = document.querySelector('[data-audience-header]') || document.querySelector('.topbar');
+const searchButtons = Array.from(document.querySelectorAll('.search-btn'));
 const audienceSwitch = document.querySelector('[data-audience-switch]');
 const audienceButtons = audienceSwitch ? Array.from(audienceSwitch.querySelectorAll('[data-audience-btn]')) : [];
 const headerMenu = document.querySelector('[data-header-menu]');
@@ -257,6 +258,376 @@ if (onIndexPage) {
   persistAudience('students');
 }
 applyAudience(initialAudience, { persist: false });
+
+(() => {
+  if (searchButtons.length === 0) {
+    return;
+  }
+
+  const normalize = (value = '') =>
+    String(value)
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g, '')
+      .toLowerCase()
+      .trim();
+
+  const tokenize = (value = '') => normalize(value).split(/\s+/).filter(Boolean);
+
+  const state = {
+    dialog: null,
+    input: null,
+    results: null,
+    meta: null,
+    close: null,
+    items: null,
+    isOpen: false,
+    hasLoaded: false,
+    activeQuery: '',
+    triggerButton: null,
+  };
+
+  const setStatus = (message = '', type = '') => {
+    if (!state.meta) {
+      return;
+    }
+
+    state.meta.textContent = message;
+    state.meta.dataset.state = type;
+  };
+
+  const clearResults = () => {
+    if (state.results) {
+      state.results.innerHTML = '';
+    }
+  };
+
+  const clearSearchState = () => {
+    clearResults();
+    setStatus('');
+  };
+
+  const createResultItem = (item) => {
+    const link = document.createElement('a');
+    link.className = 'search-result';
+    link.href = item.url;
+    link.innerHTML = `
+      <span class="search-result-head">
+        <span class="search-result-title">${item.title}</span>
+        ${item.category ? `<span class="search-result-category">${item.category}</span>` : ''}
+      </span>
+      ${item.description ? `<span class="search-result-description">${item.description}</span>` : ''}
+      <span class="search-result-url">${item.url}</span>
+    `;
+    return link;
+  };
+
+  const renderResults = (results, query) => {
+    clearResults();
+
+    if (results.length === 0) {
+      setStatus(`Keine Treffer fuer "${query}"`, 'empty');
+      return;
+    }
+
+    const fragment = document.createDocumentFragment();
+    results.forEach((item) => fragment.appendChild(createResultItem(item)));
+    state.results.appendChild(fragment);
+    setStatus(`${results.length} Treffer fuer "${query}"`);
+  };
+
+  const scoreItem = (item, query, terms) => {
+    let score = 0;
+    const title = item._title;
+    const category = item._category;
+    const description = item._description;
+    const keywords = item._keywords;
+    const searchText = item._searchText;
+
+    if (title === query) {
+      score += 160;
+    } else if (title.startsWith(query)) {
+      score += 110;
+    } else if (title.includes(query)) {
+      score += 70;
+    }
+
+    if (category.includes(query)) {
+      score += 20;
+    }
+
+    if (keywords.includes(query)) {
+      score += 44;
+    }
+
+    if (description.includes(query)) {
+      score += 28;
+    }
+
+    terms.forEach((term) => {
+      if (title.includes(term)) {
+        score += 36;
+      }
+      if (keywords.includes(term)) {
+        score += 22;
+      }
+      if (description.includes(term)) {
+        score += 12;
+      }
+      if (searchText.includes(term)) {
+        score += 8;
+      }
+    });
+
+    return score;
+  };
+
+  const getResults = (query) => {
+    if (!state.items) {
+      return [];
+    }
+
+    const normalizedQuery = normalize(query);
+    if (!normalizedQuery) {
+      return [];
+    }
+
+    const terms = tokenize(normalizedQuery);
+
+    return state.items
+      .map((item) => ({
+        ...item,
+        _score: scoreItem(item, normalizedQuery, terms),
+      }))
+      .filter((item) => item._score > 0)
+      .sort((left, right) => right._score - left._score)
+      .slice(0, 8);
+  };
+
+  const updateSearchResults = () => {
+    if (!state.input) {
+      return;
+    }
+
+    const query = state.input.value.trim();
+    state.activeQuery = query;
+
+    if (!query) {
+      clearSearchState();
+      return;
+    }
+
+    renderResults(getResults(query), query);
+  };
+
+  const positionDialog = () => {
+    if (!state.dialog || !state.triggerButton) {
+      return;
+    }
+
+    const dialog = state.dialog.querySelector('.search-dialog');
+    if (!dialog) {
+      return;
+    }
+
+    const buttonRect = state.triggerButton.getBoundingClientRect();
+    const maxWidth = Math.min(540, window.innerWidth - 24);
+    const panelWidth = Math.max(320, maxWidth);
+    const panelLeft = Math.min(
+      Math.max(12, buttonRect.right - panelWidth),
+      window.innerWidth - panelWidth - 12
+    );
+    const panelTop = Math.max(10, buttonRect.top - 4);
+
+    dialog.style.width = `${panelWidth}px`;
+    dialog.style.left = `${panelLeft}px`;
+    dialog.style.top = `${panelTop}px`;
+  };
+
+  const ensureDialog = () => {
+    if (state.dialog) {
+      return;
+    }
+
+    const dialog = document.createElement('div');
+    dialog.className = 'search-overlay';
+    dialog.setAttribute('aria-hidden', 'true');
+    dialog.innerHTML = `
+      <section
+        class="search-dialog"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="search-title"
+      >
+        <div class="search-dialog-head">
+          <div>
+            <p class="search-eyebrow">Suche</p>
+            <h2 id="search-title">Was moechtest du finden?</h2>
+          </div>
+          <button class="search-dialog-close" type="button" aria-label="Suche schliessen" data-search-close>
+            ×
+          </button>
+        </div>
+        <label class="search-field" for="site-search-input">
+          <span class="search-field-icon" aria-hidden="true">⌕</span>
+          <input
+            id="site-search-input"
+            class="search-input"
+            type="search"
+            name="site-search"
+            placeholder="Suche nach Anmeldung, Unternehmen, Events, BCG ..."
+            autocomplete="off"
+            spellcheck="false"
+          />
+        </label>
+        <p class="search-meta" data-search-meta></p>
+        <div class="search-results" data-search-results></div>
+      </section>
+    `;
+
+    document.body.appendChild(dialog);
+
+    state.dialog = dialog;
+    state.input = dialog.querySelector('.search-input');
+    state.results = dialog.querySelector('[data-search-results]');
+    state.meta = dialog.querySelector('[data-search-meta]');
+    state.close = dialog.querySelector('.search-dialog-close');
+
+    dialog.addEventListener('click', (event) => {
+      if (event.target === dialog) {
+        closeSearch();
+        return;
+      }
+
+      const target = event.target instanceof Element ? event.target.closest('[data-search-close]') : null;
+      if (!target) {
+        return;
+      }
+      closeSearch();
+    });
+
+    state.input?.addEventListener('input', updateSearchResults);
+    state.input?.addEventListener('keydown', (event) => {
+      if (event.key !== 'Enter') {
+        return;
+      }
+
+      const firstResult = state.results?.querySelector('.search-result');
+      if (firstResult instanceof HTMLAnchorElement) {
+        window.location.href = firstResult.href;
+      }
+    });
+  };
+
+  const loadIndex = async () => {
+    if (state.hasLoaded) {
+      return;
+    }
+
+    setStatus('Index wird geladen ...', 'loading');
+
+    try {
+      const response = await window.fetch('search-index.json');
+      if (!response.ok) {
+        throw new Error(`HTTP ${response.status}`);
+      }
+
+      const payload = await response.json();
+      state.items = Array.isArray(payload)
+        ? payload.map((item) => {
+            const title = String(item.title || '');
+            const category = String(item.category || '');
+            const description = String(item.description || '');
+            const keywords = Array.isArray(item.keywords) ? item.keywords.join(' ') : String(item.keywords || '');
+
+            return {
+              ...item,
+              title,
+              url: String(item.url || '#'),
+              category,
+              description,
+              _title: normalize(title),
+              _category: normalize(category),
+              _description: normalize(description),
+              _keywords: normalize(keywords),
+              _searchText: normalize(`${title} ${category} ${description} ${keywords}`),
+            };
+          })
+        : [];
+      state.hasLoaded = true;
+      updateSearchResults();
+    } catch (_error) {
+      state.items = [];
+      state.hasLoaded = true;
+      clearResults();
+      setStatus('Die Suche konnte gerade nicht geladen werden.', 'error');
+    }
+  };
+
+  const openSearch = async (button) => {
+    ensureDialog();
+
+    if (!state.dialog) {
+      return;
+    }
+
+    state.triggerButton = button || searchButtons[0] || null;
+    setMenuState(false);
+    state.isOpen = true;
+    state.dialog.classList.add('is-open');
+    state.dialog.setAttribute('aria-hidden', 'false');
+    positionDialog();
+
+    await loadIndex();
+
+    if (state.input) {
+      state.input.focus();
+      state.input.select();
+    }
+
+    updateSearchResults();
+  };
+
+  function closeSearch() {
+    if (!state.dialog || !state.isOpen) {
+      return;
+    }
+
+    state.isOpen = false;
+    state.dialog.classList.remove('is-open');
+    state.dialog.setAttribute('aria-hidden', 'true');
+  }
+
+  searchButtons.forEach((button) => {
+    button.addEventListener('click', () => {
+      if (state.isOpen) {
+        closeSearch();
+        return;
+      }
+      openSearch(button);
+    });
+  });
+
+  window.addEventListener('resize', () => {
+    if (state.isOpen) {
+      positionDialog();
+    }
+  });
+
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape') {
+      closeSearch();
+    }
+
+    if ((event.metaKey || event.ctrlKey) && event.key.toLowerCase() === 'k') {
+      event.preventDefault();
+      if (state.isOpen) {
+        closeSearch();
+        return;
+      }
+      openSearch(state.triggerButton || searchButtons[0] || null);
+    }
+  });
+})();
 
 const revealEls = document.querySelectorAll('.reveal');
 

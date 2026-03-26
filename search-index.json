@@ -1,0 +1,128 @@
+[
+  {
+    "title": "Talent Elevator 2026",
+    "url": "index.html",
+    "category": "Startseite",
+    "description": "Karriereevent fuer ausgezeichnete Studierende mit Event 2026, Working Sessions und Partnern.",
+    "keywords": ["startseite", "event 2026", "working sessions", "partner", "studierende", "unternehmen"]
+  },
+  {
+    "title": "Was ist der Talent Elevator?",
+    "url": "index.html",
+    "category": "Startseite",
+    "description": "Einordnung des Karriereevents und was Studierende beim Talent Elevator erwartet.",
+    "keywords": ["karriereevent", "studierende", "unternehmen", "plattform", "austausch"]
+  },
+  {
+    "title": "Vergangene Events",
+    "url": "index.html#vergangene-events",
+    "category": "Events",
+    "description": "Uebersicht und Einstieg zu den Events der letzten Jahre.",
+    "keywords": ["2023", "2024", "2025", "vergangene events", "rueckblick"]
+  },
+  {
+    "title": "Haeufige Fragen",
+    "url": "index.html#faq",
+    "category": "Startseite",
+    "description": "FAQ rund um den Talent Elevator fuer Studierende und Interessierte.",
+    "keywords": ["faq", "fragen", "antworten", "informationen"]
+  },
+  {
+    "title": "Anmeldung",
+    "url": "anmeldung.html",
+    "category": "Studierende",
+    "description": "Dein Platz beim Talent Elevator mit Bewerbungsablauf, Bewerbungsstart und Remind Me.",
+    "keywords": ["bewerbung", "anmeldung", "registrierung", "studierende", "remind me"]
+  },
+  {
+    "title": "Bewerbungsablauf",
+    "url": "anmeldung.html",
+    "category": "Studierende",
+    "description": "Informationen zum Ablauf der Bewerbung und den Phasen bis zum Event.",
+    "keywords": ["ablauf", "bewerbungsstart", "bewerbung", "prozess"]
+  },
+  {
+    "title": "Ueber uns",
+    "url": "ueber-uns.html",
+    "category": "Allgemein",
+    "description": "Infos zu Talent Elevator, icons und dem Team hinter dem Event.",
+    "keywords": ["icons", "team", "about", "organisation", "kontakt"]
+  },
+  {
+    "title": "Meet the 2026 Team",
+    "url": "ueber-uns.html",
+    "category": "Allgemein",
+    "description": "Das Team 2026 mit Callista Raschauer, Alexander Bruendlinger und Lena Harder.",
+    "keywords": ["team", "callista", "alexander", "lena", "linkedin"]
+  },
+  {
+    "title": "Fuer Unternehmen",
+    "url": "unternehmen.html",
+    "category": "Unternehmen",
+    "description": "Leistungen fuer Unternehmen, Matching-Prozess, Bewerberprofil und Mehrwert des Events.",
+    "keywords": ["unternehmen", "leistungen", "matching", "recruiting", "high potentials"]
+  },
+  {
+    "title": "In drei Schritten zum Matching",
+    "url": "unternehmen.html",
+    "category": "Unternehmen",
+    "description": "Profil definieren, Matching und Vorbereitung sowie der Event-Tag fuer Unternehmen.",
+    "keywords": ["matching", "prozess", "profil definieren", "event-tag", "vorbereitung"]
+  },
+  {
+    "title": "Wen Sie treffen werden",
+    "url": "unternehmen.html",
+    "category": "Unternehmen",
+    "description": "Kennzahlen und Bewerberprofil der Teilnehmenden des Talent Elevators.",
+    "keywords": ["bewerberprofil", "teilnehmende", "praktika", "notendurchschnitt", "bewerber"]
+  },
+  {
+    "title": "Kontakt",
+    "url": "kontakt.html",
+    "category": "Unternehmen",
+    "description": "Kontaktformular fuer individuelle Anfragen von Unternehmen.",
+    "keywords": ["kontakt", "anfrage", "formular", "unternehmen-kontakt", "mail"]
+  },
+  {
+    "title": "Ihre individuelle Anfrage",
+    "url": "kontakt.html#unternehmen-kontakt",
+    "category": "Unternehmen",
+    "description": "Direkter Einstieg in das Kontaktformular fuer Unternehmen.",
+    "keywords": ["kontaktformular", "unternehmen", "anfrage", "formular"]
+  },
+  {
+    "title": "Talent Elevator 2025",
+    "url": "talent-elevator-2025.html",
+    "category": "Events",
+    "description": "Rueckblick auf das Event 2025 mit Location, Keynotes und Workshops.",
+    "keywords": ["2025", "location", "keynotes", "workshops", "bcg", "efs", "post", "kearney", "wiener stadtwerke", "sonepar"]
+  },
+  {
+    "title": "Talent Elevator 2024",
+    "url": "talent-elevator-2024.html",
+    "category": "Events",
+    "description": "Rueckblick auf das Event 2024 mit Workshop-Partnern und Programmpunkten.",
+    "keywords": ["2024", "location", "keynotes", "workshops", "billa", "bcg", "efs", "sonepar", "accilium"]
+  },
+  {
+    "title": "Talent Elevator 2023",
+    "url": "talent-elevator-2023.html",
+    "category": "Events",
+    "description": "Rueckblick auf das Event 2023 mit Location, Keynotes und Workshops.",
+    "keywords": ["2023", "location", "keynotes", "workshops", "bcg", "efs", "siemens", "sourcing international", "ey parthenon", "accilium"]
+  },
+  {
+    "title": "Impressum",
+    "url": "impressum.html",
+    "category": "Rechtliches",
+    "description": "Impressum, Medieninhaber und Standorte von icons.",
+    "keywords": ["impressum", "medieninhaber", "wien", "graz", "innsbruck", "vereinszweck"]
+  },
+  {
+    "title": "Datenschutzerklaerung",
+    "url": "datenschutzerklaerung.html",
+    "category": "Rechtliches",
+    "description": "Datenschutzinformationen, Google Analytics und Facebook-Pixel Hinweise.",
+    "keywords": ["datenschutz", "dsgvo", "google analytics", "facebook pixel", "rechte"]
+  }
+]
