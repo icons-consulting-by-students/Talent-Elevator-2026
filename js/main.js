@@ -460,15 +460,13 @@ applyAudience(initialAudience, { persist: false });
       >
         <div class="search-dialog-head">
           <div>
-            <p class="search-eyebrow">Suche</p>
-            <h2 id="search-title">Was moechtest du finden?</h2>
+            <h2 id="search-title">Was möchtest du finden?</h2>
           </div>
           <button class="search-dialog-close" type="button" aria-label="Suche schliessen" data-search-close>
             ×
           </button>
         </div>
         <label class="search-field" for="site-search-input">
-          <span class="search-field-icon" aria-hidden="true">⌕</span>
           <input
             id="site-search-input"
             class="search-input"
