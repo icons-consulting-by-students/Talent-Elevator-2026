@@ -409,6 +409,22 @@ video {
   color: rgba(255, 255, 255, 0.86);
 }
 
+.te-2026-location-application {
+  margin: -0.2rem 0 0;
+  font-size: clamp(0.98rem, 1.45vw, 1.15rem);
+  line-height: 1.5;
+  color: rgba(255, 255, 255, 0.82);
+}
+
+.te-2026-location-cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: fit-content;
+  margin-top: 0.35rem;
+  text-decoration: none;
+}
+
 .te-2026-location-mark {
   grid-row: 3;
   align-self: end;
