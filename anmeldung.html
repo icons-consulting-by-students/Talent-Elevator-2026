@@ -647,10 +647,10 @@
 
         const viennaZone = "Europe/Vienna";
         const useTestStartDate = false;
-        const originalStartUtcMs = Date.UTC(2026, 2, 1, 22, 0, 0);
-        const testStartUtcMs = Date.UTC(2026, 2, 22, 22, 0, 0);
+        const originalStartUtcMs = Date.UTC(2026, 3, 5, 22, 0, 0);
+        const testStartUtcMs = Date.UTC(2026, 3, 5, 22, 0, 0);
         const startUtcMs = useTestStartDate ? testStartUtcMs : originalStartUtcMs;
-        const endExclusiveUtcMs = Date.UTC(2026, 11, 31, 22, 0, 0);
+        const endExclusiveUtcMs = Date.UTC(2026, 3, 30, 22, 0, 0);
         const preSection = wrapper.querySelector("#bewerbung-pre");
         const openSection = wrapper.querySelector("#bewerbung-open");
         const postSection = wrapper.querySelector("#bewerbung-closed");
