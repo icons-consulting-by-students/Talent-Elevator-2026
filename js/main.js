@@ -823,6 +823,21 @@ if ('IntersectionObserver' in window && revealEls.length > 0) {
   const fields = ['name', 'company', 'email', 'message']
     .map((name) => form.elements.namedItem(name))
     .filter(Boolean);
+  const contactQueryParam = 'contact';
+  const contactStatusMessages = {
+    success: {
+      message: 'Ihre Anfrage wurde erfolgreich versendet.',
+      type: 'success',
+    },
+    invalid: {
+      message: 'Bitte pruefen Sie Ihre Eingaben und versuchen Sie es erneut.',
+      type: 'error',
+    },
+    error: {
+      message: 'Die Anfrage konnte aktuell nicht gesendet werden.',
+      type: 'error',
+    },
+  };
 
   let isSubmitting = false;
 
@@ -901,47 +916,33 @@ if ('IntersectionObserver' in window && revealEls.length > 0) {
     document.body.classList.remove('contact-modal-open');
   };
 
-  form.addEventListener('submit', async (event) => {
-    event.preventDefault();
+  const url = new URL(window.location.href);
+  const contactStatus = url.searchParams.get(contactQueryParam);
+  if (contactStatus && contactStatusMessages[contactStatus]) {
+    const statusConfig = contactStatusMessages[contactStatus];
+    setFeedback(statusConfig.message, statusConfig.type);
+    if (contactStatus === 'success') {
+      openSuccessModal();
+    }
+    url.searchParams.delete(contactQueryParam);
+    window.history.replaceState({}, document.title, url.pathname + url.search + url.hash);
+  }
+
+  form.addEventListener('submit', (event) => {
     if (isSubmitting) {
+      event.preventDefault();
       return;
     }
 
     const payload = validateForm();
     if (!payload) {
+      event.preventDefault();
       return;
     }
 
     isSubmitting = true;
     setLoadingState(true);
     setFeedback('');
-
-    try {
-      const response = await fetch('/api/contact', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(payload),
-      });
-
-      const result = await response.json().catch(() => ({
-        success: false,
-        error: 'Unerwartete Serverantwort.',
-      }));
-
-      if (!response.ok || !result.success) {
-        throw new Error(result.error || 'Die Anfrage konnte nicht gesendet werden.');
-      }
-
-      openSuccessModal();
-      setFeedback('Ihre Anfrage wurde erfolgreich versendet.', 'success');
-    } catch (error) {
-      setFeedback(error.message || 'Die Anfrage konnte aktuell nicht gesendet werden.');
-    } finally {
-      isSubmitting = false;
-      setLoadingState(false);
-    }
   });
 
   fields.forEach((field) => {
