@@ -810,9 +810,19 @@ if ('IntersectionObserver' in window && revealEls.length > 0) {
 })();
 
 (() => {
+  const form = document.querySelector('[data-contact-form]');
+  if (!form) {
+    return;
+  }
+
+  const submitButton = form.querySelector('[data-contact-submit]');
+  const feedback = form.querySelector('[data-contact-feedback]');
   const successModal = document.querySelector('[data-contact-success-modal]');
   const resetButton = document.querySelector('[data-contact-reset]');
   const modalCloseArea = document.querySelector('[data-contact-modal-close]');
+  const fields = ['name', 'company', 'email', 'message']
+    .map((name) => form.elements.namedItem(name))
+    .filter(Boolean);
   const contactQueryParam = 'contact';
   const contactStatusMessages = {
     success: {
@@ -827,6 +837,63 @@ if ('IntersectionObserver' in window && revealEls.length > 0) {
       message: 'Die Anfrage konnte aktuell nicht gesendet werden.',
       type: 'error',
     },
+  };
+
+  let isSubmitting = false;
+
+  const setFeedback = (message, type = 'error') => {
+    if (!feedback) {
+      return;
+    }
+
+    feedback.textContent = message;
+    feedback.classList.toggle('is-success', type === 'success');
+  };
+
+  const setLoadingState = (loading) => {
+    if (!submitButton) {
+      return;
+    }
+
+    submitButton.disabled = loading;
+    submitButton.classList.toggle('is-loading', loading);
+    submitButton.setAttribute('aria-busy', String(loading));
+  };
+
+  const clearInvalidState = () => {
+    fields.forEach((field) => field.classList.remove('is-invalid'));
+  };
+
+  const validateForm = () => {
+    clearInvalidState();
+
+    const values = {
+      name: String(form.elements.namedItem('name')?.value || '').trim(),
+      company: String(form.elements.namedItem('company')?.value || '').trim(),
+      email: String(form.elements.namedItem('email')?.value || '').trim(),
+      message: String(form.elements.namedItem('message')?.value || '').trim(),
+    };
+
+    const missingField = Object.entries(values).find(([, value]) => !value);
+    if (missingField) {
+      const field = form.elements.namedItem(missingField[0]);
+      field?.classList.add('is-invalid');
+      field?.focus();
+      setFeedback('Bitte fuellen Sie alle Pflichtfelder aus.');
+      return null;
+    }
+
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailPattern.test(values.email)) {
+      const emailField = form.elements.namedItem('email');
+      emailField?.classList.add('is-invalid');
+      emailField?.focus();
+      setFeedback('Bitte geben Sie eine gueltige E-Mail-Adresse ein.');
+      return null;
+    }
+
+    setFeedback('');
+    return values;
   };
 
   const openSuccessModal = () => {
@@ -849,170 +916,48 @@ if ('IntersectionObserver' in window && revealEls.length > 0) {
     document.body.classList.remove('contact-modal-open');
   };
 
-  const createFormController = (form, options = {}) => {
-    if (!form) {
-      return null;
-    }
-
-    const submitButton = form.querySelector('[data-contact-submit]');
-    const feedback = form.querySelector('[data-contact-feedback]');
-    const fields = ['name', 'company', 'email', 'message']
-      .map((name) => form.elements.namedItem(name))
-      .filter(Boolean);
-    let isSubmitting = false;
-
-    const setFeedback = (message, type = 'error') => {
-      if (!feedback) {
-        return;
-      }
-
-      feedback.textContent = message;
-      feedback.classList.toggle('is-success', type === 'success');
-    };
-
-    const setLoadingState = (loading) => {
-      if (!submitButton) {
-        return;
-      }
-
-      submitButton.disabled = loading;
-      submitButton.classList.toggle('is-loading', loading);
-      submitButton.setAttribute('aria-busy', String(loading));
-    };
-
-    const clearInvalidState = () => {
-      fields.forEach((field) => field.classList.remove('is-invalid'));
-    };
-
-    const validateForm = () => {
-      clearInvalidState();
-
-      const values = {
-        name: String(form.elements.namedItem('name')?.value || '').trim(),
-        company: String(form.elements.namedItem('company')?.value || '').trim(),
-        email: String(form.elements.namedItem('email')?.value || '').trim(),
-        message: String(form.elements.namedItem('message')?.value || '').trim(),
-      };
-
-      const missingField = Object.entries(values).find(([, value]) => !value);
-      if (missingField) {
-        const field = form.elements.namedItem(missingField[0]);
-        field?.classList.add('is-invalid');
-        field?.focus();
-        setFeedback('Bitte fuellen Sie alle Pflichtfelder aus.');
-        return null;
-      }
-
-      const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-      if (!emailPattern.test(values.email)) {
-        const emailField = form.elements.namedItem('email');
-        emailField?.classList.add('is-invalid');
-        emailField?.focus();
-        setFeedback('Bitte geben Sie eine gueltige E-Mail-Adresse ein.');
-        return null;
-      }
-
-      setFeedback('');
-      return values;
-    };
-
-    form.addEventListener('submit', async (event) => {
-      if (isSubmitting) {
-        event.preventDefault();
-        return;
-      }
-
-      const payload = validateForm();
-      if (!payload) {
-        event.preventDefault();
-        return;
-      }
-
-      if (options.mode === 'php') {
-        isSubmitting = true;
-        setLoadingState(true);
-        setFeedback('');
-        return;
-      }
-
-      event.preventDefault();
-      isSubmitting = true;
-      setLoadingState(true);
-      setFeedback('');
-
-      try {
-        const response = await fetch('/api/contact', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(payload),
-        });
-
-        const result = await response.json().catch(() => ({
-          success: false,
-          error: 'Unerwartete Serverantwort.',
-        }));
-
-        if (!response.ok || !result.success) {
-          throw new Error(result.error || 'Die Anfrage konnte nicht gesendet werden.');
-        }
-
-        openSuccessModal();
-        setFeedback('Ihre Anfrage wurde erfolgreich versendet.', 'success');
-      } catch (error) {
-        setFeedback(error.message || 'Die Anfrage konnte aktuell nicht gesendet werden.');
-      } finally {
-        isSubmitting = false;
-        setLoadingState(false);
-      }
-    });
-
-    fields.forEach((field) => {
-      field.addEventListener('input', () => {
-        field.classList.remove('is-invalid');
-        if (feedback?.textContent) {
-          setFeedback('');
-        }
-      });
-    });
-
-    return {
-      reset() {
-        form.reset();
-        clearInvalidState();
-        setFeedback('');
-        isSubmitting = false;
-        setLoadingState(false);
-      },
-      setStatus(status) {
-        const statusConfig = contactStatusMessages[status];
-        if (!statusConfig) {
-          return;
-        }
-        setFeedback(statusConfig.message, statusConfig.type);
-        if (status === 'success') {
-          openSuccessModal();
-        }
-      },
-    };
-  };
-
-  const controllers = [
-    createFormController(document.querySelector('[data-contact-form]'), { mode: 'php' }),
-    createFormController(document.querySelector('[data-contact-form-smtp]'), { mode: 'smtp' }),
-  ].filter(Boolean);
-
   const url = new URL(window.location.href);
   const contactStatus = url.searchParams.get(contactQueryParam);
   if (contactStatus && contactStatusMessages[contactStatus]) {
-    controllers[0]?.setStatus(contactStatus);
+    const statusConfig = contactStatusMessages[contactStatus];
+    setFeedback(statusConfig.message, statusConfig.type);
+    if (contactStatus === 'success') {
+      openSuccessModal();
+    }
     url.searchParams.delete(contactQueryParam);
     window.history.replaceState({}, document.title, url.pathname + url.search + url.hash);
   }
 
+  form.addEventListener('submit', (event) => {
+    if (isSubmitting) {
+      event.preventDefault();
+      return;
+    }
+
+    const payload = validateForm();
+    if (!payload) {
+      event.preventDefault();
+      return;
+    }
+
+    isSubmitting = true;
+    setLoadingState(true);
+    setFeedback('');
+  });
+
+  fields.forEach((field) => {
+    field.addEventListener('input', () => {
+      field.classList.remove('is-invalid');
+      if (feedback?.textContent) {
+        setFeedback('');
+      }
+    });
+  });
+
   const resetFlow = () => {
-    controllers.forEach((controller) => controller.reset());
+    form.reset();
+    clearInvalidState();
+    setFeedback('');
     closeSuccessModal();
   };
 
