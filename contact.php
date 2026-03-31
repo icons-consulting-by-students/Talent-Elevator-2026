@@ -10,10 +10,16 @@ $email = trim($_POST['email'] ?? '');
 $message = trim($_POST['message'] ?? '');
 
 $redirectBase = '/kontakt.html';
+$logFile = __DIR__ . '/contact-mail.log';
 
 $redirectWithStatus = static function (string $status) use ($redirectBase): void {
     header("Location: {$redirectBase}?contact={$status}");
     exit();
+};
+
+$writeLog = static function (string $message) use ($logFile): void {
+    $timestamp = date('Y-m-d H:i:s');
+    @file_put_contents($logFile, "[{$timestamp}] {$message}\n", FILE_APPEND);
 };
 
 if ($name === '' || $company === '' || $email === '' || $message === '') {
@@ -46,6 +52,15 @@ $headers .= "Content-Type: text/plain; charset=UTF-8\r\n";
 
 $params = "-f {$from}";
 $success = mail($to, $subject, $body, $headers, $params);
+$writeLog(
+    sprintf(
+        'Internal mail result=%s to=%s reply_to=%s subject="%s"',
+        $success ? 'success' : 'failure',
+        $to,
+        $email,
+        $subject
+    )
+);
 
 if ($success) {
     $confirmationSubject = 'Ihre Anfrage bei Talent Elevator';
@@ -65,6 +80,15 @@ if ($success) {
     $confirmationHeaders .= "Content-Type: text/plain; charset=UTF-8\r\n";
 
     $confirmationSuccess = mail($email, $confirmationSubject, $confirmationBody, $confirmationHeaders, $params);
+    $writeLog(
+        sprintf(
+            'Confirmation mail result=%s to=%s reply_to=%s subject="%s"',
+            $confirmationSuccess ? 'success' : 'failure',
+            $email,
+            $to,
+            $confirmationSubject
+        )
+    );
     $success = $success && $confirmationSuccess;
 }
 
