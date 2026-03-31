@@ -322,6 +322,8 @@ video {
 
 .te-2026-section {
   --te-2026-stack-lift: 1.75rem;
+  --te-2026-stack-drop: 4rem;
+  --te-2026-stack-top-clearance: 2rem;
   --te-2026-content-gap-desktop: 1.5rem;
   position: relative;
   width: 100%;
@@ -517,14 +519,13 @@ video {
   --te-2026-stack-step-x: 2rem;
   --te-2026-stack-step-y: -1.15rem;
   --te-2026-stack-visual-step: 1.25;
-  --te-2026-stack-drop: 3rem;
   position: relative;
-  min-height: 25.5rem;
+  min-height: calc(25.5rem + var(--te-2026-stack-top-clearance));
   width: min(100%, 47rem);
   cursor: pointer;
   overflow: visible;
-  padding: 1rem 5.25rem 0 0;
-  margin-top: 0.35rem;
+  padding: var(--te-2026-stack-top-clearance) 5.25rem 0 0;
+  margin-top: 0;
   transform: translateY(calc((-1 * var(--te-2026-stack-lift)) + var(--te-2026-stack-drop)));
 }
 
@@ -697,6 +698,8 @@ video {
 @media (max-width: 991px) {
   .te-2026-section {
     --te-2026-stack-lift: 0rem;
+    --te-2026-stack-drop: 3rem;
+    --te-2026-stack-top-clearance: 0rem;
     --te-2026-content-gap-desktop: clamp(2rem, 4vw, 3.2rem);
   }
 

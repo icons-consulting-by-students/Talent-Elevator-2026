@@ -47,4 +47,25 @@ $headers .= "Content-Type: text/plain; charset=UTF-8\r\n";
 $params = "-f {$from}";
 $success = mail($to, $subject, $body, $headers, $params);
 
+if ($success) {
+    $confirmationSubject = 'Ihre Anfrage bei Talent Elevator';
+    $confirmationBody = "Vielen Dank fuer Ihre Anfrage.\n\n";
+    $confirmationBody .= "Wir haben Ihre Nachricht erhalten und melden uns zeitnah bei Ihnen.\n\n";
+    $confirmationBody .= "Zusammenfassung Ihrer Anfrage:\n\n";
+    $confirmationBody .= "Name: {$name}\n";
+    $confirmationBody .= "Unternehmen: {$company}\n";
+    $confirmationBody .= "E-Mail: {$email}\n\n";
+    $confirmationBody .= "Nachricht:\n{$message}\n\n";
+    $confirmationBody .= "Beste Gruesse\n";
+    $confirmationBody .= "Talent Elevator\n";
+
+    $confirmationHeaders = "From: Talent Elevator <{$from}>\r\n";
+    $confirmationHeaders .= "Reply-To: {$to}\r\n";
+    $confirmationHeaders .= "MIME-Version: 1.0\r\n";
+    $confirmationHeaders .= "Content-Type: text/plain; charset=UTF-8\r\n";
+
+    $confirmationSuccess = mail($email, $confirmationSubject, $confirmationBody, $confirmationHeaders, $params);
+    $success = $success && $confirmationSuccess;
+}
+
 $redirectWithStatus($success ? 'success' : 'error');
