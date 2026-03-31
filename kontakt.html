@@ -128,6 +128,46 @@
                 <span class="company-contact-spinner" aria-hidden="true"></span>
               </button>
             </form>
+
+            <div class="company-contact-head reveal">
+              <p class="eyebrow">SMTP Test</p>
+              <h2>Alternative Versandvariante</h2>
+              <p>
+                Dieses Formular nutzt testweise SMTP. Wenn Sie es nicht mehr brauchen, kann dieser Block spaeter einfach entfernt werden.
+              </p>
+            </div>
+            <form
+              class="company-contact-form reveal"
+              data-contact-form-smtp
+              novalidate
+            >
+              <div class="company-form-grid">
+                <label class="company-form-field">
+                  <span>Vorname &amp; Nachname</span>
+                  <input type="text" name="name" autocomplete="name" required />
+                </label>
+                <label class="company-form-field">
+                  <span>Unternehmen</span>
+                  <input type="text" name="company" autocomplete="organization" required />
+                </label>
+              </div>
+              <label class="company-form-field">
+                <span>E-Mail-Adresse</span>
+                <input type="email" name="email" autocomplete="email" required />
+              </label>
+              <label class="company-form-field">
+                <span>Nachricht</span>
+                <textarea name="message" rows="5" required></textarea>
+              </label>
+              <p class="company-contact-privacy-note">
+                Your data is treated confidentially and used only to process your request.
+              </p>
+              <p class="company-contact-feedback" data-contact-feedback aria-live="polite"></p>
+              <button class="btn btn-primary company-contact-submit" type="submit" data-contact-submit>
+                <span class="company-contact-submit-label">SMTP-Test senden</span>
+                <span class="company-contact-spinner" aria-hidden="true"></span>
+              </button>
+            </form>
           </div>
         </div>
       </section>
