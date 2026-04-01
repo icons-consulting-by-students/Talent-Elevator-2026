@@ -845,7 +845,7 @@ video {
   }
 
   .te-2026-layout {
-    padding: 4rem clamp(1.35rem, 4vw, 1.8rem) 5.5rem;
+    padding: 4rem clamp(1.35rem, 4vw, 1.8rem) 7rem;
   }
 
   .te-2026-overlay {
@@ -859,7 +859,7 @@ video {
     width: 100vw;
     margin-left: calc(50% - 50vw);
     margin-right: calc(50% - 50vw);
-    padding: 4rem clamp(1.35rem, 4vw, 1.8rem) 3.1rem;
+    padding: 4rem clamp(1.35rem, 4vw, 1.8rem) 4.4rem;
     background-image:
       linear-gradient(
         180deg,
@@ -874,11 +874,24 @@ video {
   }
 
   .te-2026-location-mark {
-    margin-top: 0.6rem;
+    margin-top: 0.15rem;
   }
 
   .te-2026-location-title {
     max-width: 10ch;
+  }
+
+  .te-2026-workshops {
+    gap: 0.7rem;
+    margin-top: 0.9rem;
+  }
+
+  .te-2026-stack-title {
+    margin-bottom: 0.1rem;
+  }
+
+  .te-2026-stack {
+    margin-top: 0;
   }
 
   .te-2026-copy-subline,
