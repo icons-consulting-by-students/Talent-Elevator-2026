@@ -754,6 +754,7 @@ video {
   .te-2026-layout {
     grid-template-columns: 1fr;
     align-items: start;
+    gap: 3.8rem;
   }
 
   .te-2026-location,
@@ -786,10 +787,11 @@ video {
 
   .te-2026-stack-title {
     max-width: none;
+    margin-bottom: 0.25rem;
   }
 
   .te-2026-stack {
-    margin-top: 0;
+    margin-top: 0.4rem;
   }
 
   .te-2026-stack {
@@ -839,12 +841,40 @@ video {
 
 @media (max-width: 640px) {
   .te-2026-section {
-    background-size: 115% auto;
-    background-position: center top;
+    background-image: none;
   }
 
   .te-2026-layout {
-    padding: 4rem 0 5.5rem;
+    padding: 4rem clamp(1.35rem, 4vw, 1.8rem) 5.5rem;
+  }
+
+  .te-2026-overlay {
+    display: none;
+  }
+
+  .te-2026-location {
+    position: relative;
+    isolation: isolate;
+    margin-top: -4rem;
+    width: 100vw;
+    margin-left: calc(50% - 50vw);
+    margin-right: calc(50% - 50vw);
+    padding: 4rem clamp(1.35rem, 4vw, 1.8rem) 3.1rem;
+    background-image:
+      linear-gradient(
+        180deg,
+        rgba(8, 24, 39, 0.38) 0%,
+        rgba(8, 28, 48, 0.5) 46%,
+        rgba(6, 24, 42, 0.72) 100%
+      ),
+      url("../assets/media/home/Loft_Wien_Bild_2.jpg");
+    background-size: cover;
+    background-position: center top;
+    background-repeat: no-repeat;
+  }
+
+  .te-2026-location-mark {
+    margin-top: 0.6rem;
   }
 
   .te-2026-location-title {
@@ -6451,6 +6481,19 @@ textarea {
     gap: 0.7rem;
   }
 
+  .hero-actions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.75rem;
+    width: 100%;
+  }
+
+  .hero-actions .btn {
+    flex: 0 1 180px;
+    max-width: 180px;
+  }
+
   .hero-byline {
     font-size: 0.72rem;
     padding: 0.32rem 0.56rem;
@@ -7074,7 +7117,8 @@ section#bewerbung-pre p.bewerbung-countdown-number {
     left: 12px !important;
     right: 12px;
     width: calc(100vw - 24px) !important;
-    min-height: calc(100vh - 1.5rem);
+    min-height: auto;
+    max-height: min(420px, calc(100vh - 24px));
     border-radius: 24px;
   }
 
