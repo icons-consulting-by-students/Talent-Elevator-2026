@@ -316,7 +316,6 @@ applyAudience(initialAudience, { persist: false });
         ${item.category ? `<span class="search-result-category">${item.category}</span>` : ''}
       </span>
       ${item.description ? `<span class="search-result-description">${item.description}</span>` : ''}
-      <span class="search-result-url">${item.url}</span>
     `;
     return link;
   };
@@ -325,14 +324,14 @@ applyAudience(initialAudience, { persist: false });
     clearResults();
 
     if (results.length === 0) {
-      setStatus(`Keine Treffer fuer "${query}"`, 'empty');
+      setStatus(`Keine Treffer für "${query}"`, 'empty');
       return;
     }
 
     const fragment = document.createDocumentFragment();
     results.forEach((item) => fragment.appendChild(createResultItem(item)));
     state.results.appendChild(fragment);
-    setStatus(`${results.length} Treffer fuer "${query}"`);
+    setStatus(`${results.length} Treffer für "${query}"`);
   };
 
   const scoreItem = (item, query, terms) => {
@@ -2307,7 +2306,7 @@ if ('IntersectionObserver' in window && animatedDonuts.length > 0) {
     },
     efs: {
       title: 'EFS Consulting',
-      text: 'EFS ist die größte unabhängige Unternehmensberatung Österreichs. Mit Hauptsitz in Wien und einem Office in China führen wir Projekte in Europa, Asien und Amerika durch. Unsere Wurzeln liegen im Bereich Automotive. Davon ausgehend haben wir Kompetenzen in vielen weiteren Bereichen aufgebaut, wie etwa Digitalisierung, IT-Transformation oder Informationssicherheit. Wir beraten Kunden entlang der gesamten Wertschöpfungskette und entwickeln gemeinsam Ideen, Konzepte, Produkte und Services für die Zukunft. Dazu braucht es Menschen mit Persönlichkeit, die mit Begeisterung an Herausforderungen herangehen und ihre individuellen Kompetenzen einbringen, um zukunftsweisende Lösungen zu erarbeiten. Einander zu entwickeln, Raum zur Entfaltung zu geben und eine positive Atmosphäre zu schaffen, ist uns dabei besonders wichtig.',
+      text: 'EFS Consulting ist die größte unabhängige Unternehmensberatung Österreichs. Mit Hauptsitz in Wien und weiteren Offices in China, den USA sowie Europa realisieren wir interdisziplinäre Projekte in Asien, Amerika und Europa. Wir beraten Kunden entlang der gesamten Wertschöpfungskette und entwickeln gemeinsam Ideen, Konzepte, Produkte und Services für die Zukunft. Unsere Wurzeln liegen im Bereich Automotive. Davon ausgehend haben wir Kompetenzen in vielen weiteren Branchen und Bereichen – wie etwa Digitalisierung und IT-Transformation – aufgebaut.',
       href: 'https://www.efs.consulting/',
       logo: 'assets/logos/EFS_logo.png',
     },
@@ -2325,7 +2324,7 @@ if ('IntersectionObserver' in window && animatedDonuts.length > 0) {
     },
     post: {
       title: 'Österreichische Post',
-      text: 'Die Österreichische Post AG ist ein international tätiger Post-, Logistik- und Dienstleistungskonzern mit herausragender Bedeutung für Österreich. Gegründet 1999, mit Hauptsitz in Wien und gesamt national und international rund 27.000 Mitarbeiter*innen. Das Unternehmen steht für höchste Qualität und bietet ein umfassendes Produkt- und Serviceportfolio, um aktuelle Kund*innenbedürfnisse bestens abzudecken. Die Post bündelt ihre Geschäftsaktivitäten in drei Divisionen: Brief & Werbepost, Paket & Logistik und Filiale & Bank. International ist die Post selektiv präsent in den Märkten Deutschland, Südost- und Osteuropa, der Türkei und Aserbaidschan.',
+      text: 'Die Österreichische Post AG ist die führende heimische Logistikerin und bietet als Grundversorgerin Post-, Bank- sowie Telekommunikationsservices an. Das Unternehmen betreibt in Österreich ein umfassendes Netzwerk mit rund 3.000 Post-Standorten und versorgt international mehr als 150 Millionen Menschen in 13 Ländern als E-Commerce-Dienstleisterin. Mit der bank99 und YELLLOW werden moderne Finanz- und Mobilfunklösungen angeboten. Die börsennotierte Post beschäftigt knapp 30.000 Menschen und erzielt über 3 Milliarden Euro Umsatz jährlich. Sie setzt verstärkt auf Zustellung mit E-Fahrzeugen und erneuerbare Energie, um bis 2030 österreichweit nur noch mit E-Fahrzeugen, Fahrrädern oder zu Fuß zuzustellen.',
       href: 'https://www.post.at/',
       logo: 'assets/logos/Post_logo.png',
     },

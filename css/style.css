@@ -364,7 +364,7 @@ video {
   grid-template-columns: minmax(280px, 0.4fr) minmax(0, 0.6fr);
   align-items: end;
   gap: clamp(2.5rem, 5vw, 5.5rem);
-  padding: clamp(4rem, 7vw, 6rem) clamp(1.35rem, 4vw, 4rem) 9rem;
+  padding: clamp(4rem, 7vw, 6rem) clamp(1.35rem, 4vw, 4rem) 11rem clamp(2.5rem, 5vw, 5rem);
 }
 
 .te-2026-location {
@@ -443,9 +443,15 @@ video {
   gap: var(--te-2026-content-gap-desktop);
 }
 
+.te-2026-workshops {
+  display: grid;
+  align-content: start;
+  gap: 0.85rem;
+}
+
 .te-2026-copy {
   position: relative;
-  max-width: 40rem;
+  max-width: 44.75rem;
   padding: clamp(1.45rem, 2.4vw, 2rem);
   border: 1px solid rgba(255, 255, 255, 0.14);
   border-radius: 1.6rem;
@@ -507,7 +513,7 @@ video {
 }
 
 .te-2026-stack-title {
-  margin: -0.7rem 0 2rem;
+  margin: 0 0 1.7rem;
   max-width: 28ch;
   font-family: "Space Grotesk", "Segoe UI", sans-serif;
   font-size: clamp(1.6rem, 2.7vw, 2.5rem);
@@ -521,7 +527,7 @@ video {
   --te-2026-stack-step-y: -1.15rem;
   --te-2026-stack-visual-step: 1.25;
   position: relative;
-  min-height: calc(25.5rem + var(--te-2026-stack-top-clearance));
+  min-height: calc(31rem + var(--te-2026-stack-top-clearance));
   width: min(100%, 47rem);
   cursor: pointer;
   overflow: visible;
@@ -535,8 +541,8 @@ video {
   position: absolute;
   inset: auto auto 0 0;
   width: calc(100% - 6.25rem);
-  min-height: 22rem;
-  aspect-ratio: 1.45 / 1;
+  min-height: 27.5rem;
+  aspect-ratio: 1.2 / 1;
   display: block;
   border: 1px solid rgba(255, 255, 255, 0.2);
   border-radius: 1.75rem;
@@ -590,7 +596,7 @@ video {
 .te-2026-card-inner {
   position: relative;
   z-index: 1;
-  min-height: 22rem;
+  min-height: 27.5rem;
   height: 100%;
   display: flex;
   flex-direction: column;
@@ -608,15 +614,15 @@ video {
 }
 
 .te-2026-card[data-te-2026-company="Waterdrop"] .te-2026-card-logo {
-  max-width: min(11rem, 43%);
-  max-height: 3rem;
+  max-width: min(13rem, 52%);
+  max-height: 3.8rem;
 }
 
 .te-2026-card-text {
   width: 100%;
   max-width: none;
   align-self: stretch;
-  font-size: 0.96rem;
+  font-size: clamp(0.78rem, 0.72rem + 0.32vw, 0.96rem);
   line-height: 1.62;
   color: rgba(255, 255, 255, 0.9);
   padding: 0.95rem 1.05rem;
@@ -696,6 +702,47 @@ video {
   box-shadow: 0 6px 16px rgba(4, 10, 18, 0.08);
 }
 
+@media (max-width: 1180px) and (min-width: 992px) {
+  .te-2026-section {
+    --te-2026-stack-offset: 1rem;
+  }
+
+  .te-2026-copy {
+    max-width: 38.25rem;
+  }
+
+  .te-2026-workshops {
+    align-content: start;
+  }
+
+  .te-2026-stack {
+    --te-2026-stack-step-x: 1.7rem;
+    --te-2026-stack-step-y: -0.95rem;
+    --te-2026-stack-visual-step: 1.15;
+    min-height: calc(35rem + var(--te-2026-stack-top-clearance));
+    width: min(100%, 43rem);
+    padding: var(--te-2026-stack-top-clearance) 4.25rem 0 0;
+  }
+
+  .te-2026-card {
+    width: calc(100% - 7rem);
+    min-height: 30.5rem;
+    aspect-ratio: 1.02 / 1;
+  }
+
+  .te-2026-card-inner {
+    min-height: 30.5rem;
+    gap: 1.55rem;
+    padding: 1.25rem;
+  }
+
+  .te-2026-card-text {
+    font-size: clamp(0.7rem, 0.5rem + 0.38vw, 0.84rem);
+    line-height: 1.5;
+    padding: 0.85rem 0.95rem;
+  }
+}
+
 @media (max-width: 991px) {
   .te-2026-section {
     --te-2026-stack-lift: 0rem;
@@ -729,6 +776,10 @@ video {
     margin-top: 0;
   }
 
+  .te-2026-workshops {
+    gap: 0.75rem;
+  }
+
   .te-2026-stack-eyebrow {
     margin-top: 0;
   }
@@ -755,7 +806,7 @@ video {
     position: relative;
     inset: auto;
     width: 100%;
-    min-height: 23rem;
+    min-height: 27rem;
     aspect-ratio: auto;
     transform: none;
     opacity: 1;
@@ -776,7 +827,7 @@ video {
   }
 
   .te-2026-card-inner {
-    min-height: 23rem;
+    min-height: 27rem;
   }
 
   .te-2026-location-mark {
@@ -793,7 +844,7 @@ video {
   }
 
   .te-2026-layout {
-    padding-block: 4rem;
+    padding: 4rem 0 5.5rem;
   }
 
   .te-2026-location-title {
@@ -806,12 +857,12 @@ video {
   }
 
   .te-2026-card {
-    min-height: 20rem;
+    min-height: 24rem;
     border-radius: 1.35rem;
   }
 
   .te-2026-card-inner {
-    min-height: 20rem;
+    min-height: 24rem;
     gap: 2rem;
     padding: 1.3rem;
   }
@@ -6878,7 +6929,7 @@ section#bewerbung-pre p.bewerbung-countdown-number {
 
 .search-dialog-head h2 {
   margin: 0;
-  font-size: clamp(1.7rem, 2.4vw, 2.25rem);
+  font-size: clamp(1.45rem, 2vw, 1.95rem);
   font-weight: 700;
   line-height: 1.12;
   color: rgba(10, 20, 35, 0.88);
