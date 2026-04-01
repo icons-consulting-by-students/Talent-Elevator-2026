@@ -1197,7 +1197,7 @@ main {
   font-size: clamp(2rem, 6.6vw, 6rem);
   line-height: 1.02;
   font-weight: 500;
-  color: hotpink;
+  color: rgba(255, 255, 255, 0.98);
   text-shadow: 0 8px 28px rgba(2, 14, 29, 0.42);
 }
 
