@@ -495,6 +495,10 @@ video {
   color: #fff;
 }
 
+.te-2026-copy-title--stack-size {
+  font-size: clamp(1.6rem, 2.7vw, 2.5rem);
+}
+
 .te-2026-copy-subline {
   margin: 1.2rem 0 0;
   max-width: 34rem;
