@@ -2340,6 +2340,12 @@ if ('IntersectionObserver' in window && animatedDonuts.length > 0) {
       href: 'https://www.voestalpine.com/group/en/group/overview/organizational-chart/metal-engineering/',
       logo: 'assets/logos/Voestalpine_logo.png',
     },
+    waterdrop: {
+      title: 'waterdrop',
+      text: 'Das österreichische Unternehmen waterdrop®️ wurde 2016 mit einer klaren Mission gegründet: Menschen dabei zu helfen, mehr Wasser zu trinken – einfach, nachhaltig und ohne Zucker. Unsere Microdrinks sind zuckerfreie Würfel mit natürlichen Frucht- und Pflanzenextrakten sowie wertvollen Vitaminen, die Leitungswasser in ein erfrischendes Getränk verwandeln. Durch den Verzicht auf abgefüllte Getränke hilft waterdrop®️ im Vergleich zu herkömmlichen Getränkelösungen, Plastik zu reduzieren, und verbindet funktionale Hydration mit modernem Lifestyle. Wir sind global in D2C, im Retail und in eigenen Stores vertreten. Lass uns gemeinsam neue Trinkrituale entwickeln und mehr Wasser trinken zur Gewohnheit machen.',
+      href: 'https://www.waterdrop.com/',
+      logo: 'assets/logos/Waterdrop_logo.png',
+    },
   };
 
   const setActiveCard = (key) => {
