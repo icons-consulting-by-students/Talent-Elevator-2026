@@ -468,7 +468,7 @@ video {
     order: 2;
     align-self: end;
     margin-top: clamp(12rem, 18vw, 20rem);
-    transform: translateY(clamp(5rem, 8vw, 9rem));
+    transform: translateY(clamp(6.5rem, 9.5vw, 9.5rem));
   }
 }
 
