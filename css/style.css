@@ -858,8 +858,8 @@ p.te-2026-copy-subline {
     position: relative;
     inset: auto;
     width: 100%;
-    min-height: 27rem;
-    aspect-ratio: auto;
+    min-height: 22rem;
+    aspect-ratio: 1.4 / 1;;
     transform: none;
     opacity: 1;
     z-index: auto;
@@ -879,7 +879,7 @@ p.te-2026-copy-subline {
   }
 
   .te-2026-card-inner {
-    min-height: 27rem;
+    min-height: 22rem;
   }
 
   .te-2026-location-mark {
