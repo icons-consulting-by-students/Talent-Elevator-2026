@@ -241,6 +241,241 @@
         font-weight: 600;
       }
 
+      .application-workshop-section {
+        margin: clamp(1.5rem, 3.2vw, 2.4rem) 0 clamp(2.4rem, 4.6vw, 3.8rem);
+      }
+
+      .application-workshop-grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: clamp(0.9rem, 1.8vw, 1.35rem);
+      }
+
+      .application-workshop-card {
+        isolation: isolate;
+        position: relative;
+        min-height: clamp(220px, 19vw, 300px);
+        overflow: hidden;
+        border: 1px solid rgba(236, 246, 255, 0.24);
+        border-radius: 24px;
+        background-image:
+          linear-gradient(rgba(10, 35, 70, 0.48), rgba(10, 35, 70, 0.48)),
+          var(--application-workshop-bg);
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+        box-shadow: 0 16px 34px rgba(3, 12, 24, 0.28);
+        transition: transform 240ms ease, border-color 240ms ease, box-shadow 240ms ease;
+      }
+
+      .application-workshop-card:hover {
+        transform: scale(1.025);
+        border-color: rgba(255, 255, 255, 0.34);
+        box-shadow:
+          0 26px 50px rgba(2, 10, 20, 0.22),
+          0 0 24px rgba(114, 178, 242, 0.24),
+          inset 0 1px 0 rgba(255, 255, 255, 0.28);
+      }
+
+      .application-workshop-card::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        z-index: 0;
+        background:
+          linear-gradient(135deg, rgba(255, 255, 255, 0.2), transparent 34%),
+          linear-gradient(180deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.02));
+        opacity: 0.82;
+        pointer-events: none;
+      }
+
+      .application-workshop-overlay {
+        display: none;
+        position: absolute;
+        inset: -1px;
+        z-index: 1;
+        background:
+          linear-gradient(180deg, rgba(8, 18, 28, 0.02) 0%, rgba(9, 20, 32, 0.08) 34%, rgba(4, 10, 18, 0.36) 100%),
+          linear-gradient(135deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.01));
+        backdrop-filter: blur(4px);
+        -webkit-backdrop-filter: blur(4px);
+      }
+
+      .application-workshop-logo-wrap {
+        position: absolute;
+        z-index: 2;
+        top: clamp(0.65rem, 1.45vw, 1.05rem);
+        left: clamp(1.1rem, 2.4vw, 2rem);
+        width: min(56%, 202px);
+        height: clamp(54px, 7vw, 82px);
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+      }
+
+      .application-workshop-logo {
+        width: auto;
+        height: 100%;
+        max-width: 100%;
+        object-fit: contain;
+      }
+
+      .application-workshop-logo--smaller {
+        height: 76%;
+      }
+
+      .application-workshop-logo--bcg {
+        height: 64%;
+      }
+
+      .application-workshop-button {
+        position: absolute;
+        left: clamp(0.85rem, 1.8vw, 1.25rem);
+        right: clamp(0.85rem, 1.8vw, 1.25rem);
+        bottom: clamp(0.85rem, 1.8vw, 1.25rem);
+        z-index: 2;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 3rem;
+        border: 1px solid rgba(255, 255, 255, 0.14);
+        border-radius: 1rem;
+        background: linear-gradient(135deg, rgba(255, 255, 255, 0.16), rgba(255, 255, 255, 0.05));
+        color: rgba(255, 255, 255, 0.92);
+        font: inherit;
+        font-weight: 800;
+        letter-spacing: 0.01em;
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(14px);
+        -webkit-backdrop-filter: blur(14px);
+        cursor: pointer;
+      }
+
+      .application-workshop-info-overlay[hidden] {
+        display: none;
+      }
+
+      .application-workshop-info-overlay {
+        --workshop-overlay-origin-x: 50%;
+        --workshop-overlay-origin-y: 50%;
+        position: fixed;
+        inset: 0;
+        z-index: 1300;
+        display: flex;
+        align-items: flex-start;
+        justify-content: center;
+        overflow-y: auto;
+        padding: clamp(9rem, 18vh, 12rem) clamp(1.25rem, 4vw, 3rem) clamp(2rem, 6vw, 4rem);
+        background:
+          radial-gradient(circle at 18% 16%, rgba(114, 178, 242, 0.16), transparent 34%),
+          linear-gradient(135deg, rgba(4, 18, 34, 0.96), rgba(8, 34, 61, 0.94));
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        opacity: 0;
+        transition: opacity 260ms ease;
+      }
+
+      .application-workshop-info-panel {
+        --active-workshop-bg: linear-gradient(rgba(189, 219, 242, 0.34), rgba(189, 219, 242, 0.34));
+        position: relative;
+        width: min(100%, 760px);
+        margin-bottom: clamp(2rem, 6vw, 4rem);
+        padding: clamp(1.6rem, 3.6vw, 2.75rem);
+        border: 1px solid rgba(255, 255, 255, 0.18);
+        border-radius: 28px;
+        background:
+          linear-gradient(rgba(8, 28, 50, 0.58), rgba(8, 28, 50, 0.58)),
+          var(--active-workshop-bg);
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+        box-shadow: 0 30px 80px rgba(0, 0, 0, 0.36);
+        color: #fff;
+        text-align: left;
+        backdrop-filter: blur(18px);
+        -webkit-backdrop-filter: blur(18px);
+        transform: translateY(14px) scale(0.86);
+        transform-origin: var(--workshop-overlay-origin-x) var(--workshop-overlay-origin-y);
+        transition:
+          transform 320ms cubic-bezier(0.22, 1, 0.36, 1),
+          opacity 220ms ease;
+        opacity: 0;
+      }
+
+      .application-workshop-info-overlay.is-open {
+        opacity: 1;
+      }
+
+      .application-workshop-info-overlay.is-open .application-workshop-info-panel {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+
+      .application-workshop-info-overlay.is-closing {
+        opacity: 0;
+      }
+
+      .application-workshop-info-overlay.is-closing .application-workshop-info-panel {
+        opacity: 0;
+        transform: translateY(10px) scale(0.9);
+      }
+
+      .application-workshop-info-panel > strong {
+        display: block;
+        margin: 0 0 0.7rem;
+        color: #fff;
+        font-size: clamp(1.25rem, 2.4vw, 1.8rem);
+        line-height: 1.2;
+      }
+
+      .application-workshop-info-panel p {
+        margin: 0;
+        color: rgba(255, 255, 255, 0.88);
+        font-size: 1rem;
+        line-height: 1.7;
+      }
+
+      .application-workshop-info-panel p strong {
+        display: inline;
+        margin: 0;
+        color: inherit;
+        font-size: inherit;
+        line-height: inherit;
+        font-weight: 800;
+      }
+
+      .application-workshop-info-panel p + strong {
+        margin-top: clamp(1.6rem, 3vw, 2.2rem);
+      }
+
+      .application-workshop-info-panel ul {
+        margin: 0.3rem 0 0;
+        padding-left: 1.35rem;
+        color: rgba(255, 255, 255, 0.88);
+        font-size: 1rem;
+        line-height: 1.28;
+      }
+
+      .application-workshop-info-panel li {
+        padding-left: 0.2rem;
+        margin: 0.04rem 0;
+      }
+
+      .application-workshop-info-close {
+        position: absolute;
+        top: 1rem;
+        right: 1rem;
+        width: 2.75rem;
+        height: 2.75rem;
+        border: 1px solid rgba(255, 255, 255, 0.18);
+        border-radius: 999px;
+        background: rgba(12, 40, 66, 0.08);
+        color: #fff;
+        font-size: 1.4rem;
+        line-height: 1;
+        cursor: pointer;
+      }
+
       .bewerbung-remind-overlay[hidden] {
         display: none;
       }
@@ -385,6 +620,16 @@
         .bewerbung-remind-dialog {
           padding: 1.25rem;
         }
+
+        .application-workshop-grid {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+      }
+
+      @media (max-width: 560px) {
+        .application-workshop-grid {
+          grid-template-columns: 1fr;
+        }
       }
 
       .anmeldung-page .footer {
@@ -499,6 +744,195 @@
         <div class="container">
           <div class="apply-process-head reveal" data-bewerbung-title>
             <p class="eyebrow">Bewerbung 2026</p>
+            <h2>Workshops und Anforderungsprofile</h2>
+            <section class="application-workshop-section" aria-label="Unternehmensworkshops 2026">
+              <div class="application-workshop-grid">
+                <article
+                  class="application-workshop-card"
+                  aria-label="BCG Workshop"
+                  style="--application-workshop-bg: url('assets/media/home/Firmenvorstellung_BCG_2.png')"
+                >
+                  <span class="application-workshop-overlay" aria-hidden="true"></span>
+                  <span class="application-workshop-logo-wrap">
+                    <img
+                      class="application-workshop-logo application-workshop-logo--bcg"
+                      src="assets/logos/BCG_logo_white.png"
+                      alt="BCG"
+                    />
+                  </span>
+                  <button
+                    class="application-workshop-button"
+                    type="button"
+                    data-workshop-info-open
+                    data-workshop-copy="<br />Erhalte im Rahmen des BCG Workshops einen exklusiven Einblick in das, was dich im Consulting bei einer der weltweit führenden Strategieberatungen erwartet, und erfahre während unseres Case-Workshops, wie wir in der Group GenAI vorantreiben. 
+                            <br />Tauche in eines unserer GenAI-Projekte ein und stelle dich dabei gemeinsam mit BCGler:innen der Herausforderung, einen Case-Workshop zum Thema &quot;Enabling Growth with GenAI&quot; zu erarbeiten."
+                    data-profile-copy="<br />**Du studierst BWL oder kommst aus einem anderen Fachbereich? Dann bewirb dich – wir freuen uns über beide Profile!**
+                            <ul>
+                              <li>Du hast sehr gute Studienleistungen</li>
+                              <li>Du hast Praxiserfahrung durch mehrere Vollzeitpraktika gesammelt</li>
+                              <li>Du bringst Auslandserfahrung mit</li>
+                            </ul>"
+                  >
+                    Mehr Info
+                  </button>
+                </article>
+
+                <article
+                  class="application-workshop-card"
+                  aria-label="EFS Workshop"
+                  style="--application-workshop-bg: url('assets/media/home/Firmenvorstellung_EFS.png')"
+                >
+                  <span class="application-workshop-overlay" aria-hidden="true"></span>
+                  <span class="application-workshop-logo-wrap">
+                    <img
+                      class="application-workshop-logo application-workshop-logo--smaller"
+                      src="assets/logos/EFS_logo_white.png"
+                      alt="EFS"
+                    />
+                  </span>
+                  <button
+                    class="application-workshop-button"
+                    type="button"
+                    data-workshop-info-open
+                    data-workshop-copy="<br />**Die Zukunft der Automobilproduktion: Potenziale humanoider Robotik verstehen und gestalten.**<br /> 
+                            Die Studierenden arbeiten in Teams an einem realen Use Case aus der Automobilproduktion und nutzen einen von uns entwickelten humanoiden Roboterkatalog, 
+                            um geeignete humanoide Modelle für die jeweilige Aufgabe auszuwählen. 
+                            <br />Sie analysieren Prozessanforderungen, vergleichen technische Fähigkeiten der Roboter 
+                            und diskutieren, wie moderne humanoide Systeme bestehende Abläufe unterstützen oder verbessern können. Im zweiten Teil entwickeln die Teams eigene Ideen für 
+                            weitere Einsatzmöglichkeiten humanoider Robotik im Automotive Umfeld und bewerten, welche dieser Ansätze technisch umsetzbar sind und welchen Mehrwert sie 
+                            für Produktion und Organisation bieten könnten. 
+                            <br />Der Workshop fördert technisches Verständnis, Kreativität und strukturiertes Denken und gibt den Teilnehmenden die Möglichkeit, reale industrielle Herausforderungen aktiv mitzugestalten."
+                    data-profile-copy="<br />**Du studierst BWL oder kommst aus einem anderen Fachbereich? Dann bewirb dich – wir freuen uns über beide Profile!**
+                            <ul>
+                              <li>Du bringst ein technisches Grundverständnis mit und kannst mit Konzepten wie DoF, Traglast oder Geschwindigkeit etwas anfangen</li>
+                              <li>Du begeisterst dich für Robotik und KI</li>
+                              <li>Du denkst analytisch und arbeitest gerne im Team</li>
+                              <li>Erste Erfahrungen in Produktionsumgebungen oder mit Robotik/AI-Projekten sind ein Plus</li>
+                            </ul>"
+                  >
+                    Mehr Info
+                  </button>
+                </article>
+
+                <article
+                  class="application-workshop-card"
+                  aria-label="Sonepar Workshop"
+                  style="--application-workshop-bg: url('assets/media/home/Firmenvorstellung_Sonepar.jpg')"
+                >
+                  <span class="application-workshop-overlay" aria-hidden="true"></span>
+                  <span class="application-workshop-logo-wrap">
+                    <img class="application-workshop-logo" src="assets/logos/sonepar_logo_white.png" alt="Sonepar" />
+                  </span>
+                  <button
+                    class="application-workshop-button"
+                    type="button"
+                    data-workshop-info-open
+                    data-workshop-copy="Freu dich auf spannende Workshops mit unseren diesjährigen Partnerunternehmen!"
+                    data-profile-copy="Weitere Details zu den Inhalten und Anforderungen folgen in Kürze."
+                  >
+                    Mehr Info
+                  </button>
+                </article>
+
+                <article
+                  class="application-workshop-card"
+                  aria-label="Wiener Stadtwerke Workshop"
+                  style="--application-workshop-bg: url('assets/media/home/Firmenvorstellung_WienerStadtwerke.jpg')"
+                >
+                  <span class="application-workshop-overlay" aria-hidden="true"></span>
+                  <span class="application-workshop-logo-wrap">
+                    <img
+                      class="application-workshop-logo"
+                      src="assets/logos/Wiener-Stadtwerke_logo_white.png"
+                      alt="Wiener Stadtwerke"
+                    />
+                  </span>
+                  <button
+                    class="application-workshop-button"
+                    type="button"
+                    data-workshop-info-open
+                    data-workshop-copy="Freu dich auf spannende Workshops mit unseren diesjährigen Partnerunternehmen!"
+                    data-profile-copy="Weitere Details zu den Inhalten und Anforderungen folgen in Kürze."
+                  >
+                    Mehr Info
+                  </button>
+                </article>
+
+                <article
+                  class="application-workshop-card"
+                  aria-label="Post Workshop"
+                  style="--application-workshop-bg: url('assets/media/home/Firmenvorstellung_Post.jpg')"
+                >
+                  <span class="application-workshop-overlay" aria-hidden="true"></span>
+                  <span class="application-workshop-logo-wrap">
+                    <img class="application-workshop-logo" src="assets/logos/Post_logo_white.png" alt="Post" />
+                  </span>
+                  <button
+                    class="application-workshop-button"
+                    type="button"
+                    data-workshop-info-open
+                    data-workshop-copy="Freu dich auf spannende Workshops mit unseren diesjährigen Partnerunternehmen!"
+                    data-profile-copy="Weitere Details zu den Inhalten und Anforderungen folgen in Kürze."
+                  >
+                    Mehr Info
+                  </button>
+                </article>
+
+                <article
+                  class="application-workshop-card"
+                  aria-label="Waterdrop Workshop"
+                  style="--application-workshop-bg: url('assets/media/home/Firmenvorstellung_Waterdrop_2.jpg')"
+                >
+                  <span class="application-workshop-overlay" aria-hidden="true"></span>
+                  <span class="application-workshop-logo-wrap">
+                    <img class="application-workshop-logo" src="assets/logos/waterdrop_logo_white.svg" alt="Waterdrop" />
+                  </span>
+                  <button
+                    class="application-workshop-button"
+                    type="button"
+                    data-workshop-info-open
+                    data-workshop-copy="<br />**Entwickelt man ein High-Potential-Programm, das echte Führungskräfte hervorbringt?**<br />
+                            In diesem interaktiven Workshop tauchst du ein in die Entwicklung unseres neuen Talentprogramms OCEAN: einer Journey von strategischer Ausbildung über funktionale Expertise bis zum internationalen Secondment. Doch statt mitzufahren, übernimmst du selbst das Steuer.
+                            <br />Gemeinsam erarbeitet ihr zentrale Bausteine des Programms: Wer soll Teil des Programms werden? Wie soll dieses ausgestaltet sein? Was macht OCEAN einzigartig im Vergleich zu anderen Talentprogrammen?
+                            <br />Bearbeite an echten Herausforderungen mit, forme die Führungskräfte von morgen und werde sogar selbst Teil von etwas, das deine Karriere verändern wird."
+                    data-profile-copy="<br />**Du studierst BWL oder kommst aus einem anderen Fachbereich? Dann bewirb dich – wir freuen uns über beide Profile!**
+                            <ul>
+                              <li>Du hast sehr gute Studienleistungen</li>
+                              <li>Du bist gegen Ende deines Bachelorstudiums oder im Master</li>
+                              <li>Du hast mindestens 2 Vollzeitpraktika absolviert</li>
+                              <li>Du bringst Auslandserfahrung mit – durch ein Auslandssemester oder ein Praktikum im Ausland</li>
+                              <li>Erfahrung in Scale-up, FMCG oder Beratung ist ein Plus</li>
+                              <li>Extracurriculares Engagement ist ein Plus</li>
+                            </ul>"
+                  >
+                    Mehr Info
+                  </button>
+                </article>
+              </div>
+            </section>
+            <div
+              class="application-workshop-info-overlay"
+              data-workshop-info-overlay
+              role="dialog"
+              aria-modal="true"
+              aria-labelledby="application-workshop-info-title"
+              hidden
+            >
+              <div class="application-workshop-info-panel" data-workshop-info-panel>
+                <button
+                  class="application-workshop-info-close"
+                  type="button"
+                  aria-label="Workshop-Information schließen"
+                  data-workshop-info-close
+                >
+                  ×
+                </button>
+                <strong id="application-workshop-info-title">Der Workshop</strong>
+                <p data-workshop-info-copy>Platzhaltertext zum Workshop.</p>
+                <strong>Wen wir suchen</strong>
+                <p data-workshop-profile-copy>Platzhaltertext zum Anforderungsprofil.</p>
+              </div>
+            </div>
             <h2 data-bewerbung-title-text>Beginn der Bewerbung</h2>
           </div>
 
@@ -918,6 +1352,116 @@
 
         applyState();
         scheduleCountdownUpdate();
+      })();
+
+      (function () {
+        const workshopButtons = document.querySelectorAll("[data-workshop-info-open]");
+        const workshopOverlay = document.querySelector("[data-workshop-info-overlay]");
+        const workshopPanel = document.querySelector("[data-workshop-info-panel]");
+        const workshopCloseButton = document.querySelector("[data-workshop-info-close]");
+        const workshopCopy = document.querySelector("[data-workshop-info-copy]");
+        const workshopProfileCopy = document.querySelector("[data-workshop-profile-copy]");
+        let workshopOverlayPinned = false;
+        let workshopCloseTimeout;
+
+        if (!workshopButtons.length || !workshopOverlay) {
+          return;
+        }
+
+        function formatWorkshopText(value, fallback) {
+          const safeText = (value || fallback)
+            .replace(/&/g, "&amp;")
+            .replace(/</g, "&lt;")
+            .replace(/>/g, "&gt;")
+            .replace(/"/g, "&quot;");
+
+          return safeText
+            .replace(/&lt;ul&gt;/gi, "<ul>")
+            .replace(/&lt;\/ul&gt;/gi, "</ul>")
+            .replace(/&lt;li&gt;/gi, "<li>")
+            .replace(/&lt;\/li&gt;/gi, "</li>")
+            .replace(/&lt;br\s*\/?&gt;/gi, "<br>")
+            .replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>")
+            .replace(/\n/g, "<br>");
+        }
+
+        function openWorkshopOverlay(button, shouldPin) {
+          workshopOverlayPinned = Boolean(shouldPin);
+          window.clearTimeout(workshopCloseTimeout);
+          if (button) {
+            const card = button.closest(".application-workshop-card");
+            const originRect = card ? card.getBoundingClientRect() : button.getBoundingClientRect();
+            const originX = originRect.left + originRect.width / 2;
+            const originY = originRect.top + originRect.height / 2;
+            workshopOverlay.style.setProperty("--workshop-overlay-origin-x", originX + "px");
+            workshopOverlay.style.setProperty("--workshop-overlay-origin-y", originY + "px");
+            if (card && workshopPanel) {
+              workshopPanel.style.setProperty(
+                "--active-workshop-bg",
+                card.style.getPropertyValue("--application-workshop-bg")
+              );
+            }
+          }
+          if (button && workshopCopy) {
+            workshopCopy.innerHTML = formatWorkshopText(button.dataset.workshopCopy, "Platzhaltertext zum Workshop.");
+          }
+          if (button && workshopProfileCopy) {
+            workshopProfileCopy.innerHTML = formatWorkshopText(
+              button.dataset.profileCopy,
+              "Platzhaltertext zum Anforderungsprofil."
+            );
+          }
+          workshopOverlay.hidden = false;
+          workshopOverlay.classList.remove("is-closing");
+          window.requestAnimationFrame(function () {
+            workshopOverlay.classList.add("is-open");
+          });
+        }
+
+        function closeWorkshopOverlay() {
+          workshopOverlayPinned = false;
+          workshopOverlay.classList.remove("is-open");
+          workshopOverlay.classList.add("is-closing");
+          window.clearTimeout(workshopCloseTimeout);
+          workshopCloseTimeout = window.setTimeout(function () {
+            workshopOverlay.hidden = true;
+            workshopOverlay.classList.remove("is-closing");
+          }, 320);
+        }
+
+        workshopButtons.forEach(function (button) {
+          button.addEventListener("click", function () {
+            openWorkshopOverlay(button, true);
+          });
+        });
+
+        workshopOverlay.addEventListener("mouseleave", function () {
+          if (!workshopOverlayPinned) {
+            closeWorkshopOverlay();
+          }
+        });
+
+        workshopOverlay.addEventListener("click", function (event) {
+          if (event.target === workshopOverlay) {
+            closeWorkshopOverlay();
+          }
+        });
+
+        if (workshopPanel) {
+          workshopPanel.addEventListener("click", function (event) {
+            event.stopPropagation();
+          });
+        }
+
+        if (workshopCloseButton) {
+          workshopCloseButton.addEventListener("click", closeWorkshopOverlay);
+        }
+
+        document.addEventListener("keydown", function (event) {
+          if (event.key === "Escape" && !workshopOverlay.hidden) {
+            closeWorkshopOverlay();
+          }
+        });
       })();
     </script>
     <script src="js/main.js"></script>
