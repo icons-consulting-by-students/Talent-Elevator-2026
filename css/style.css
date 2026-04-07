@@ -323,7 +323,7 @@ video {
 .te-2026-section {
   --te-2026-stack-lift: 1.75rem;
   --te-2026-stack-drop: 6.5rem;
-  --te-2026-stack-offset: 5.75rem;
+  --te-2026-stack-offset: 1.5rem;
   --te-2026-stack-top-clearance: 2rem;
   --te-2026-content-gap-desktop: 1.5rem;
   position: relative;
@@ -337,6 +337,7 @@ video {
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
+  padding-bottom: 2rem;
   margin-bottom: clamp(3rem, 6vw, 5rem);
 }
 
@@ -435,7 +436,7 @@ video {
   width: clamp(12rem, 22vw, 17rem);
   height: auto;
   margin-top: 0;
-  transform: translateY(calc((-1 * var(--te-2026-stack-lift)) + var(--te-2026-stack-drop, 2rem) + 0.5rem));
+  transform: translateY(calc((-1 * var(--te-2026-stack-lift)) + var(--te-2026-stack-drop, 2rem) + 2.5rem));
 }
 
 .te-2026-content {
@@ -447,6 +448,28 @@ video {
   display: grid;
   align-content: start;
   gap: 0.85rem;
+}
+
+@media (min-width: 641px) {
+  .te-2026-content {
+    align-self: stretch;
+    grid-template-rows: auto 1fr;
+  }
+
+  .te-2026-workshops {
+    order: 1;
+  }
+
+  .te-2026-workshops .te-2026-stack-eyebrow {
+    margin-top: -0.5rem;
+  }
+
+  .te-2026-copy {
+    order: 2;
+    align-self: end;
+    margin-top: clamp(12rem, 18vw, 20rem);
+    transform: translateY(clamp(5rem, 8vw, 9rem));
+  }
 }
 
 .te-2026-copy {
@@ -507,6 +530,10 @@ video {
   color: rgba(255, 255, 255, 0.82);
 }
 
+p.te-2026-copy-subline {
+  font-size: clamp(0.98rem, 1.45vw, 1.15rem);
+}
+
 .te-2026-stack-eyebrow {
   margin: 2.2rem 0 0;
   letter-spacing: 0.14em;
@@ -517,7 +544,7 @@ video {
 }
 
 .te-2026-stack-title {
-  margin: 0 0 1.7rem;
+  margin: 0 0 0.4rem;
   max-width: 28ch;
   font-family: "Space Grotesk", "Segoe UI", sans-serif;
   font-size: clamp(1.6rem, 2.7vw, 2.5rem);
@@ -813,7 +840,7 @@ video {
   }
 
   .te-2026-stack {
-    margin-top: 0.4rem;
+    margin-top: 0;
   }
 
   .te-2026-stack {
@@ -824,6 +851,7 @@ video {
     cursor: default;
     overflow: visible;
     padding: 0;
+    transform: none;
   }
 
   .te-2026-card {
@@ -864,10 +892,11 @@ video {
 @media (max-width: 640px) {
   .te-2026-section {
     background-image: none;
+    padding-bottom: 0;
   }
 
   .te-2026-layout {
-    padding: 4rem clamp(1.35rem, 4vw, 1.8rem) 7rem;
+    padding: 4rem clamp(1.35rem, 4vw, 1.8rem) 0.5rem;
   }
 
   .te-2026-overlay {
@@ -897,6 +926,7 @@ video {
 
   .te-2026-location-mark {
     margin-top: 0.15rem;
+    transform: translateY(-0.15rem);
   }
 
   .te-2026-location-title {
