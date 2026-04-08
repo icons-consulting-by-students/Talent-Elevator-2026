@@ -1310,6 +1310,7 @@ main {
   overflow: hidden;
 }
 
+.hero-video-wrapper iframe,
 .hero-video-wrapper video {
   position: absolute;
   top: 50%;
@@ -1321,6 +1322,7 @@ main {
   transform: translate(-50%, -50%) scale(1.08);
   object-fit: cover;
   object-position: center 62%;
+  border: 0;
 }
 
 .hero-video-overlay {
