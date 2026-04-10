@@ -1215,11 +1215,13 @@ main {
   display: inline-flex;
   flex-direction: column;
   align-items: center;
-  gap: 0.7rem;
-  padding: 0;
-  color: rgba(255, 255, 255, 0.94);
+  gap: 0.38rem;
+  padding: 0.54rem 1.75rem 0.5rem;
+  color: var(--night-2);
   font-size: clamp(0.78rem, 1.1vw, 1rem);
   letter-spacing: 0.03em;
+  background: rgba(255, 255, 255, 0.5);
+  border-radius: 18px;
 }
 
 .hero-byline img {
@@ -1231,9 +1233,7 @@ main {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 0.3rem 0.55rem;
-  background: rgba(255, 255, 255, 0.5);
-  border-radius: 12px;
+  padding: 0;
 }
 
 .hero-logo-large {
@@ -6573,8 +6573,8 @@ textarea {
 
   .hero-byline {
     font-size: 0.72rem;
-    padding: 0.32rem 0.56rem;
-    gap: 0.45rem;
+    padding: 0.46rem 1.34rem 0.42rem;
+    gap: 0.3rem;
   }
 
   .hero-byline img {
