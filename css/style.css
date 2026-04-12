@@ -1236,6 +1236,14 @@ main {
   padding: 0;
 }
 
+.events-2023-page .hero-byline,
+.events-2024-page .hero-byline,
+.events-2025-page .hero-byline {
+  color: #fff;
+  background: transparent;
+  gap: 1rem;
+}
+
 .hero-logo-large {
   width: min(660px, 82vw);
   height: auto;
