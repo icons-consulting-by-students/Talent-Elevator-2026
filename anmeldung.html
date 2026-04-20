@@ -1097,6 +1097,7 @@
       </div>
     </footer>
 
+    <script src="js/application-phase.js"></script>
     <script>
       (function () {
         const wrapper = document.getElementById("bewerbung-wrapper");
@@ -1104,12 +1105,14 @@
           return;
         }
 
-        const viennaZone = "Europe/Vienna";
-        const useTestStartDate = false;
-        const originalStartUtcMs = Date.UTC(2026, 3, 5, 22, 0, 0);
-        const testStartUtcMs = Date.UTC(2026, 3, 5, 22, 0, 0);
-        const startUtcMs = useTestStartDate ? testStartUtcMs : originalStartUtcMs;
-        const endExclusiveUtcMs = Date.UTC(2026, 3, 30, 22, 0, 0);
+        const applicationPhase = window.TEApplicationPhase;
+        if (!applicationPhase) {
+          return;
+        }
+
+        const viennaZone = applicationPhase.viennaZone;
+        const startUtcMs = applicationPhase.startUtcMs;
+        const endExclusiveUtcMs = applicationPhase.endExclusiveUtcMs;
         const preSection = wrapper.querySelector("#bewerbung-pre");
         const openSection = wrapper.querySelector("#bewerbung-open");
         const postSection = wrapper.querySelector("#bewerbung-closed");
@@ -1166,13 +1169,7 @@
         }
 
         function getState(nowMs) {
-          if (nowMs < startUtcMs) {
-            return "before";
-          }
-          if (nowMs >= endExclusiveUtcMs) {
-            return "after";
-          }
-          return "active";
+          return applicationPhase.getState(nowMs);
         }
 
         function updateCountdown(now) {

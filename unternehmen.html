@@ -273,6 +273,17 @@
       </div>
     </footer>
 
+    <script src="js/application-phase.js"></script>
+    <script>
+      (function () {
+        const applicationPhase = window.TEApplicationPhase;
+        if (!applicationPhase || !document.body.classList.contains("unternehmen-page")) {
+          return;
+        }
+
+        document.body.classList.toggle("is-application-phase", applicationPhase.isActive());
+      })();
+    </script>
     <script src="js/main.js"></script>
   </body>
 </html>
