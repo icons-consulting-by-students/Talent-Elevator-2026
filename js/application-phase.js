@@ -4,7 +4,7 @@
     useTestStartDate: false,
     originalStartUtcMs: Date.UTC(2026, 3, 5, 22, 0, 0),
     testStartUtcMs: Date.UTC(2026, 3, 5, 22, 0, 0),
-    endExclusiveUtcMs: Date.UTC(2026, 4, 1, 22, 0, 0),
+    endExclusiveUtcMs: Date.UTC(2026, 3, 30, 22, 0, 0),
   };
 
   const startUtcMs = phaseConfig.useTestStartDate ? phaseConfig.testStartUtcMs : phaseConfig.originalStartUtcMs;
