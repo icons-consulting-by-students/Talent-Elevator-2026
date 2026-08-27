@@ -1,4 +1,11 @@
 .DS_Store
 node_modules/
+
+# Secrets
 .env
 server/.env
+
+# Runtime logs — contain names and email addresses of real applicants (GDPR).
+# Never commit these.
+*.log
+contact-mail.log

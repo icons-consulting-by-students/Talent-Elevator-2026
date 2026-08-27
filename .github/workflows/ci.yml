@@ -1,0 +1,87 @@
+name: CI
+
+# Achtung: dieses Repository ist auf GitHub ÖFFENTLICH. Alles, was hier
+# committet wird, ist für jeden im Internet lesbar — auch nach dem Löschen,
+# solange es in der Historie steht. Der Secrets-Job ist deshalb kein
+# Formalismus.
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  checks:
+    name: Syntax & Inhalt
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Abhängigkeiten installieren
+        run: npm ci
+
+      - name: JavaScript-Syntax prüfen
+        run: |
+          fail=0
+          while IFS= read -r f; do
+            node --check "$f" || { echo "::error file=$f::Syntaxfehler in $f"; fail=1; }
+          done < <(git ls-files '*.js')
+          [ $fail -eq 0 ] && echo "✅ **JavaScript:** keine Syntaxfehler." >> "$GITHUB_STEP_SUMMARY"
+          exit $fail
+
+      - name: search-index.json ist valides JSON
+        run: |
+          jq empty search-index.json || { echo "::error file=search-index.json::Kaputtes JSON — die Seitensuche fällt damit aus."; exit 1; }
+          echo "✅ **Suchindex:** valides JSON ($(jq 'length' search-index.json) Einträge)." >> "$GITHUB_STEP_SUMMARY"
+
+      # Die Archivseiten dokumentieren vergangene Editionen inklusive der
+      # damaligen Partnerunternehmen. Sie werden nicht mehr angefasst.
+      - name: Archivseiten unverändert
+        if: github.event_name == 'pull_request'
+        run: |
+          changed=$(git diff --name-only origin/${{ github.base_ref }}...HEAD -- 'talent-elevator-20*.html' || true)
+          if [ -n "$changed" ]; then
+            echo "::warning::Archivseiten wurden geändert — bitte bewusst bestätigen:"
+            echo "$changed"
+            echo "⚠️ **Archiv geändert:** $changed — war das Absicht?" >> "$GITHUB_STEP_SUMMARY"
+          fi
+
+  secrets:
+    name: Secrets & Personendaten
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    steps:
+      - uses: actions/checkout@v4
+
+      # contact-mail.log stand mit Klarnamen und E-Mail-Adresse einer echten
+      # Bewerberin in diesem öffentlichen Repository (Commit 0c2c473).
+      # Genau das soll hier nie wieder durchrutschen.
+      - name: Keine Logs, Secrets oder Bewerberdaten
+        run: |
+          fail=0
+          bad=$(git ls-files | grep -Ei '\.log$|(^|/)\.env$|(^|/)\.env\.[a-z]+$|\.pem$|\.key$|\.csv$|\.xlsx$|id_rsa' | grep -v '\.example$' || true)
+          if [ -n "$bad" ]; then
+            echo "::error::Diese Dateien gehören nicht in ein öffentliches Repository:"
+            echo "$bad"
+            echo "Logs und Tabellen enthalten Namen und E-Mail-Adressen von Bewerber:innen (DSGVO)."
+            fail=1
+          fi
+          if git grep -nIE '(sk-[A-Za-z0-9_-]{16,}|SG\.[A-Za-z0-9_-]{16,}|AKIA[0-9A-Z]{16}|smtp_pass|SMTP_PASSWORD\s*=\s*["'"'"'][^"'"'"']+)' -- . ':!*.example' ':!.github' ; then
+            echo "::error::Zugangsdaten im Code gefunden. Sie gehören in server/.env — und der Key muss rotiert werden."
+            fail=1
+          fi
+          if [ $fail -eq 0 ]; then
+            echo "✅ Keine Secrets oder Personendaten im Repository." >> "$GITHUB_STEP_SUMMARY"
+          fi
+          exit $fail
